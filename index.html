@@ -2,28 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Hello!</title>
+    <title>SVGcode</title>
 
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/svg" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
 
-    <!-- import the webpage's javascript file -->
-    <script src="potrace.js"></script>
-    <script src="script.js" type="module"></script>
+    <script src="/potrace.js"></script>
+    <script src="/main.js" type="module"></script>
   </head>
   <body>
-    <input id="turdsize" type="range" min="0" max="1000" value="2" />
-    <input id="contrast" type="range" min="0" max="100" value="100" />
-    <!--<img crossorigin="anonymous" src="https://cdn.glitch.com/f6cb8551-b72a-4f2d-abe0-062718a12580%2Ffloppy.png?v=1616498888327"> -->
-    <img
-      crossorigin="anonymous"
-      src="https://cdn.glitch.com/f6cb8551-b72a-4f2d-abe0-062718a12580%2F8450_2.webp?v=1616522360216"
-    />
-
-    <canvas ></canvas>
-    <output></output>
+    <h1>SVGcode</h1>
+    <div>
+      <button class="open" type="button">Open image</button>
+      <button class="save" type="button">Save SVG</button>
+    </div>
+    <div class="preprocess"></div>
+    <div>
+      <label>
+      Turdsize
+      <input class="turdsize" type="range" min="0" max="1000" value="2" />
+      </label>
+    </div>
+    <div>
+      <img
+        crossorigin="anonymous"
+        src="/favicon.svg"
+      />
+      <canvas></canvas>
+      <output></output>
+    </div>
   </body>
 </html>

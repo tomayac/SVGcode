@@ -1,11 +1,31 @@
-/* CSS files add styling rules to your content */
-
-body {
-  font-family: helvetica, arial, sans-serif;
-  margin: 2em;
+:root {
+  color-scheme: dark light;
 }
 
-h1 {
-  font-style: italic;
-  color: #373fff;
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+input[type=range] {
+  display: block;
+}
+
+img, canvas, svg {
+  outline: solid 1px CanvasText;
+  width: calc((100% / 3.25));
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  background-color: CanvasText;
+}
+
+.preprocess-input {
+  display: flex;
 }

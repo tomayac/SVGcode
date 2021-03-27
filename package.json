@@ -1,0 +1,16 @@
+{
+  "name": "SVGcode",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1",
+    "vite": "^2.1.3"
+  },
+  "dependencies": {
+    "browser-fs-access": "^0.16.0"
+  }
+}
