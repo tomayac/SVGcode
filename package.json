@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "fix": "npx prettier . --write"
   },
   "devDependencies": {
     "prettier": "^2.2.1",

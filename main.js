@@ -102,11 +102,14 @@ const convertToSVG = async () => {
 
 const getFilterString = () => {
   let string = `${posterize.checked ? 'url("#posterize") ' : ''}`;
-  for (const [filter] of Object.entries(filters)) {
+  for (const [filter, props] of Object.entries(filters)) {
     const input = filterInputs[filter];
+    if (props.initial === parseInt(input.value, 10)) {
+      continue;
+    }
     string += `${filter}(${input.value}${input.dataset.unit}) `
   }
-  return string.trim();
+  return string.trim() || 'none';
 }
 
 const preProcessImage = () => {
