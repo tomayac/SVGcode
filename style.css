@@ -2,7 +2,9 @@
   color-scheme: dark light;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
@@ -10,11 +12,13 @@ body {
   font-family: system-ui, sans-serif;
 }
 
-input[type=range] {
+input[type='range'] {
   display: block;
 }
 
-img, canvas, svg {
+img,
+canvas,
+svg {
   outline: solid 1px CanvasText;
   width: calc((100% / 3.25));
   height: auto;
