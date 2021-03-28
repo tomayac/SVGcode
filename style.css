@@ -29,3 +29,7 @@ svg {
 .preprocess-input {
   display: flex;
 }
+
+.filter {
+  display: none;
+}

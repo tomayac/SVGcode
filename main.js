@@ -5,8 +5,14 @@ const ctx = canvas.getContext("2d");
 
 const fileOpenButton = document.querySelector('.open');
 const fileSaveButton = document.querySelector('.save');
+const posterize = document.querySelector(".posterize");
+const red = document.querySelector(".posterize-r");
+const green = document.querySelector(".posterize-g");
+const blue = document.querySelector(".posterize-b");
+
 const turdsize = document.querySelector(".turdsize");
 const preprocess = document.querySelector(".preprocess");
+const filterXML = document.querySelector('#posterize');
 
 const inputImage = document.querySelector("img");
 const outputSVG = document.querySelector("output");
@@ -24,6 +30,15 @@ const filters = {
   'saturate': {unit: PERCENT, initial: 100, min: 0, max: 200},
   'sepia': {unit: PERCENT, initial: 0, min: 0, max: 100},
 }
+
+const getPosterizeFilter = (r, g, b) => {
+  return `
+    <feComponentTransfer>
+      <feFuncR type="discrete" tableValues="${r.join(' ')}" />
+      <feFuncG type="discrete" tableValues="${g.join(' ')}" />
+      <feFuncB type="discrete" tableValues="${b.join(' ')}" />
+    </feComponentTransfer>`;
+};
 
 const filterInputs = {};
 
@@ -58,7 +73,7 @@ for (const [filter, props] of Object.entries(filters)) {
   input.value = initial;
   input.dataset.unit = unit;
   filterInputs[filter] = input;
-  input.addEventListener('input', debounce(async () => {
+  input.addEventListener('change', debounce(async () => {
       preProcessImage();
       await convertToSVG();
     }, 250));
@@ -68,8 +83,7 @@ for (const [filter, props] of Object.entries(filters)) {
   button.textContent = 'Reset';
   button.addEventListener('click', async () => {
     input.value = initial;
-    preProcessImage();
-    await convertToSVG();
+    input.dispatchEvent(new Event('change'));
   });
 
   label.append(input);
@@ -87,8 +101,8 @@ const convertToSVG = async () => {
 };
 
 const getFilterString = () => {
-  let string = '';
-  for (const [filter, props] of Object.entries(filters)) {
+  let string = `${posterize.checked ? 'url("#posterize") ' : ''}`;
+  for (const [filter] of Object.entries(filters)) {
     const input = filterInputs[filter];
     string += `${filter}(${input.value}${input.dataset.unit}) `
   }
@@ -101,9 +115,38 @@ const preProcessImage = () => {
   ctx.drawImage(inputImage, 0, 0);
 }
 
+const getRange = (input) => {
+  const value = parseInt(input.value, 10);
+  const array = [];
+  for (let i = 0; i <= value; i++) {
+    array[i] = (1 / value * i).toFixed(1);
+  }
+  return array;
+};
+
+const updateFilter = async () => {
+  filterXML.innerHTML = getPosterizeFilter(getRange(red), getRange(green), getRange(blue));
+  preProcessImage();
+  await convertToSVG()
+}
+
+red.addEventListener('change', debounce(updateFilter, 250))
+green.addEventListener('change', debounce(updateFilter, 250))
+blue.addEventListener('change', debounce(updateFilter, 250))
+
+posterize.addEventListener('change', async () => {
+  preProcessImage();
+  await convertToSVG()
+});
+
+turdsize.addEventListener('change', debounce(async () => {
+  await convertToSVG();
+}, 250));
+
 const init = async () => {
   canvas.width = inputImage.naturalWidth;
   canvas.height = inputImage.naturalHeight;
+  updateFilter();
   preProcessImage();
   try {
     await convertToSVG();
@@ -118,7 +161,3 @@ if (inputImage.complete) {
   inputImage.removeEventListener("load", init);
   init();
 }
-
-turdsize.addEventListener('input', debounce(async () => {
-  await convertToSVG();
-}, 250));

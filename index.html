@@ -18,7 +18,12 @@
       <button class="open" type="button">Open image</button>
       <button class="save" type="button">Save SVG</button>
     </div>
-    <div class="preprocess"></div>
+    <div class="preprocess">
+      <div class="preprocess-input"><label>Posterize <input type="checkbox" class="posterize"></label></div>
+      <div class="preprocess-input"><label>Red <input class="posterize-r" type="range" min=1 max=10 value=5 /></label></div>
+      <div class="preprocess-input"><label>Green <input class="posterize-g" type="range" min=1 max=10 value=5/></label></div>
+      <div class="preprocess-input"><label>Blue <input class="posterize-b" type="range" min=1 max=10 value=5/></label></div>
+    </div>
     <div>
       <label>
       Turdsize
@@ -33,5 +38,10 @@
       <canvas></canvas>
       <output></output>
     </div>
+    <svg class="filter"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+    <filter id="posterize"></filter>
+    </svg>
   </body>
 </html>
