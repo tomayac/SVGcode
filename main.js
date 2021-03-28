@@ -3,9 +3,9 @@ import { fileOpen, fileSave } from 'browser-fs-access';
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const fileOpenButton = document.querySelector('.open');
-const fileSaveButton = document.querySelector('.save');
+const saveImageButton = document.querySelector('.save-image');
+const saveSVGButton = document.querySelector('.save-svg');
 const posterize = document.querySelector('.posterize');
-const turdsize = document.querySelector('.turdsize');
 const preprocess = document.querySelector('.preprocess');
 const filterXML = document.querySelector('#posterize');
 const inputImage = document.querySelector('img');
@@ -31,6 +31,20 @@ const posterizeComponents = {
   [COLORS.red]: { unit: null, initial: 5, min: 1, max: 10 },
   [COLORS.green]: { unit: null, initial: 5, min: 1, max: 10 },
   [COLORS.blue]: { unit: null, initial: 5, min: 1, max: 10 },
+};
+
+const SCALE = {
+  scale: 'scale',
+};
+
+const scale = {
+  [SCALE.scale]: { unit: null, initial: 100, min: 1, max: 200 },
+};
+
+const POTRACE = { turdsize: 'turdsize' };
+
+const potraceOptions = {
+  [POTRACE.turdsize]: { unit: null, initial: 2, min: 1, max: 1000 },
 };
 
 const filterInputs = {};
@@ -83,6 +97,13 @@ const createFilter = (filter, props) => {
         await updateFilter();
       }, 250),
     );
+  } else if (Object.keys(POTRACE).includes(filter)) {
+    input.addEventListener(
+      'change',
+      debounce(async () => {
+        await convertToSVG();
+      }, 250),
+    );
   } else {
     input.addEventListener(
       'change',
@@ -110,7 +131,13 @@ const createFilter = (filter, props) => {
 for (const [filter, props] of Object.entries(posterizeComponents)) {
   createFilter(filter, props);
 }
+for (const [filter, props] of Object.entries(scale)) {
+  createFilter(filter, props);
+}
 for (const [filter, props] of Object.entries(filters)) {
+  createFilter(filter, props);
+}
+for (const [filter, props] of Object.entries(potraceOptions)) {
   createFilter(filter, props);
 }
 
@@ -135,9 +162,22 @@ const getFilterString = () => {
 };
 
 const preProcessImage = () => {
+  const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
+  canvas.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
+  canvas.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.filter = getFilterString();
-  ctx.drawImage(inputImage, 0, 0);
+  ctx.drawImage(
+    inputImage,
+    0,
+    0,
+    inputImage.naturalWidth,
+    inputImage.naturalHeight,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
 };
 
 const getRange = (input) => {
@@ -171,6 +211,14 @@ turdsize.addEventListener(
   }, 250),
 );
 
+const canvasToBlob = async (mimeType = 'image/png') => {
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob);
+    }, mimeType);
+  });
+};
+
 fileOpenButton.addEventListener('click', async () => {
   try {
     const files = await fileOpen({
@@ -188,9 +236,25 @@ fileOpenButton.addEventListener('click', async () => {
   }
 });
 
+saveImageButton.addEventListener('click', async () => {
+  try {
+    const blob = await canvasToBlob();
+    await fileSave(blob, { fileName: '', description: 'PNG file' });
+  } catch (err) {
+    console.error(err.name, err.message);
+  }
+});
+
+saveSVGButton.addEventListener('click', async () => {
+  try {
+    const blob = new Blob([outputSVG.innerHTML], { type: 'image/svg+xml' });
+    await fileSave(blob, { fileName: '', description: 'SVG file' });
+  } catch (err) {
+    console.error(err.name, err.message);
+  }
+});
+
 const init = async () => {
-  canvas.width = inputImage.naturalWidth;
-  canvas.height = inputImage.naturalHeight;
   updateFilter();
   preProcessImage();
   try {
