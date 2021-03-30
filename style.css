@@ -37,3 +37,7 @@ svg {
 .filter {
   display: none;
 }
+
+.wrapper {
+  display: flex;
+}

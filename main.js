@@ -1,15 +1,23 @@
-import { fileOpen, fileSave } from 'browser-fs-access';
+import { fileOpen, fileSave, supported } from 'browser-fs-access';
 
-const canvas = document.querySelector('canvas');
+const canvas = document.querySelector('.canvas-main');
+const canvasRed = document.querySelector('.canvas-red');
+const canvasGreen = document.querySelector('.canvas-green');
+const canvasBlue = document.querySelector('.canvas-blue');
 const ctx = canvas.getContext('2d');
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');
 const saveSVGButton = document.querySelector('.save-svg');
+const dropArea = document.querySelector('.drop');
 const posterize = document.querySelector('.posterize');
 const preprocess = document.querySelector('.preprocess');
-const filterXML = document.querySelector('#posterize');
+const posterizeFilterXML = document.querySelector('#posterize');
+const rgbSplitFilterXML = document.querySelector('#rgb-split');
 const inputImage = document.querySelector('img');
-const outputSVG = document.querySelector('output');
+const outputSVG = document.querySelector('.output-main');
+const outputSVGRed = document.querySelector('.output-red');
+const outputSVGGreen = document.querySelector('.output-green');
+const outputSVGBlue = document.querySelector('.output-blue');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -56,6 +64,35 @@ const getPosterizeFilter = (r, g, b) => {
       <feFuncG type="discrete" tableValues="${g.join(' ')}" />
       <feFuncB type="discrete" tableValues="${b.join(' ')}" />
     </feComponentTransfer>`;
+};
+
+const getRGBSplitFilter = (channel) => {
+  let rgb;
+  switch (channel) {
+    case 'red':
+      rgb = `
+        1.0 0.0 0.0 0.0 0.0
+        0.0 0.0 0.0 0.0 0.0
+        0.0 0.0 0.0 0.0 0.0`;
+      break;
+    case 'green':
+      rgb = `
+        0.1 0.0 0.0 0.0 0.0
+        0.0 1.0 0.0 0.0 0.0
+        0.0 0.0 0.0 0.0 0.0`;
+      break;
+    case 'blue':
+      rgb = `
+        0.0 0.0 0.0 0.0 0.0
+        0.0 0.0 0.0 0.0 0.0
+        0.0 0.0 1.0 0.0 0.0`;
+      break;
+  }
+  return `
+    <feColorMatrix
+      type="matrix"
+      values="${rgb}
+              0 0 0 1 0" />`;
 };
 
 const debounce = (func, wait) => {
@@ -147,6 +184,26 @@ const convertToSVG = async () => {
   };
   const svg = await loadFromCanvas(canvas, config);
   outputSVG.innerHTML = svg;
+  Object.keys(COLORS).forEach(async (channel) => {
+    let canvas;
+    let outputSVG;
+    switch (channel) {
+      case 'red':
+        canvas = canvasRed;
+        outputSVG = outputSVGRed;
+        break;
+      case 'green':
+        canvas = canvasGreen;
+        outputSVG = outputSVGGreen;
+        break;
+      case 'blue':
+        canvas = canvasBlue;
+        outputSVG = outputSVGBlue;
+        break;
+    }
+    const svg = await loadFromCanvas(canvas, config);
+    outputSVG.innerHTML = svg.replace('fill="#000000"', `fill="${channel}"`);
+  });
 };
 
 const getFilterString = () => {
@@ -161,7 +218,7 @@ const getFilterString = () => {
   return string.trim() || 'none';
 };
 
-const preProcessImage = () => {
+const preProcessMainCanvas = () => {
   const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
   canvas.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
   canvas.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
@@ -180,6 +237,48 @@ const preProcessImage = () => {
   );
 };
 
+const preProcessRGBCanvas = (channel) => {
+  const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
+  let canvas;
+  switch (channel) {
+    case 'red':
+      canvas = canvasRed;
+      break;
+    case 'green':
+      canvas = canvasGreen;
+      break;
+    case 'blue':
+      canvas = canvasBlue;
+      break;
+  }
+  canvas.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
+  canvas.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  rgbSplitFilterXML.innerHTML = getRGBSplitFilter(channel);
+  ctx.filter = `url("#rgb-split") ${
+    getFilterString() === 'none' ? '' : getFilterString()
+  }`;
+  ctx.drawImage(
+    inputImage,
+    0,
+    0,
+    inputImage.naturalWidth,
+    inputImage.naturalHeight,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
+};
+
+const preProcessImage = () => {
+  preProcessMainCanvas();
+  Object.keys(COLORS).forEach((channel) => {
+    preProcessRGBCanvas(channel);
+  });
+};
+
 const getRange = (input) => {
   const value = parseInt(input.value, 10);
   const array = [];
@@ -190,7 +289,7 @@ const getRange = (input) => {
 };
 
 const updateFilter = async () => {
-  filterXML.innerHTML = getPosterizeFilter(
+  posterizeFilterXML.innerHTML = getPosterizeFilter(
     getRange(filterInputs[COLORS.red]),
     getRange(filterInputs[COLORS.green]),
     getRange(filterInputs[COLORS.blue]),
@@ -233,6 +332,33 @@ fileOpenButton.addEventListener('click', async () => {
     });
   } catch (err) {
     console.error(err.name, err.message);
+  }
+});
+
+dropArea.addEventListener('dragover', (event) => {
+  // Prevent navigation.
+  event.preventDefault();
+  // Style the drag-and-drop as a "copy file" operation.
+  event.dataTransfer.dropEffect = 'copy';
+});
+
+dropArea.addEventListener('drop', async (event) => {
+  // Prevent navigation.
+  event.preventDefault();
+  const item = event.dataTransfer.items[0];
+  if (item.kind === 'file') {
+    if (supported) {
+      const entry = await item.getAsFileSystemHandle();
+      if (entry.kind === 'directory') {
+        return;
+      } else {
+        const file = await entry.getFile();
+        inputImage.src = URL.createObjectURL(file);
+      }
+    } else {
+      const file = item.getAsFile();
+      inputImage.src = URL.createObjectURL(file);
+    }
   }
 });
 
