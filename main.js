@@ -1,10 +1,11 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 
 const canvas = document.querySelector('.canvas-main');
+const ctx = canvas.getContext('2d');
 const canvasRed = document.querySelector('.canvas-red');
 const canvasGreen = document.querySelector('.canvas-green');
 const canvasBlue = document.querySelector('.canvas-blue');
-const ctx = canvas.getContext('2d');
+const canvasAlpha = document.querySelector('.canvas-alpha');
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');
 const saveSVGButton = document.querySelector('.save-svg');
@@ -18,6 +19,7 @@ const outputSVG = document.querySelector('.output-main');
 const outputSVGRed = document.querySelector('.output-red');
 const outputSVGGreen = document.querySelector('.output-green');
 const outputSVGBlue = document.querySelector('.output-blue');
+const outputSVGAlpha = document.querySelector('.output-alpha');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -33,12 +35,13 @@ const filters = {
   sepia: { unit: PERCENT, initial: 0, min: 0, max: 100 },
 };
 
-const COLORS = { red: 'red', green: 'green', blue: 'blue' };
+const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 
 const posterizeComponents = {
   [COLORS.red]: { unit: null, initial: 5, min: 1, max: 10 },
   [COLORS.green]: { unit: null, initial: 5, min: 1, max: 10 },
   [COLORS.blue]: { unit: null, initial: 5, min: 1, max: 10 },
+  [COLORS.alpha]: { unit: null, initial: 5, min: 1, max: 10 },
 };
 
 const SCALE = {
@@ -57,12 +60,13 @@ const potraceOptions = {
 
 const filterInputs = {};
 
-const getPosterizeFilter = (r, g, b) => {
+const getPosterizeFilter = (r, g, b, a) => {
   return `
     <feComponentTransfer>
       <feFuncR type="discrete" tableValues="${r.join(' ')}" />
       <feFuncG type="discrete" tableValues="${g.join(' ')}" />
       <feFuncB type="discrete" tableValues="${b.join(' ')}" />
+      <feFuncA type="discrete" tableValues="${a.join(' ')}" />
     </feComponentTransfer>`;
 };
 
@@ -86,6 +90,12 @@ const getRGBSplitFilter = (channel) => {
         0.0 0.0 0.0 0.0 0.0
         0.0 0.0 0.0 0.0 0.0
         0.0 0.0 1.0 0.0 0.0`;
+      break;
+    case 'alpha':
+      rgb = `
+        0.0 0.0 0.0 0.0 0.0
+        0.0 0.0 0.0 0.0 0.0
+        0.0 0.0 0.0 0.0 0.0`;
       break;
   }
   return `
@@ -178,6 +188,24 @@ for (const [filter, props] of Object.entries(potraceOptions)) {
   createFilter(filter, props);
 }
 
+const extractColors = () => {
+  const colors = {};
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  for (let i = 0; i < imageData.data.length; i += 4) {
+    const r = imageData.data[i + 0];
+    const g = imageData.data[i + 1];
+    const b = imageData.data[i + 2];
+    const a = imageData.data[i + 3];
+    const rgba = `${r},${g},${b},${a}`;
+    if (colors[rgba]) {
+      colors[rgba] = colors[rgba] + 1;
+    } else {
+      colors[rgba] = 1;
+    }
+  }
+  console.log(colors);
+};
+
 const convertToSVG = async () => {
   const config = {
     turdsize: parseInt(turdsize.value, 10),
@@ -199,6 +227,10 @@ const convertToSVG = async () => {
       case 'blue':
         canvas = canvasBlue;
         outputSVG = outputSVGBlue;
+        break;
+      case 'alpha':
+        canvas = canvasAlpha;
+        outputSVG = outputSVGAlpha;
         break;
     }
     const svg = await loadFromCanvas(canvas, config);
@@ -235,6 +267,7 @@ const preProcessMainCanvas = () => {
     canvas.width,
     canvas.height,
   );
+  extractColors();
 };
 
 const preProcessRGBCanvas = (channel) => {
@@ -249,6 +282,9 @@ const preProcessRGBCanvas = (channel) => {
       break;
     case 'blue':
       canvas = canvasBlue;
+      break;
+    case 'alpha':
+      canvas = canvasAlpha;
       break;
   }
   canvas.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
@@ -293,6 +329,7 @@ const updateFilter = async () => {
     getRange(filterInputs[COLORS.red]),
     getRange(filterInputs[COLORS.green]),
     getRange(filterInputs[COLORS.blue]),
+    getRange(filterInputs[COLORS.alpha]),
   );
   preProcessImage();
   await convertToSVG();
