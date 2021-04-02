@@ -1,19 +1,31 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 
-const canvasMain = document.querySelector('.canvas-main');
-const ctx = canvasMain.getContext('2d', { desynchronized: true });
-ctx.imageSmoothingEnabled = false;
-const canvasChannel = document.querySelector('.canvas-channel');
+const canvasMain = /*'OffscreenCanvas' in window ? new OffscreenCanvas(1, 1) : */ document.querySelector(
+  '.canvas-main',
+);
+const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
+ctxMain.imageSmoothingEnabled = false;
+
+const canvasChannel =
+  'OffscreenCanvas' in window
+    ? new OffscreenCanvas(1, 1)
+    : document.querySelector('.canvas-channel');
+const ctxChannel = canvasChannel.getContext('2d', { desynchronized: true });
+ctxChannel.imageSmoothingEnabled = false;
+
+const inputImage = document.querySelector('img');
+const outputBlackWhite = document.querySelector('.output-main');
+const outputColor = document.querySelector('.output-channel');
+
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');
 const saveSVGButton = document.querySelector('.save-svg');
+
 const dropArea = document.querySelector('.drop');
+
 const posterize = document.querySelector('.posterize');
 const preprocess = document.querySelector('.preprocess');
 const posterizeFilterXML = document.querySelector('#posterize');
-const inputImage = document.querySelector('img');
-const outputSVG = document.querySelector('.output-main');
-const outputSVGChannel = document.querySelector('.output-channel');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -76,7 +88,7 @@ const debounce = (func, wait) => {
   };
 };
 
-const createFilter = (filter, props) => {
+const createControls = (filter, props) => {
   const { unit, min, max, initial } = props;
   const div = document.createElement('div');
   div.classList.add('preprocess-input');
@@ -135,21 +147,26 @@ const createFilter = (filter, props) => {
 };
 
 for (const [filter, props] of Object.entries(posterizeComponents)) {
-  createFilter(filter, props);
+  createControls(filter, props);
 }
 for (const [filter, props] of Object.entries(scale)) {
-  createFilter(filter, props);
+  createControls(filter, props);
 }
 for (const [filter, props] of Object.entries(filters)) {
-  createFilter(filter, props);
+  createControls(filter, props);
 }
 for (const [filter, props] of Object.entries(potraceOptions)) {
-  createFilter(filter, props);
+  createControls(filter, props);
 }
 
 const extractColors = () => {
   const colors = {};
-  const imageData = ctx.getImageData(0, 0, canvasMain.width, canvasMain.height);
+  const imageData = ctxMain.getImageData(
+    0,
+    0,
+    canvasMain.width,
+    canvasMain.height,
+  );
   for (let i = 0; i < imageData.data.length; i += 4) {
     const r = imageData.data[i + 0];
     const g = imageData.data[i + 1];
@@ -170,7 +187,7 @@ const convertToSVG = async () => {
     turdsize: parseInt(turdsize.value, 10),
   };
   const svg = await loadFromCanvas(canvasMain, config);
-  outputSVG.innerHTML = svg;
+  outputBlackWhite.innerHTML = svg;
 };
 
 const getFilterString = () => {
@@ -186,12 +203,15 @@ const getFilterString = () => {
 };
 
 const preProcessMainCanvas = () => {
+  console.log('preProcessMainCanvas');
   const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
   canvasMain.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
   canvasMain.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
-  ctx.clearRect(0, 0, canvasMain.width, canvasMain.height);
-  ctx.filter = getFilterString();
-  ctx.drawImage(
+  canvasChannel.width = canvasMain.width;
+  canvasChannel.height = canvasMain.height;
+  ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
+  ctxMain.filter = getFilterString();
+  ctxMain.drawImage(
     inputImage,
     0,
     0,
@@ -205,56 +225,66 @@ const preProcessMainCanvas = () => {
 };
 
 const preProcessImage = async () => {
+  console.log('preProcessImage');
   preProcessMainCanvas();
-  const ctx = canvasChannel.getContext('2d', { desynchronized: true });
-  canvasChannel.width = canvasMain.width;
-  canvasChannel.height = canvasMain.height;
-  ctx.clearRect(0, 0, canvasChannel.width, canvasChannel.height);
+
   const { colors, imageData } = extractColors();
-  outputSVGChannel.innerHTML = '';
+  ctxChannel.clearRect(0, 0, canvasChannel.width, canvasChannel.height);
+
   let prefix = '';
   let suffix = '';
   let svgString = '';
-  for (const [color, occurrences] of Object.entries(colors)) {
-    if (occurrences < 100) {
-      continue;
-    }
-    const newImageData = new ImageData(canvasMain.width, canvasMain.height);
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      const r = imageData.data[i + 0];
-      const g = imageData.data[i + 1];
-      const b = imageData.data[i + 2];
-      const a = imageData.data[i + 3];
-      const rgba = `${r},${g},${b},${a}`;
-      if (rgba === color) {
-        newImageData.data[i + 0] = 0;
-        newImageData.data[i + 1] = 0;
-        newImageData.data[i + 2] = 0;
-        newImageData.data[i + 3] = 255;
-      } else {
-        newImageData.data[i + 0] = 0;
-        newImageData.data[i + 1] = 0;
-        newImageData.data[i + 2] = 0;
-        newImageData.data[i + 3] = 0;
+
+  const imageDataObjects = {};
+
+  for (let i = 0; i < imageData.data.length; i += 4) {
+    for (const [color, occurrences] of Object.entries(colors)) {
+      const [red, green, blue, alpha] = color.split(',');
+      //console.log(color, '=>', occurrences)
+      if (!imageDataObjects[color]) {
+        imageDataObjects[color] = new ImageData(
+          canvasMain.width,
+          canvasMain.height,
+        );
       }
+      const r = imageData.data[i + 0];
+      if (r !== red) {
+        continue;
+      }
+      const g = imageData.data[i + 1];
+      if (g !== green) {
+        continue;
+      }
+      const b = imageData.data[i + 2];
+      if (b !== blue) {
+        continue;
+      }
+      const a = imageData.data[i + 3];
+      if (a !== alpha) {
+        continue;
+      }
+      imageDataObjects[color].data[i + 0] = 0;
+      imageDataObjects[color].data[i + 1] = 0;
+      imageDataObjects[color].data[i + 2] = 0;
+      imageDataObjects[color].data[i + 3] = 255;
     }
-    ctx.putImageData(newImageData, 0, 0);
+  }
+  for (const [color, occurrences] of Object.entries(colors)) {
+    ctxChannel.putImageData(imageDataObjects[color], 0, 0);
     const config = {
       turdsize: parseInt(turdsize.value, 10),
     };
     let svg = await loadFromCanvas(canvasChannel, config);
+    console.log(svg);
     svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
     if (!prefix) {
       prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
       suffix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');
-      svg = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
-      svgString += prefix + svg;
-    } else {
-      svg = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
-      svgString += svg;
+      svgString = prefix;
     }
+    svgString += svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
   }
-  outputSVGChannel.innerHTML = svgString + suffix;
+  outputColor.innerHTML = svgString + suffix;
 };
 
 const getRange = (input) => {
@@ -285,6 +315,7 @@ posterize.addEventListener('change', async () => {
 turdsize.addEventListener(
   'change',
   debounce(async () => {
+    preProcessImage();
     await convertToSVG();
   }, 250),
 );
@@ -352,7 +383,9 @@ saveImageButton.addEventListener('click', async () => {
 
 saveSVGButton.addEventListener('click', async () => {
   try {
-    const blob = new Blob([outputSVG.innerHTML], { type: 'image/svg+xml' });
+    const blob = new Blob([outputBlackWhite.innerHTML], {
+      type: 'image/svg+xml',
+    });
     await fileSave(blob, { fileName: '', description: 'SVG file' });
   } catch (err) {
     console.error(err.name, err.message);
@@ -360,16 +393,23 @@ saveSVGButton.addEventListener('click', async () => {
 });
 
 const init = async () => {
+  console.log('Entering Init');
   updateFilter();
+  /*
+  console.log('Done Update filter')
   preProcessImage();
+  console.log('DOne preprocess ')
   try {
     await convertToSVG();
+    console.log('done convert')
   } catch (err) {
     console.error(err.name, err.message);
-  }
+  }*/
 };
 
-inputImage.addEventListener('load', init);
+inputImage.addEventListener('load', () => {
+  init();
+});
 
 if (inputImage.complete) {
   inputImage.dispatchEvent(new Event('load'));
