@@ -20,7 +20,7 @@ img,
 canvas,
 svg {
   outline: solid 1px CanvasText;
-  width: calc((100% / 3.25));
+  width: calc((100% / 2.25));
   height: auto;
   margin: 0;
   padding: 0;

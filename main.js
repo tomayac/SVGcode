@@ -1,11 +1,9 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 
-const canvas = document.querySelector('.canvas-main');
-const ctx = canvas.getContext('2d');
-const canvasRed = document.querySelector('.canvas-red');
-const canvasGreen = document.querySelector('.canvas-green');
-const canvasBlue = document.querySelector('.canvas-blue');
-const canvasAlpha = document.querySelector('.canvas-alpha');
+const canvasMain = document.querySelector('.canvas-main');
+const ctx = canvasMain.getContext('2d', { desynchronized: true });
+ctx.imageSmoothingEnabled = false;
+const canvasChannel = document.querySelector('.canvas-channel');
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');
 const saveSVGButton = document.querySelector('.save-svg');
@@ -13,13 +11,9 @@ const dropArea = document.querySelector('.drop');
 const posterize = document.querySelector('.posterize');
 const preprocess = document.querySelector('.preprocess');
 const posterizeFilterXML = document.querySelector('#posterize');
-const rgbSplitFilterXML = document.querySelector('#rgb-split');
 const inputImage = document.querySelector('img');
 const outputSVG = document.querySelector('.output-main');
-const outputSVGRed = document.querySelector('.output-red');
-const outputSVGGreen = document.querySelector('.output-green');
-const outputSVGBlue = document.querySelector('.output-blue');
-const outputSVGAlpha = document.querySelector('.output-alpha');
+const outputSVGChannel = document.querySelector('.output-channel');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -38,10 +32,10 @@ const filters = {
 const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 
 const posterizeComponents = {
-  [COLORS.red]: { unit: null, initial: 5, min: 1, max: 10 },
-  [COLORS.green]: { unit: null, initial: 5, min: 1, max: 10 },
-  [COLORS.blue]: { unit: null, initial: 5, min: 1, max: 10 },
-  [COLORS.alpha]: { unit: null, initial: 5, min: 1, max: 10 },
+  [COLORS.red]: { unit: null, initial: 1, min: 1, max: 10 },
+  [COLORS.green]: { unit: null, initial: 1, min: 1, max: 10 },
+  [COLORS.blue]: { unit: null, initial: 1, min: 1, max: 10 },
+  [COLORS.alpha]: { unit: null, initial: 1, min: 1, max: 10 },
 };
 
 const SCALE = {
@@ -68,41 +62,6 @@ const getPosterizeFilter = (r, g, b, a) => {
       <feFuncB type="discrete" tableValues="${b.join(' ')}" />
       <feFuncA type="discrete" tableValues="${a.join(' ')}" />
     </feComponentTransfer>`;
-};
-
-const getRGBSplitFilter = (channel) => {
-  let rgb;
-  switch (channel) {
-    case 'red':
-      rgb = `
-        1.0 0.0 0.0 0.0 0.0
-        0.0 0.0 0.0 0.0 0.0
-        0.0 0.0 0.0 0.0 0.0`;
-      break;
-    case 'green':
-      rgb = `
-        0.1 0.0 0.0 0.0 0.0
-        0.0 1.0 0.0 0.0 0.0
-        0.0 0.0 0.0 0.0 0.0`;
-      break;
-    case 'blue':
-      rgb = `
-        0.0 0.0 0.0 0.0 0.0
-        0.0 0.0 0.0 0.0 0.0
-        0.0 0.0 1.0 0.0 0.0`;
-      break;
-    case 'alpha':
-      rgb = `
-        0.0 0.0 0.0 0.0 0.0
-        0.0 0.0 0.0 0.0 0.0
-        0.0 0.0 0.0 0.0 0.0`;
-      break;
-  }
-  return `
-    <feColorMatrix
-      type="matrix"
-      values="${rgb}
-              0 0 0 1 0" />`;
 };
 
 const debounce = (func, wait) => {
@@ -190,7 +149,7 @@ for (const [filter, props] of Object.entries(potraceOptions)) {
 
 const extractColors = () => {
   const colors = {};
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const imageData = ctx.getImageData(0, 0, canvasMain.width, canvasMain.height);
   for (let i = 0; i < imageData.data.length; i += 4) {
     const r = imageData.data[i + 0];
     const g = imageData.data[i + 1];
@@ -198,44 +157,20 @@ const extractColors = () => {
     const a = imageData.data[i + 3];
     const rgba = `${r},${g},${b},${a}`;
     if (colors[rgba]) {
-      colors[rgba] = colors[rgba] + 1;
+      colors[rgba] += 1;
     } else {
       colors[rgba] = 1;
     }
   }
-  console.log(colors);
+  return { colors, imageData };
 };
 
 const convertToSVG = async () => {
   const config = {
     turdsize: parseInt(turdsize.value, 10),
   };
-  const svg = await loadFromCanvas(canvas, config);
+  const svg = await loadFromCanvas(canvasMain, config);
   outputSVG.innerHTML = svg;
-  Object.keys(COLORS).forEach(async (channel) => {
-    let canvas;
-    let outputSVG;
-    switch (channel) {
-      case 'red':
-        canvas = canvasRed;
-        outputSVG = outputSVGRed;
-        break;
-      case 'green':
-        canvas = canvasGreen;
-        outputSVG = outputSVGGreen;
-        break;
-      case 'blue':
-        canvas = canvasBlue;
-        outputSVG = outputSVGBlue;
-        break;
-      case 'alpha':
-        canvas = canvasAlpha;
-        outputSVG = outputSVGAlpha;
-        break;
-    }
-    const svg = await loadFromCanvas(canvas, config);
-    outputSVG.innerHTML = svg.replace('fill="#000000"', `fill="${channel}"`);
-  });
 };
 
 const getFilterString = () => {
@@ -252,9 +187,9 @@ const getFilterString = () => {
 
 const preProcessMainCanvas = () => {
   const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
-  canvas.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
-  canvas.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  canvasMain.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
+  canvasMain.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
+  ctx.clearRect(0, 0, canvasMain.width, canvasMain.height);
   ctx.filter = getFilterString();
   ctx.drawImage(
     inputImage,
@@ -264,55 +199,62 @@ const preProcessMainCanvas = () => {
     inputImage.naturalHeight,
     0,
     0,
-    canvas.width,
-    canvas.height,
-  );
-  extractColors();
-};
-
-const preProcessRGBCanvas = (channel) => {
-  const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
-  let canvas;
-  switch (channel) {
-    case 'red':
-      canvas = canvasRed;
-      break;
-    case 'green':
-      canvas = canvasGreen;
-      break;
-    case 'blue':
-      canvas = canvasBlue;
-      break;
-    case 'alpha':
-      canvas = canvasAlpha;
-      break;
-  }
-  canvas.width = Math.ceil(inputImage.naturalWidth * scaleFactor);
-  canvas.height = Math.ceil(inputImage.naturalHeight * scaleFactor);
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  rgbSplitFilterXML.innerHTML = getRGBSplitFilter(channel);
-  ctx.filter = `url("#rgb-split") ${
-    getFilterString() === 'none' ? '' : getFilterString()
-  }`;
-  ctx.drawImage(
-    inputImage,
-    0,
-    0,
-    inputImage.naturalWidth,
-    inputImage.naturalHeight,
-    0,
-    0,
-    canvas.width,
-    canvas.height,
+    canvasMain.width,
+    canvasMain.height,
   );
 };
 
-const preProcessImage = () => {
+const preProcessImage = async () => {
   preProcessMainCanvas();
-  Object.keys(COLORS).forEach((channel) => {
-    preProcessRGBCanvas(channel);
-  });
+  const ctx = canvasChannel.getContext('2d', { desynchronized: true });
+  canvasChannel.width = canvasMain.width;
+  canvasChannel.height = canvasMain.height;
+  ctx.clearRect(0, 0, canvasChannel.width, canvasChannel.height);
+  const { colors, imageData } = extractColors();
+  outputSVGChannel.innerHTML = '';
+  let prefix = '';
+  let suffix = '';
+  let svgString = '';
+  for (const [color, occurrences] of Object.entries(colors)) {
+    if (occurrences < 100) {
+      continue;
+    }
+    const newImageData = new ImageData(canvasMain.width, canvasMain.height);
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      const r = imageData.data[i + 0];
+      const g = imageData.data[i + 1];
+      const b = imageData.data[i + 2];
+      const a = imageData.data[i + 3];
+      const rgba = `${r},${g},${b},${a}`;
+      if (rgba === color) {
+        newImageData.data[i + 0] = 0;
+        newImageData.data[i + 1] = 0;
+        newImageData.data[i + 2] = 0;
+        newImageData.data[i + 3] = 255;
+      } else {
+        newImageData.data[i + 0] = 0;
+        newImageData.data[i + 1] = 0;
+        newImageData.data[i + 2] = 0;
+        newImageData.data[i + 3] = 0;
+      }
+    }
+    ctx.putImageData(newImageData, 0, 0);
+    const config = {
+      turdsize: parseInt(turdsize.value, 10),
+    };
+    let svg = await loadFromCanvas(canvasChannel, config);
+    svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
+    if (!prefix) {
+      prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
+      suffix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');
+      svg = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
+      svgString += prefix + svg;
+    } else {
+      svg = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
+      svgString += svg;
+    }
+  }
+  outputSVGChannel.innerHTML = svgString + suffix;
 };
 
 const getRange = (input) => {
@@ -349,7 +291,7 @@ turdsize.addEventListener(
 
 const canvasToBlob = async (mimeType = 'image/png') => {
   return new Promise((resolve) => {
-    canvas.toBlob((blob) => {
+    canvasMain.toBlob((blob) => {
       resolve(blob);
     }, mimeType);
   });
