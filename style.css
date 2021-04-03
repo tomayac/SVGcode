@@ -27,11 +27,20 @@ svg {
 }
 
 svg {
-  background-color: Canvas;
+  background-color: #131313;
 }
 
 .preprocess-input {
   display: flex;
+}
+
+.drop {
+  width: 100%;
+  height: 5rem;
+  border: solid 0.25rem Highlight;
+  display: grid;
+  align-content: center;
+  justify-content: center;
 }
 
 .filter {

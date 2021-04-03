@@ -4037,7 +4037,4 @@ function wrapStart() {
   ]);
 }
 
-// export the functions in server env.
-if (typeof module !== 'undefined') {
-  module.exports = { loadFromCanvas, loadFromImageData };
-}
+export { loadFromCanvas, loadFromImageData };

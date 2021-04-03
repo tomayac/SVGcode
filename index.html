@@ -9,7 +9,6 @@
     <link rel="icon" type="image/svg" href="/favicon.svg" />
     <link rel="stylesheet" href="/style.css" />
 
-    <script src="/potrace.js"></script>
     <script src="/main.js" type="module"></script>
   </head>
   <body>
@@ -30,13 +29,16 @@
             >Posterize <input type="checkbox" class="posterize" checked
           /></label>
         </div>
+        <div class="preprocess-input">
+          <button type="button" class="reset-all">Reset all</button>
+        </div>
       </div>
       <div>
         <img crossorigin="anonymous" src="/favicon.svg" />
         <canvas class="canvas-main"></canvas>
         <output class="output-main"></output>
-        <canvas class="canvas-channel" hidden></canvas>
         <output class="output-channel"></output>
+        <canvas class="canvas-channel" hidden></canvas>
       </div>
     </div>
     <svg
