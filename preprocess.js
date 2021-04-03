@@ -3,7 +3,7 @@ import { inputImage, COLORS, SCALE } from './ui.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { getColorSVG } from './color.js';
 
-const canvasMain = /*'OffscreenCanvas' in window ? new OffscreenCanvas(1, 1) :*/ document.querySelector(
+const canvasMain = /* 'OffscreenCanvas' in window ? new OffscreenCanvas(1, 1) :*/ document.querySelector(
   '.canvas-main',
 );
 const ctxMain = canvasMain.getContext('2d', { desynchronized: true });

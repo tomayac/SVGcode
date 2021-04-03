@@ -38,7 +38,7 @@ const getColorSVG = async () => {
     turdsize: parseInt(filterInputs[POTRACE.turdsize].value, 10),
   };
 
-  for (let [color, occurrences] of Object.entries(colors)) {
+  for (const [color, occurrences] of Object.entries(colors)) {
     const imageData = new ImageData(canvasMain.width, canvasMain.height);
     imageData.data.fill(255);
     const len = occurrences.length;

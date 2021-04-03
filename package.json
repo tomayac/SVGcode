@@ -5,13 +5,30 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
+    "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/ --ignore-pattern potrace.js",
     "fix": "npx prettier . --write"
   },
-  "devDependencies": {
-    "prettier": "^2.2.1",
-    "vite": "^2.1.3"
-  },
   "dependencies": {
-    "browser-fs-access": "^0.16.0"
+    "browser-fs-access": "^0.16.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.1.0",
+    "prettier": "^2.2.1",
+    "vite": "^2.1.5"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "extends": [
+      "google",
+      "prettier"
+    ],
+    "rules": {
+      "valid-jsdoc": "off"
+    }
   }
 }
