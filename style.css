@@ -1,5 +1,6 @@
 :root {
   color-scheme: dark light;
+  --margin: 0.25rem;
 }
 
 *,
@@ -20,9 +21,8 @@ img,
 canvas,
 svg {
   outline: solid 1px CanvasText;
-  width: calc((100% / 2.25));
+  width: calc((100% / 2) - (2 * var(--margin)));
   height: auto;
-  margin: 0;
   padding: 0;
 }
 
@@ -32,15 +32,17 @@ svg {
 
 .preprocess-input {
   display: flex;
+  margin: var(--margin);
 }
 
 .drop {
   width: 100%;
   height: 5rem;
-  border: solid 0.25rem Highlight;
+  border: solid 0.25rem red;
   display: grid;
   align-content: center;
   justify-content: center;
+  margin: var(--margin);
 }
 
 .filter {
@@ -49,4 +51,6 @@ svg {
 
 .wrapper {
   display: flex;
+  padding: var(--margin);
+  gap: var(--margin);
 }
