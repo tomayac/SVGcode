@@ -45,9 +45,9 @@ const filters = {
 const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 
 const posterizeComponents = {
-  [COLORS.red]: { unit: null, initial: 1, min: 1, max: 10 },
-  [COLORS.green]: { unit: null, initial: 1, min: 1, max: 10 },
-  [COLORS.blue]: { unit: null, initial: 1, min: 1, max: 10 },
+  [COLORS.red]: { unit: null, initial: 5, min: 1, max: 10 },
+  [COLORS.green]: { unit: null, initial: 5, min: 1, max: 10 },
+  [COLORS.blue]: { unit: null, initial: 5, min: 1, max: 10 },
   [COLORS.alpha]: { unit: null, initial: 1, min: 1, max: 10 },
 };
 
@@ -147,18 +147,20 @@ const createControls = (filter, props) => {
   preprocessContainer.append(div);
 };
 
-for (const [filter, props] of Object.entries(posterizeComponents)) {
-  createControls(filter, props);
-}
-for (const [filter, props] of Object.entries(scale)) {
-  createControls(filter, props);
-}
-for (const [filter, props] of Object.entries(filters)) {
-  createControls(filter, props);
-}
-for (const [filter, props] of Object.entries(potraceOptions)) {
-  createControls(filter, props);
-}
+const initUI = () => {
+  for (const [filter, props] of Object.entries(posterizeComponents)) {
+    createControls(filter, props);
+  }
+  for (const [filter, props] of Object.entries(scale)) {
+    createControls(filter, props);
+  }
+  for (const [filter, props] of Object.entries(filters)) {
+    createControls(filter, props);
+  }
+  for (const [filter, props] of Object.entries(potraceOptions)) {
+    createControls(filter, props);
+  }
+};
 
 const extractColors = () => {
   const colors = {};
@@ -174,13 +176,13 @@ const extractColors = () => {
     const b = imageData.data[i + 2];
     const a = imageData.data[i + 3];
     const rgba = `${r},${g},${b},${a}`;
-    if (colors[rgba]) {
-      colors[rgba] += 1;
+    if (!colors[rgba]) {
+      colors[rgba] = [i];
     } else {
-      colors[rgba] = 1;
+      colors[rgba].push(i);
     }
   }
-  return { colors, imageData };
+  return colors;
 };
 
 const convertToSVG = async () => {
@@ -229,55 +231,35 @@ const preProcessImage = async () => {
   console.log('preProcessImage');
   preProcessMainCanvas();
 
-  const { colors, imageData } = extractColors();
-  ctxChannel.fillStyle = 'rgba(0,0,0,1)';
-  ctxChannel.fillRect(0, 0, canvasChannel.width, canvasChannel.height);
+  const colors = extractColors();
 
   let prefix = '';
   let suffix = '';
   let svgString = '';
+  const config = {
+    turdsize: parseInt(turdsize.value, 10),
+  };
 
-  const imageDataObjects = {};
-
-  for (let i = 0; i < imageData.data.length; i += 4) {
-    for (const [color, occurrences] of Object.entries(colors)) {
-      const [red, green, blue, alpha] = color.split(',').map(Number);
-      if (!imageDataObjects[color]) {
-        imageDataObjects[color] = new ImageData(
-          canvasMain.width,
-          canvasMain.height,
-        );
-      }
-      const r = imageData.data[i + 0];
-      if (r !== red) {
-        continue;
-      }
-      const g = imageData.data[i + 1];
-      if (g !== green) {
-        continue;
-      }
-      const b = imageData.data[i + 2];
-      if (b !== blue) {
-        continue;
-      }
-      const a = imageData.data[i + 3];
-      if (a !== alpha) {
-        continue;
-      }
-      imageDataObjects[color].data[i + 0] = 0;
-      imageDataObjects[color].data[i + 1] = 0;
-      imageDataObjects[color].data[i + 2] = 0;
-      imageDataObjects[color].data[i + 3] = 255;
+  for (let [color, occurrences] of Object.entries(colors)) {
+    const imageData = new ImageData(
+      canvasMain.width,
+      canvasMain.height,
+    );
+    imageData.data.fill(255);
+    const len = occurrences.length;
+    if (len <= config.turdsize) {
+      continue;
     }
-  }
-  for (const [color, occurrences] of Object.entries(colors)) {
-    ctxChannel.putImageData(imageDataObjects[color], 0, 0);
-    const config = {
-      turdsize: parseInt(turdsize.value, 10),
-    };
+    for (let i = 0; i < len; i++) {
+      const location = occurrences[i];
+      imageData.data[location + 0] = 0;
+      imageData.data[location + 1] = 0;
+      imageData.data[location + 2] = 0;
+      imageData.data[location + 3] = 255;
+    }
+    ctxChannel.putImageData(imageData, 0, 0);
     let svg = await loadFromCanvas(canvasChannel, config);
-    console.log(svg);
-    svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
+    svg = svg.replace('fill="#000000"', `fill="rgba(${color})" stroke="rgba(${color})"`);
     if (!prefix) {
       prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
       suffix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');
@@ -313,17 +295,9 @@ posterizeCheckbox.addEventListener('change', async () => {
   await convertToSVG();
 });
 
-turdsize.addEventListener(
-  'change',
-  debounce(async () => {
-    preProcessImage();
-    await convertToSVG();
-  }, 250),
-);
-
-const canvasToBlob = async (mimeType = 'image/png') => {
+const canvasToBlob = async (canvas, mimeType = 'image/png') => {
   return new Promise((resolve) => {
-    canvasMain.toBlob((blob) => {
+    canvas.toBlob((blob) => {
       resolve(blob);
     }, mimeType);
   });
@@ -331,16 +305,13 @@ const canvasToBlob = async (mimeType = 'image/png') => {
 
 fileOpenButton.addEventListener('click', async () => {
   try {
-    const files = await fileOpen({
+    const file = await fileOpen({
       mimeTypes: ['image/*'],
       description: 'Image files',
-      multiple: true,
     });
-    files.forEach((file) => {
-      const blobURL = URL.createObjectURL(file);
-      inputImage.src = blobURL;
-      inputImage.dispatchEvent(new Event('load'));
-    });
+    const blobURL = URL.createObjectURL(file);
+    inputImage.src = blobURL;
+    inputImage.dispatchEvent(new Event('load'));
   } catch (err) {
     console.error(err.name, err.message);
   }
@@ -375,7 +346,7 @@ dropContainer.addEventListener('drop', async (event) => {
 
 saveImageButton.addEventListener('click', async () => {
   try {
-    const blob = await canvasToBlob();
+    const blob = await canvasToBlob(canvasMain);
     await fileSave(blob, { fileName: '', description: 'PNG file' });
   } catch (err) {
     console.error(err.name, err.message);
@@ -404,25 +375,19 @@ saveColorSVGButton.addEventListener('click', async () => {
   }
 });
 
-const init = async () => {
+const startProcessing = async () => {
   console.log('Entering Init');
   updateFilter();
-  /*
-  console.log('Done Update filter')
-  preProcessImage();
-  console.log('DOne preprocess ')
-  try {
-    await convertToSVG();
-    console.log('done convert')
-  } catch (err) {
-    console.error(err.name, err.message);
-  }*/
 };
 
-inputImage.addEventListener('load', () => {
-  init();
-});
-
-if (inputImage.complete) {
-  inputImage.dispatchEvent(new Event('load'));
-}
+(() => {
+  initUI();
+  inputImage.addEventListener('load', () => {
+    startProcessing();
+  });
+  if (inputImage.complete) {
+    setTimeout(() => {
+      inputImage.dispatchEvent(new Event('load'));
+    }, 1000);
+  }
+})();
