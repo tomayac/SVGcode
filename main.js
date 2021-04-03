@@ -1,6 +1,6 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 
-const canvasMain = /*'OffscreenCanvas' in window ? new OffscreenCanvas(1, 1) : */ document.querySelector(
+const canvasMain = /*'OffscreenCanvas' in window ? new OffscreenCanvas(1, 1) :*/ document.querySelector(
   '.canvas-main',
 );
 const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
@@ -19,12 +19,13 @@ const outputColor = document.querySelector('.output-channel');
 
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');
-const saveSVGButton = document.querySelector('.save-svg');
+const saveBlackWhiteSVGButton = document.querySelector('.save-bw-svg');
+const saveColorSVGButton = document.querySelector('.save-color-svg');
 
-const dropArea = document.querySelector('.drop');
+const dropContainer = document.querySelector('.drop');
 
-const posterize = document.querySelector('.posterize');
-const preprocess = document.querySelector('.preprocess');
+const posterizeCheckbox = document.querySelector('.posterize');
+const preprocessContainer = document.querySelector('.preprocess');
 const posterizeFilterXML = document.querySelector('#posterize');
 
 const PERCENT = '%';
@@ -143,7 +144,7 @@ const createControls = (filter, props) => {
   label.append(input);
   div.append(label);
   div.append(button);
-  preprocess.append(div);
+  preprocessContainer.append(div);
 };
 
 for (const [filter, props] of Object.entries(posterizeComponents)) {
@@ -191,7 +192,7 @@ const convertToSVG = async () => {
 };
 
 const getFilterString = () => {
-  let string = `${posterize.checked ? 'url("#posterize") ' : ''}`;
+  let string = `${posterizeCheckbox.checked ? 'url("#posterize") ' : ''}`;
   for (const [filter, props] of Object.entries(filters)) {
     const input = filterInputs[filter];
     if (props.initial === parseInt(input.value, 10)) {
@@ -229,7 +230,8 @@ const preProcessImage = async () => {
   preProcessMainCanvas();
 
   const { colors, imageData } = extractColors();
-  ctxChannel.clearRect(0, 0, canvasChannel.width, canvasChannel.height);
+  ctxChannel.fillStyle = 'rgba(0,0,0,1)';
+  ctxChannel.fillRect(0, 0, canvasChannel.width, canvasChannel.height);
 
   let prefix = '';
   let suffix = '';
@@ -239,8 +241,7 @@ const preProcessImage = async () => {
 
   for (let i = 0; i < imageData.data.length; i += 4) {
     for (const [color, occurrences] of Object.entries(colors)) {
-      const [red, green, blue, alpha] = color.split(',');
-      //console.log(color, '=>', occurrences)
+      const [red, green, blue, alpha] = color.split(',').map(Number);
       if (!imageDataObjects[color]) {
         imageDataObjects[color] = new ImageData(
           canvasMain.width,
@@ -307,7 +308,7 @@ const updateFilter = async () => {
   await convertToSVG();
 };
 
-posterize.addEventListener('change', async () => {
+posterizeCheckbox.addEventListener('change', async () => {
   preProcessImage();
   await convertToSVG();
 });
@@ -345,14 +346,14 @@ fileOpenButton.addEventListener('click', async () => {
   }
 });
 
-dropArea.addEventListener('dragover', (event) => {
+dropContainer.addEventListener('dragover', (event) => {
   // Prevent navigation.
   event.preventDefault();
   // Style the drag-and-drop as a "copy file" operation.
   event.dataTransfer.dropEffect = 'copy';
 });
 
-dropArea.addEventListener('drop', async (event) => {
+dropContainer.addEventListener('drop', async (event) => {
   // Prevent navigation.
   event.preventDefault();
   const item = event.dataTransfer.items[0];
@@ -381,9 +382,20 @@ saveImageButton.addEventListener('click', async () => {
   }
 });
 
-saveSVGButton.addEventListener('click', async () => {
+saveBlackWhiteSVGButton.addEventListener('click', async () => {
   try {
     const blob = new Blob([outputBlackWhite.innerHTML], {
+      type: 'image/svg+xml',
+    });
+    await fileSave(blob, { fileName: '', description: 'SVG file' });
+  } catch (err) {
+    console.error(err.name, err.message);
+  }
+});
+
+saveColorSVGButton.addEventListener('click', async () => {
+  try {
+    const blob = new Blob([outputColor.innerHTML], {
       type: 'image/svg+xml',
     });
     await fileSave(blob, { fileName: '', description: 'SVG file' });
