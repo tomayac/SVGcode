@@ -1,26 +1,17 @@
 import { filterInputs, POTRACE } from './ui.js';
-import { loadFromImageData } from './potrace.js';
-import { canvasMain, ctxMain } from './preprocess.js';
 
-const outputMonochrome = document.querySelector('.output-main');
+const monochromeSVGWorker = new Worker('monochromeworker.js');
 
-const convertToMonochromeSVG = async () => {
-  const config = {
-    turdsize: parseInt(filterInputs[POTRACE.turdsize].value, 10),
-  };
-  const imageData = ctxMain.getImageData(
-    0,
-    0,
-    canvasMain.width,
-    canvasMain.height,
-  );
-  const svg = await loadFromImageData(
-    imageData.data,
-    canvasMain.width,
-    canvasMain.height,
-    config,
-  );
-  outputMonochrome.innerHTML = svg;
+const convertToMonochromeSVG = async (imageData) => {
+  return new Promise(async (resolve, reject) => {
+    monochromeSVGWorker.onmessage = (e) => {
+      resolve(e.data);
+    };
+    const config = {
+      turdsize: parseInt(filterInputs[POTRACE.turdsize].value, 10),
+    };
+    monochromeSVGWorker.postMessage([imageData, config]);
+  });
 };
 
-export { convertToMonochromeSVG, outputMonochrome };
+export { convertToMonochromeSVG };

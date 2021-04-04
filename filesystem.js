@@ -1,8 +1,5 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
-import { canvasMain } from './preprocess.js';
 import { inputImage } from './ui.js';
-import { outputMonochrome } from './monochrome.js';
-import { outputColor } from './color.js';
 
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');

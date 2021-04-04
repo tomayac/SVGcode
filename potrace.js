@@ -4037,4 +4037,4 @@ function wrapStart() {
   ]);
 }
 
-export { loadFromCanvas, loadFromImageData };
+//export { loadFromCanvas, loadFromImageData };

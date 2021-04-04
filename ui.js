@@ -1,7 +1,7 @@
 import { debounce } from './util.js';
-import { startProcessing, preProcessMainCanvas } from './preprocess.js';
+import { startProcessing } from './preprocess.js';
 import { convertToMonochromeSVG } from './monochrome.js';
-import { getColorSVG } from './color.js';
+import { convertToColorSVG } from './color.js';
 import './filesystem.js';
 
 const preprocessContainer = document.querySelector('.preprocess');
@@ -11,15 +11,26 @@ const resetAllButton = document.querySelector('.reset-all');
 const PERCENT = '%';
 const DEGREES = 'deg';
 
+const FILTERS = {
+  brightness: 'brightness',
+  contrast: 'contrast',
+  grayscale: 'grayscale',
+  hueRotate: 'hue-rotate',
+  invert: 'invert',
+  opacity: 'opacity',
+  saturate: 'saturate',
+  sepia: 'sepia',
+};
+
 const filters = {
-  brightness: { unit: PERCENT, initial: 100, min: 0, max: 200 },
-  contrast: { unit: PERCENT, initial: 100, min: 0, max: 200 },
-  grayscale: { unit: PERCENT, initial: 0, min: 0, max: 100 },
-  'hue-rotate': { unit: DEGREES, initial: 0, min: 0, max: 360 },
-  invert: { unit: PERCENT, initial: 0, min: 0, max: 100 },
-  opacity: { unit: PERCENT, initial: 100, min: 0, max: 100 },
-  saturate: { unit: PERCENT, initial: 100, min: 0, max: 200 },
-  sepia: { unit: PERCENT, initial: 0, min: 0, max: 100 },
+  [FILTERS.brightness]: { unit: PERCENT, initial: 100, min: 0, max: 200 },
+  [FILTERS.contrast]: { unit: PERCENT, initial: 100, min: 0, max: 200 },
+  [FILTERS.grayscale]: { unit: PERCENT, initial: 0, min: 0, max: 100 },
+  [FILTERS.hueRotate]: { unit: DEGREES, initial: 0, min: 0, max: 360 },
+  [FILTERS.invert]: { unit: PERCENT, initial: 0, min: 0, max: 100 },
+  [FILTERS.opacity]: { unit: PERCENT, initial: 100, min: 0, max: 100 },
+  [FILTERS.saturate]: { unit: PERCENT, initial: 100, min: 0, max: 200 },
+  [FILTERS.sepia]: { unit: PERCENT, initial: 0, min: 0, max: 100 },
 };
 
 const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
@@ -78,16 +89,16 @@ const createControls = (filter, props) => {
       'change',
       debounce(async () => {
         await convertToMonochromeSVG();
-        await getColorSVG();
+        await convertToColorSVG();
       }, 250),
     );
-  } else {
+  } else if (Object.keys(FILTERS).includes(filter)) {
     input.addEventListener(
       'change',
       debounce(async () => {
-        preProcessMainCanvas();
+        await startProcessing();
         await convertToMonochromeSVG();
-        await getColorSVG();
+        await convertToColorSVG();
       }, 250),
     );
   }
