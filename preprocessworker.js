@@ -1,5 +1,5 @@
 const canvasMain = new OffscreenCanvas(1, 1);
-const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
+const ctxMain = canvasMain.getContext('2d');
 ctxMain.imageSmoothingEnabled = false;
 
 const preProcessMainCanvas = (

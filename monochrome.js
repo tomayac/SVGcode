@@ -1,9 +1,11 @@
 import { filterInputs, POTRACE } from './ui.js';
 
-const monochromeSVGWorker = new Worker('monochromeworker.js');
+const monochromeSVGWorker = new Worker('monochromeworker.js', {
+  type: 'module',
+});
 
 const convertToMonochromeSVG = async (imageData) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve) => {
     monochromeSVGWorker.onmessage = (e) => {
       resolve(e.data);
     };

@@ -1,12 +1,15 @@
-importScripts(['./potrace.js']);
+import { loadFromImageData } from 'potrace-wasm';
 
 const extractColors = (imageData) => {
   const colors = {};
   for (let i = 0; i < imageData.data.length; i += 4) {
-    const r = imageData.data[i + 0];
+    const r = imageData.data[i];
     const g = imageData.data[i + 1];
     const b = imageData.data[i + 2];
     const a = imageData.data[i + 3];
+    if (a === 0) {
+      continue;
+    }
     const rgba = `${r},${g},${b},${a}`;
     if (!colors[rgba]) {
       colors[rgba] = [i];
@@ -33,7 +36,7 @@ const convertToColorSVG = async (imageData, config) => {
     }
     for (let i = 0; i < len; i++) {
       const location = occurrences[i];
-      newImageData.data[location + 0] = 0;
+      newImageData.data[location] = 0;
       newImageData.data[location + 1] = 0;
       newImageData.data[location + 2] = 0;
       newImageData.data[location + 3] = 255;

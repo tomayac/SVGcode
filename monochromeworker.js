@@ -1,7 +1,7 @@
-importScripts(['./potrace.js']);
+import { loadFromImageData } from 'potrace-wasm';
 
 const convertToMonochromeSVG = async (imageData, config) => {
-  const svg = await self.loadFromImageData(
+  const svg = await loadFromImageData(
     imageData.data,
     imageData.width,
     imageData.height,

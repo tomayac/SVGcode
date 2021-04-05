@@ -1,15 +1,16 @@
 import { debounce } from './util.js';
-import { startProcessing } from './preprocess.js';
-import { convertToMonochromeSVG } from './monochrome.js';
-import { convertToColorSVG } from './color.js';
+import { startProcessing } from './orchestrate.js';
 import './filesystem.js';
 
 const preprocessContainer = document.querySelector('.preprocess');
+const posterizeCheckbox = document.querySelector('.posterize');
 const inputImage = document.querySelector('img');
 const resetAllButton = document.querySelector('.reset-all');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
+const STEPS = ' steps';
+const PIXELS = ' pixels';
 
 const FILTERS = {
   brightness: 'brightness',
@@ -22,6 +23,12 @@ const FILTERS = {
   sepia: 'sepia',
 };
 
+const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
+
+const SCALE = { scale: 'scale' };
+
+const POTRACE = { turdsize: 'turdsize' };
+
 const filters = {
   [FILTERS.brightness]: { unit: PERCENT, initial: 100, min: 0, max: 200 },
   [FILTERS.contrast]: { unit: PERCENT, initial: 100, min: 0, max: 200 },
@@ -33,27 +40,19 @@ const filters = {
   [FILTERS.sepia]: { unit: PERCENT, initial: 0, min: 0, max: 100 },
 };
 
-const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
-
 const posterizeComponents = {
-  [COLORS.red]: { unit: null, initial: 5, min: 1, max: 10 },
-  [COLORS.green]: { unit: null, initial: 5, min: 1, max: 10 },
-  [COLORS.blue]: { unit: null, initial: 5, min: 1, max: 10 },
-  [COLORS.alpha]: { unit: null, initial: 1, min: 1, max: 10 },
-};
-
-const SCALE = {
-  scale: 'scale',
+  [COLORS.red]: { unit: STEPS, initial: 5, min: 1, max: 10 },
+  [COLORS.green]: { unit: STEPS, initial: 5, min: 1, max: 10 },
+  [COLORS.blue]: { unit: STEPS, initial: 5, min: 1, max: 10 },
+  [COLORS.alpha]: { unit: STEPS, initial: 1, min: 1, max: 10 },
 };
 
 const scale = {
-  [SCALE.scale]: { unit: null, initial: 100, min: 1, max: 200 },
+  [SCALE.scale]: { unit: PERCENT, initial: 100, min: 1, max: 200 },
 };
 
-const POTRACE = { turdsize: 'turdsize' };
-
 const potraceOptions = {
-  [POTRACE.turdsize]: { unit: null, initial: 2, min: 1, max: 1000 },
+  [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 1000 },
 };
 
 const filterInputs = {};
@@ -64,10 +63,15 @@ const createControls = (filter, props) => {
   div.classList.add('preprocess-input');
 
   const label = document.createElement('label');
-  label.textContent = `${filter}${unit ? ` (${unit})` : ''}`;
+  label.textContent = filter;
   label.for = filter;
 
+  const span = document.createElement('span');
+  span.textContent = ` (${unit ? `${initial}${unit}` : initial})`;
+
   const input = document.createElement('input');
+  filterInputs[filter] = input;
+  input.id = filter;
   input.type = 'range';
   input.class = filter;
   input.min = min;
@@ -76,7 +80,9 @@ const createControls = (filter, props) => {
   if (unit) {
     input.dataset.unit = unit;
   }
-  filterInputs[filter] = input;
+  input.addEventListener('change', () => {
+    span.textContent = ` (${unit ? `${input.value}${unit}` : input.value})`;
+  });
   if (Object.keys(COLORS).includes(filter)) {
     input.addEventListener(
       'change',
@@ -88,17 +94,14 @@ const createControls = (filter, props) => {
     input.addEventListener(
       'change',
       debounce(async () => {
-        await convertToMonochromeSVG();
-        await convertToColorSVG();
+        await startProcessing();
       }, 250),
     );
-  } else if (Object.keys(FILTERS).includes(filter)) {
+  } else {
     input.addEventListener(
       'change',
       debounce(async () => {
         await startProcessing();
-        await convertToMonochromeSVG();
-        await convertToColorSVG();
       }, 250),
     );
   }
@@ -111,11 +114,16 @@ const createControls = (filter, props) => {
     input.dispatchEvent(new Event('change'));
   });
 
+  label.append(span);
   label.append(input);
   div.append(label);
   div.append(button);
   preprocessContainer.append(div);
 };
+
+posterizeCheckbox.addEventListener('change', async () => {
+  startProcessing();
+});
 
 const initUI = () => {
   for (const [filter, props] of Object.entries(posterizeComponents)) {
@@ -138,22 +146,18 @@ const initUI = () => {
   }
 };
 
-const resetToDefault = (filter, initial) => {
-  filterInputs[filter].value = initial;
-};
-
 resetAllButton.addEventListener('click', async () => {
   for (const [filter, props] of Object.entries(posterizeComponents)) {
-    resetToDefault(filter, props.initial);
+    filterInputs[filter].value = props.initial;
   }
   for (const [filter, props] of Object.entries(scale)) {
-    resetToDefault(filter, props.initial);
+    filterInputs[filter].value = props.initial;
   }
   for (const [filter, props] of Object.entries(filters)) {
-    resetToDefault(filter, props.initial);
+    filterInputs[filter].value = props.initial;
   }
   for (const [filter, props] of Object.entries(potraceOptions)) {
-    resetToDefault(filter, props.initial);
+    filterInputs[filter].value = props.initial;
   }
   await startProcessing();
 });

@@ -2,14 +2,16 @@
   "name": "SVGcode",
   "version": "0.0.1",
   "scripts": {
+    "start": "npm run dev",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/ --ignore-pattern potrace.js",
+    "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
     "fix": "npx prettier . --write"
   },
   "dependencies": {
-    "browser-fs-access": "^0.16.2"
+    "browser-fs-access": "^0.16.2",
+    "potrace-wasm": "github:tomayac/potrace-wasm#patch-1"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
