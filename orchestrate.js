@@ -9,9 +9,12 @@ const startProcessing = async () => {
   const imageData = preProcessMainCanvas();
   // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
   // const imageData = await preProcessInputImage()
-  const [monochromeSVG, colorSVG] = await Promise.all([convertToMonochromeSVG(imageData),convertToColorSVG(imageData)]  )
+  const [monochromeSVG, colorSVG] = await Promise.all([
+    convertToMonochromeSVG(imageData),
+    convertToColorSVG(imageData),
+  ]);
   monochromeSVGOutput.innerHTML = monochromeSVG;
-  colorSVGOutput.innerHTML = colorSVG
+  colorSVGOutput.innerHTML = colorSVG;
 };
 
 export { startProcessing, monochromeSVGOutput, colorSVGOutput };

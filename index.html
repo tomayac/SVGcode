@@ -9,39 +9,41 @@
     <script src="./main.js" type="module"></script>
   </head>
   <body>
-    <h1>SVGcode</h1>
-    <div class="drop">Drop file here</div>
-    <div class="wrapper">
-      <button class="open" type="button">Open image</button>
-      <button class="save-image" type="button">Save image</button>
-      <button class="save-bw-svg" type="button">
-        Save Black &amp; White SVG
-      </button>
-      <button class="save-color-svg" type="button">Save Color SVG</button>
-    </div>
-    <div class="wrapper">
-      <div class="preprocess">
-        <div class="preprocess-input">
-          <label
-            >Posterize <input type="checkbox" class="posterize" checked
-          /></label>
+    <main>
+      <h1>SVGcode</h1>
+      <div class="drop">Drop file here</div>
+      <div class="wrapper">
+        <button class="open" type="button">Open image</button>
+        <button class="save-image" type="button">Save image</button>
+        <button class="save-bw-svg" type="button">
+          Save Black &amp; White SVG
+        </button>
+        <button class="save-color-svg" type="button">Save Color SVG</button>
+      </div>
+      <div class="wrapper">
+        <div class="preprocess">
+          <div class="preprocess-input">
+            <label
+              >Posterize <input type="checkbox" class="posterize" checked
+            /></label>
+          </div>
+          <div class="preprocess-input">
+            <button type="button" class="reset-all">Reset all</button>
+          </div>
         </div>
-        <div class="preprocess-input">
-          <button type="button" class="reset-all">Reset all</button>
+        <div>
+          <img crossorigin="anonymous" src="./favicon.svg" />
+          <canvas class="canvas-main"></canvas>
+          <output class="output-monochrome"></output>
+          <output class="output-color"></output>
+          <canvas class="canvas-channel" hidden></canvas>
         </div>
       </div>
-      <div>
-        <img crossorigin="anonymous" src="./favicon.svg" />
-        <canvas class="canvas-main"></canvas>
-        <output class="output-monochrome"></output>
-        <output class="output-color"></output>
-        <canvas class="canvas-channel" hidden></canvas>
-      </div>
-    </div>
-    <footer>
-      Made with 🤩 enthusiasm by
-      <a href="https://twitter.com/tomayac">@tomayac</a>. Powered by
-      <a href="http://potrace.sourceforge.net/">Potrace</a>.
-    </footer>
+      <footer>
+        Made with 🤩 enthusiasm by
+        <a href="https://twitter.com/tomayac">@tomayac</a>. Powered by
+        <a href="http://potrace.sourceforge.net/">Potrace</a>.
+      </footer>
+    </main>
   </body>
 </html>

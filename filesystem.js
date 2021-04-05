@@ -1,7 +1,7 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 import { inputImage } from './ui.js';
-import {canvasMain} from './preprocess.js'
-import {monochromeSVGOutput, colorSVGOutput } from './orchestrate.js';
+import { canvasMain } from './preprocess.js';
+import { monochromeSVGOutput, colorSVGOutput } from './orchestrate.js';
 
 const fileOpenButton = document.querySelector('.open');
 const saveImageButton = document.querySelector('.save-image');

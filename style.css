@@ -1,6 +1,7 @@
 :root {
   color-scheme: dark light;
   --margin: 0.25rem;
+  --100vh: 100vh;
 }
 
 *,
@@ -11,6 +12,18 @@
 
 body {
   font-family: system-ui, sans-serif;
+  height: var(--100vh, 100vh);
+  max-height: var(--100vh, 100vh);
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  padding: var(--margin);
 }
 
 input[type='range'] {
@@ -21,7 +34,7 @@ img,
 canvas,
 svg {
   outline: solid 1px CanvasText;
-  width: calc((100% / 2) - (2 * var(--margin)));
+  width: calc(50% - 4px);
   height: auto;
   padding: 0;
 }
@@ -36,17 +49,12 @@ svg {
 }
 
 .drop {
-  width: 100%;
   height: 5rem;
-  border: solid 0.25rem red;
+  border: solid var(--margin) red;
   display: grid;
   align-content: center;
   justify-content: center;
   margin: var(--margin);
-}
-
-.filter {
-  display: none;
 }
 
 .wrapper {
