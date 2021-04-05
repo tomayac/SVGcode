@@ -12,12 +12,6 @@
 
 body {
   font-family: system-ui, sans-serif;
-  height: var(--100vh, 100vh);
-  max-height: var(--100vh, 100vh);
-  width: 100vw;
-  max-width: 100vw;
-  overflow-x: hidden;
-  overflow-y: hidden;
   margin: 0;
   padding: 0;
 }
@@ -54,7 +48,6 @@ svg {
   display: grid;
   align-content: center;
   justify-content: center;
-  margin: var(--margin);
 }
 
 .wrapper {
