@@ -6,15 +6,38 @@ import { convertToColorSVG } from './color.js';
 const preProcessWorker = new Worker('preprocessworker.js');
 
 const posterizeCheckbox = document.querySelector('.posterize');
-const posterizeFilterXML = document.querySelector('#posterize');
 const monochromeSVGOutput = document.querySelector('.output-monochrome');
 const colorSVGOutput = document.querySelector('.output-color');
+const canvasMain = document.querySelector('.canvas-main');
+const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
+ctxMain.imageSmoothingEnabled = false;
 
 const startProcessing = async () => {
-  updateFilter();
-  const imageData = await preProcessInputImage();
+  const imageData = preProcessMainCanvas();
+  // On main thread until https://crbug.com/1195763 gets resolved.
+  // const imageData = await preProcessInputImage()
   monochromeSVGOutput.innerHTML = await convertToMonochromeSVG(imageData);
   colorSVGOutput.innerHTML = await convertToColorSVG(imageData);
+};
+
+const preProcessMainCanvas = () => {
+  const { width, height } = getScaledDimensions();
+  canvasMain.width = width;
+  canvasMain.height = height
+  ctxMain.clearRect(0, 0, width, height);
+  ctxMain.filter = getFilterString();
+  ctxMain.drawImage(
+    inputImage,
+    0,
+    0,
+    inputImage.naturalWidth,
+    inputImage.naturalHeight,
+    0,
+    0,
+    width,
+    height,
+  );
+  return ctxMain.getImageData(0, 0, width, height);
 };
 
 const preProcessInputImage = async () => {
@@ -41,26 +64,33 @@ const getScaledDimensions = () => {
   };
 };
 
-const getPosterizeFilter = (r, g, b, a) => {
-  return `data:image/svg+xml;utf8,
-    <svg
-      class="filter"
+const getPosterizeFilter = () => {
+  const getRange = (input) => {
+    const value = parseInt(input.value, 10);
+    const array = [];
+    for (let i = 0; i <= value; i++) {
+      array[i] = ((1 / value) * i).toFixed(1);
+    }
+    return array.join(',');
+  };
+
+  return `data:image/svg+xml;utf8,<svg
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <filter id="posterize">
         <feComponentTransfer>
-        <feFuncR type="discrete" tableValues="${r.join(' ')}" />
-        <feFuncG type="discrete" tableValues="${g.join(' ')}" />
-        <feFuncB type="discrete" tableValues="${b.join(' ')}" />
-        <feFuncA type="discrete" tableValues="${a.join(' ')}" />
+          <feFuncR type="discrete" tableValues="${getRange(filterInputs[COLORS.red])}" />
+          <feFuncG type="discrete" tableValues="${getRange(filterInputs[COLORS.green])}" />
+          <feFuncB type="discrete" tableValues="${getRange(filterInputs[COLORS.blue])}" />
+          <feFuncA type="discrete" tableValues="${getRange(filterInputs[COLORS.alpha])}" />
         </feComponentTransfer>
       </filter>
-    </svg>`;
+    </svg>`.replace(/[\r\n]/g, '').replace(/\s+/g, ' ').trim();
 };
 
 const getFilterString = () => {
-  let string = `${posterizeCheckbox.checked ? 'url("#posterize") ' : ''}`;
+  let string = `${posterizeCheckbox.checked ? `url('${getPosterizeFilter()}#posterize') ` : ''}`;
   for (const [filter, props] of Object.entries(filters)) {
     const input = filterInputs[filter];
     if (props.initial === parseInt(input.value, 10)) {
@@ -69,24 +99,6 @@ const getFilterString = () => {
     string += `${filter}(${input.value}${input.dataset.unit}) `;
   }
   return string.trim() || 'none';
-};
-
-const getRange = (input) => {
-  const value = parseInt(input.value, 10);
-  const array = [];
-  for (let i = 0; i <= value; i++) {
-    array[i] = ((1 / value) * i).toFixed(1);
-  }
-  return array;
-};
-
-const updateFilter = async () => {
-  return getPosterizeFilter(
-    getRange(filterInputs[COLORS.red]),
-    getRange(filterInputs[COLORS.green]),
-    getRange(filterInputs[COLORS.blue]),
-    getRange(filterInputs[COLORS.alpha]),
-  );
 };
 
 posterizeCheckbox.addEventListener('change', async () => {

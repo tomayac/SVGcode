@@ -8,7 +8,6 @@ const preProcessMainCanvas = (
   width,
   height,
 ) => {
-  console.log(filterString, width, height);
   canvasMain.width = width;
   canvasMain.height = height;
   ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
