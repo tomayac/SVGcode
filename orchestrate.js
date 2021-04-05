@@ -1,6 +1,7 @@
 import { preProcessMainCanvas } from './preprocess.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
+import { optimizeSVG } from './svgo.js';
 
 const monochromeSVGOutput = document.querySelector('.output-monochrome');
 const colorSVGOutput = document.querySelector('.output-color');
@@ -13,8 +14,12 @@ const startProcessing = async () => {
     convertToMonochromeSVG(imageData),
     convertToColorSVG(imageData),
   ]);
-  monochromeSVGOutput.innerHTML = monochromeSVG;
-  colorSVGOutput.innerHTML = colorSVG;
+  const [optimizedMonochromeSVG, optimizedColorSVG] = await Promise.all([
+    optimizeSVG(monochromeSVG),
+    optimizeSVG(colorSVG),
+  ]);
+  monochromeSVGOutput.innerHTML = optimizedMonochromeSVG;
+  colorSVGOutput.innerHTML = optimizedColorSVG;
 };
 
 export { startProcessing, monochromeSVGOutput, colorSVGOutput };

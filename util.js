@@ -12,7 +12,7 @@ const debounce = (func, wait) => {
 
 document.documentElement.style.setProperty(
   '--100vh',
-  `${window.innerHeight}px`
+  `${window.innerHeight}px`,
 );
 
 window.addEventListener(
@@ -20,7 +20,7 @@ window.addEventListener(
   debounce(() => {
     document.documentElement.style.setProperty(
       '--100vh',
-      `${window.innerHeight}px`
+      `${window.innerHeight}px`,
     );
   }, 250),
 );

@@ -24,6 +24,13 @@ fileOpenButton.addEventListener('click', async () => {
       description: 'Image files',
     });
     const blobURL = URL.createObjectURL(file);
+    inputImage.addEventListener(
+      'load',
+      () => {
+        URL.revokeObjectURL(blobURL);
+      },
+      { once: true },
+    );
     inputImage.src = blobURL;
   } catch (err) {
     console.error(err.name, err.message);
@@ -39,17 +46,27 @@ dropContainer.addEventListener('drop', async (event) => {
   event.preventDefault();
   const item = event.dataTransfer.items[0];
   if (item.kind === 'file') {
+    let blobURL;
+    inputImage.addEventListener(
+      'load',
+      () => {
+        URL.revokeObjectURL(blobURL);
+      },
+      { once: true },
+    );
     if (supported) {
       const entry = await item.getAsFileSystemHandle();
       if (entry.kind === 'directory') {
         return;
       } else {
         const file = await entry.getFile();
-        inputImage.src = URL.createObjectURL(file);
+        blobURL = URL.createObjectURL(file);
+        inputImage.src = blobURL;
       }
     } else {
       const file = item.getAsFile();
-      inputImage.src = URL.createObjectURL(file);
+      blobURL = URL.createObjectURL(file);
+      inputImage.src = blobURL;
     }
   }
 });

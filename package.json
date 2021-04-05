@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "browser-fs-access": "^0.16.2",
-    "potrace-wasm": "github:tomayac/potrace-wasm#patch-1"
+    "potrace-wasm": "github:tomayac/potrace-wasm#patch-1",
+    "svgo": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
