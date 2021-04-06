@@ -1,7 +1,7 @@
 import { filterInputs, filters, inputImage, COLORS, SCALE } from './ui.js';
-
 // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
-// const preProcessWorker = new Worker('preprocessworker.js', { type: 'module' });
+// import PreProcessWorker from './preprocessworker.js?worker';
+// const preProcessWorker = new PreProcessWorker();
 
 const posterizeCheckbox = document.querySelector('.posterize');
 const canvasMain = document.querySelector('.canvas-main');

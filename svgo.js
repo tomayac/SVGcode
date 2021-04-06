@@ -1,4 +1,6 @@
-const optimizeSVGWorker = new Worker('./svgoworker.js', { type: 'module' });
+import OptimizeSVGWorker from './svgoworker.js?worker';
+
+const optimizeSVGWorker = new OptimizeSVGWorker();
 
 const optimizeSVG = async (svg) => {
   return new Promise((resolve, reject) => {

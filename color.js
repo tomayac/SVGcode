@@ -1,6 +1,7 @@
 import { filterInputs, POTRACE } from './ui.js';
+import ColorWorker from './colorworker?worker';
 
-const colorWorker = new Worker('./colorworker.js', { type: 'module' });
+const colorWorker = new ColorWorker();
 
 const convertToColorSVG = async (imageData) => {
   return new Promise(async (resolve, reject) => {
