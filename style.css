@@ -33,8 +33,10 @@ svg {
   padding: 0;
 }
 
-svg {
-  background-color: #131313;
+@media (prefers-color-scheme: dark) {
+  svg {
+    background-color: #131313;
+  }
 }
 
 .preprocess-input {
