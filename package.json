@@ -10,7 +10,7 @@
     "fix": "npx prettier . --write"
   },
   "dependencies": {
-    "browser-fs-access": "^0.16.3",
+    "browser-fs-access": "^0.16.4",
     "potrace-wasm": "github:tomayac/potrace-wasm#patch-1",
     "svgo": "^2.3.0"
   },
