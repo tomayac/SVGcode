@@ -1,5 +1,5 @@
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
-const A=(()=>{if(self!==top)try{top.location}catch{return!1}else{if("chooseFileSystemEntries"in self)return"chooseFileSystemEntries";if("showOpenFilePicker"in self)return"showOpenFilePicker"}return!1})(),e=A?"chooseFileSystemEntries"===A?import("./file-open.c1794569.js"):import("./file-open.05d00c00.js"):import("./file-open.1fe7b44c.js");
+const A=(()=>{if(top&&self!==top)try{top.location}catch{return!1}else{if("chooseFileSystemEntries"in self)return"chooseFileSystemEntries";if("showOpenFilePicker"in self)return"showOpenFilePicker"}return!1})(),e=A?"chooseFileSystemEntries"===A?import("./file-open.c1794569.js"):import("./file-open.05d00c00.js"):import("./file-open.1fe7b44c.js");
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
 async function t(...A){return(await e).default(...A)}
 // @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
