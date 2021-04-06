@@ -151,7 +151,9 @@ const initUI = () => {
 resetAllButton.addEventListener('click', async () => {
   const reset = (filter, unit, initial) => {
     filterInputs[filter].value = initial;
-    filterSpans[filter].textContent = ` (${unit ? `${initial}${unit}` : initial})`;
+    filterSpans[filter].textContent = ` (${
+      unit ? `${initial}${unit}` : initial
+    })`;
   };
 
   for (const [filter, props] of Object.entries(posterizeComponents)) {
