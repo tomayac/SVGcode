@@ -1,5 +1,5 @@
 export default {
-  base: 'SVGcode/',
+  base: '/SVGcode/',
   build: {
     target: 'esnext',
   },
