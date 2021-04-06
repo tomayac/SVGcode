@@ -62,7 +62,7 @@ const convertToColorSVG = async (imageData, config) => {
 };
 
 self.addEventListener('message', async (e) => {
-  const [imageData, config] = e.data;
+  const { imageData, config } = e.data;
   const svg = await convertToColorSVG(imageData, config);
-  self.postMessage(svg);
+  e.ports[0].postMessage({ result: svg });
 });

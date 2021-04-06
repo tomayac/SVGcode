@@ -1,10 +1,18 @@
+const optimizeSVGWorker = new Worker('./svgoworker.js', { type: 'module' });
+
 const optimizeSVG = async (svg) => {
-  const optimizeSVGWorker = new Worker('./svgoworker.js', { type: 'module' });
-  return new Promise(async (resolve) => {
-    optimizeSVGWorker.onmessage = (e) => {
-      resolve(e.data);
+  return new Promise((resolve, reject) => {
+    const channel = new MessageChannel();
+    channel.port1.onmessage = ({ data }) => {
+      channel.port1.close();
+      if (data.error) {
+        reject(data.error);
+      } else {
+        resolve(data.result);
+      }
     };
-    optimizeSVGWorker.postMessage([svg]);
+
+    optimizeSVGWorker.postMessage({ svg }, [channel.port2]);
   });
 };
 

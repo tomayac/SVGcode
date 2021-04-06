@@ -5,6 +5,7 @@ import { filterInputs, filters, inputImage, COLORS, SCALE } from './ui.js';
 
 const posterizeCheckbox = document.querySelector('.posterize');
 const canvasMain = document.querySelector('.canvas-main');
+// const offscreen = canvasMain.transferControlToOffscreen();
 const ctxMain = canvasMain.getContext('2d');
 ctxMain.imageSmoothingEnabled = false;
 
@@ -32,17 +33,24 @@ const preProcessMainCanvas = () => {
 /*
 const preProcessInputImage = async () => {
   return new Promise(async (resolve, reject) => {
-    preProcessWorker.onmessage = (e) => {
-      resolve(e.data);
+    const channel = new MessageChannel();
+    channel.port1.onmessage = ({data}) => {
+      channel.port1.close();
+      if (data.error) {
+        reject(data.error);
+      } else {
+        resolve(data.result);
+      }
     };
+
     const { width, height } = getScaledDimensions();
-    const imageBitmap = await createImageBitmap(inputImage);
-    preProcessWorker.postMessage([
-      imageBitmap,
-      getFilterString(),
+    preProcessWorker.postMessage({
+      offscreen,
+      inputImageBitmap: await createImageBitmap(inputImage),
+      filterString: getFilterString(),
       width,
       height,
-    ]);
+    }, [channel.port2, offscreen]);
   });
 };
 */
@@ -105,4 +113,4 @@ const getFilterString = () => {
   return string.trim() || 'none';
 };
 
-export { preProcessMainCanvas, canvasMain };
+export { preProcessMainCanvas, /* preProcessInputImage,*/ canvasMain };

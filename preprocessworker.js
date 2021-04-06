@@ -1,18 +1,13 @@
-const canvasMain = new OffscreenCanvas(1, 1);
-const ctxMain = canvasMain.getContext('2d');
-ctxMain.imageSmoothingEnabled = false;
-
 const preProcessMainCanvas = (
+  ctxOffscreen,
   inputImageBitmap,
   filterString,
   width,
   height,
 ) => {
-  canvasMain.width = width;
-  canvasMain.height = height;
-  ctxMain.clearRect(0, 0, canvasMain.width, canvasMain.height);
-  ctxMain.filter = filterString;
-  ctxMain.drawImage(
+  ctxOffscreen.clearRect(0, 0, width, height);
+  ctxOffscreen.filter = filterString;
+  ctxOffscreen.drawImage(
     inputImageBitmap,
     0,
     0,
@@ -23,16 +18,20 @@ const preProcessMainCanvas = (
     width,
     height,
   );
-  return ctxMain.getImageData(0, 0, width, height);
+  return ctxOffscreen.getImageData(0, 0, width, height);
 };
 
 self.addEventListener('message', (e) => {
-  const [inputImageBitmap, filterString, width, height] = e.data;
+  const { offscreen, inputImageBitmap, filterString, width, height } = e.data;
+  const ctxOffscreen = offscreen.getContext('2d');
+  offscreen.width = width;
+  offscreen.height = height;
   const imageData = preProcessMainCanvas(
+    ctxOffscreen,
     inputImageBitmap,
     filterString,
     width,
     height,
   );
-  self.postMessage(imageData);
+  e.ports[0].postMessage({ result: imageData });
 });
