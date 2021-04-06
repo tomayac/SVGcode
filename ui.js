@@ -56,6 +56,7 @@ const potraceOptions = {
 };
 
 const filterInputs = {};
+const filterSpans = {};
 
 const createControls = (filter, props) => {
   const { unit, min, max, initial } = props;
@@ -67,6 +68,7 @@ const createControls = (filter, props) => {
   label.for = filter;
 
   const span = document.createElement('span');
+  filterSpans[filter] = span;
   span.textContent = ` (${unit ? `${initial}${unit}` : initial})`;
 
   const input = document.createElement('input');
@@ -147,19 +149,24 @@ const initUI = () => {
 };
 
 resetAllButton.addEventListener('click', async () => {
+  const reset = (filter, unit, initial) => {
+    filterInputs[filter].value = initial;
+    filterSpans[filter].textContent = ` (${unit ? `${initial}${unit}` : initial})`;
+  };
+
   for (const [filter, props] of Object.entries(posterizeComponents)) {
-    filterInputs[filter].value = props.initial;
+    reset(filter, props.unit, props.initial);
   }
   for (const [filter, props] of Object.entries(scale)) {
-    filterInputs[filter].value = props.initial;
+    reset(filter, props.unit, props.initial);
   }
   for (const [filter, props] of Object.entries(filters)) {
-    filterInputs[filter].value = props.initial;
+    reset(filter, props.unit, props.initial);
   }
   for (const [filter, props] of Object.entries(potraceOptions)) {
-    filterInputs[filter].value = props.initial;
+    reset(filter, props.unit, props.initial);
   }
-  await startProcessing();
+  startProcessing();
 });
 
 export { initUI, filters, filterInputs, inputImage, COLORS, SCALE, POTRACE };
