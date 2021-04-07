@@ -48,7 +48,7 @@ const posterizeComponents = {
 };
 
 const scale = {
-  [SCALE.scale]: { unit: PERCENT, initial: 100, min: 1, max: 200 },
+  [SCALE.scale]: { unit: PERCENT, initial: 100, min: 1, max: 100 },
 };
 
 const potraceOptions = {

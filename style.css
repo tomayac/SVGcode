@@ -33,6 +33,17 @@ svg {
   padding: 0;
 }
 
+label,
+button,
+h1,
+.drop {
+  user-select: none;
+}
+
+footer {
+  cursor: default;
+}
+
 @media (prefers-color-scheme: dark) {
   svg {
     background-color: #131313;
