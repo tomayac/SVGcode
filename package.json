@@ -19,7 +19,8 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.1.0",
     "prettier": "^2.2.1",
-    "vite": "^2.1.5"
+    "vite": "^2.1.5",
+    "vite-plugin-pwa": "^0.6.5"
   },
   "eslintConfig": {
     "parserOptions": {

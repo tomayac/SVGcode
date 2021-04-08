@@ -52,7 +52,7 @@ const scale = {
 };
 
 const potraceOptions = {
-  [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 1000 },
+  [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
 };
 
 const filterInputs = {};
