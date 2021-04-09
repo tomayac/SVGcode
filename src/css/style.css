@@ -2,6 +2,7 @@
   color-scheme: dark light;
   --margin: 0.25rem;
   --100vh: 100vh;
+  accent-color: CanvasText;
 }
 
 *,

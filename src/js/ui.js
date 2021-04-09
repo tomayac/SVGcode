@@ -141,6 +141,8 @@ const initUI = () => {
     createControls(filter, props);
   }
   inputImage.addEventListener('load', () => {
+    inputImage.width = inputImage.naturalWidth;
+    inputImage.height = inputImage.naturalHeight;
     startProcessing();
   });
   if (inputImage.complete) {

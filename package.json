@@ -4,9 +4,9 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vite",
-    "build": "vite build --base=/SVGcode/dist/",
+    "build": "vite build --base=/SVGcode/",
     "serve": "vite preview",
-    "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern dist/",
+    "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
     "fix": "npx prettier . --write"
   },
   "dependencies": {
