@@ -4,7 +4,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vite",
-    "build": "vite build --base=/SVGcode/",
+    "build": "vite build",
     "serve": "vite preview",
     "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
     "fix": "npx prettier . --write"
