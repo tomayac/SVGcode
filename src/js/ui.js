@@ -1,7 +1,9 @@
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
+import i18nPromise from './i18n';
 import './filesystem.js';
 
+let i18n = null;
 const preprocessContainer = document.querySelector('.preprocess');
 const posterizeCheckbox = document.querySelector('.posterize');
 const inputImage = document.querySelector('img');
@@ -64,7 +66,7 @@ const createControls = (filter, props) => {
   div.classList.add('preprocess-input');
 
   const label = document.createElement('label');
-  label.textContent = filter;
+  label.textContent = i18n.t(filter) || filter;
   label.for = filter;
 
   const span = document.createElement('span');
@@ -127,7 +129,8 @@ posterizeCheckbox.addEventListener('change', async () => {
   startProcessing();
 });
 
-const initUI = () => {
+const initUI = async () => {
+  i18n = await i18nPromise;
   for (const [filter, props] of Object.entries(posterizeComponents)) {
     createControls(filter, props);
   }

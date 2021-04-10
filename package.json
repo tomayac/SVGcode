@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "browser-fs-access": "^0.16.4",
+    "i18next": "^20.2.1",
+    "i18next-browser-languagedetector": "^6.1.0",
     "potrace-wasm": "github:tomayac/potrace-wasm#patch-1",
     "svgo": "^2.3.0"
   },
