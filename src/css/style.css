@@ -1,13 +1,14 @@
 :root {
-  color-scheme: dark light;
   --margin: 0.25rem;
   --100vh: 100vh;
-  accent-color: CanvasText;
+
+  color-scheme: dark light;
+  accent-color: canvastext;
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -28,7 +29,7 @@ input[type='range'] {
 img,
 canvas,
 svg {
-  outline: solid 1px CanvasText;
+  outline: solid 1px canvastext;
   width: calc(50% - 4px);
   height: auto;
   padding: 0;

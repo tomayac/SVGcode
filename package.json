@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
+    "lint:css": "npx stylelint \"**/*.css\" --fix",
     "fix": "npx prettier . --write"
   },
   "dependencies": {
