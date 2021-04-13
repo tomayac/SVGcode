@@ -1,18 +1,21 @@
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
-import i18nPromise from './i18n';
-import './filesystem.js';
+import I18N from './i18n.js';
+import {fileOpenButton, saveImageButton, saveMonochromeSVGButton, saveColorSVGButton, dropContainer } from './filesystem.js';
 
-let i18n = null;
+const i18n = new I18N();
+
 const preprocessContainer = document.querySelector('.preprocess');
 const posterizeCheckbox = document.querySelector('.posterize');
+const posterizeLabel = document.querySelector('[for=posterize]');
 const inputImage = document.querySelector('img');
 const resetAllButton = document.querySelector('.reset-all');
+const footer = document.querySelector('footer');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
-const STEPS = ' steps';
-const PIXELS = ' pixels';
+const STEPS = 'steps';
+const PIXELS = 'pixels';
 
 const FILTERS = {
   brightness: 'brightness',
@@ -71,7 +74,7 @@ const createControls = (filter, props) => {
 
   const span = document.createElement('span');
   filterSpans[filter] = span;
-  span.textContent = ` (${unit ? `${initial}${unit}` : initial})`;
+  span.textContent = ` (${unit ? `${initial}${i18n.t(unit)}` : initial})`;
 
   const input = document.createElement('input');
   filterInputs[filter] = input;
@@ -85,7 +88,7 @@ const createControls = (filter, props) => {
     input.dataset.unit = unit;
   }
   input.addEventListener('change', () => {
-    span.textContent = ` (${unit ? `${input.value}${unit}` : input.value})`;
+    span.textContent = ` (${unit ? `${input.value}${i18n.t(unit)}` : input.value})`;
   });
   if (Object.keys(COLORS).includes(filter)) {
     input.addEventListener(
@@ -112,7 +115,7 @@ const createControls = (filter, props) => {
 
   const button = document.createElement('button');
   button.type = 'button';
-  button.textContent = 'Reset';
+  button.textContent = i18n.t('reset');
   button.addEventListener('click', async () => {
     input.value = initial;
     input.dispatchEvent(new Event('change'));
@@ -130,7 +133,9 @@ posterizeCheckbox.addEventListener('change', async () => {
 });
 
 const initUI = async () => {
-  i18n = await i18nPromise;
+  await i18n.getTranslations();
+  changeLanguage();
+
   for (const [filter, props] of Object.entries(posterizeComponents)) {
     createControls(filter, props);
   }
@@ -153,11 +158,22 @@ const initUI = async () => {
   }
 };
 
+const changeLanguage = () => {
+  resetAllButton.textContent = i18n.t('resetAll')
+  posterizeLabel.textContent = i18n.t('posterize');
+  fileOpenButton.textContent = i18n.t('openImage'),
+  saveImageButton.textContent = i18n.t('saveImage')
+  saveMonochromeSVGButton.textContent = i18n.t('saveMonochromeSVG')
+  saveColorSVGButton.textContent = i18n.t('saveColorSVG')
+  dropContainer.textContent = i18n.t('dropFileHere')
+  footer.innerHTML = i18n.t('footerNote')
+}
+
 resetAllButton.addEventListener('click', async () => {
   const reset = (filter, unit, initial) => {
     filterInputs[filter].value = initial;
     filterSpans[filter].textContent = ` (${
-      unit ? `${initial}${unit}` : initial
+      unit ? `${initial}${i18n.t(unit)}` : initial
     })`;
   };
 

@@ -12,31 +12,28 @@
     
     <link rel="icon" type="image/svg" href="/favicon.svg" />
     
-  <script type="module" crossorigin src="/assets/index.c90b0f67.js"></script>
+  <script type="module" crossorigin src="/assets/index.e0ae26c3.js"></script>
   <link rel="modulepreload" href="/assets/vendor.5d360820.js">
-  <link rel="stylesheet" href="/assets/index.03946ec6.css">
+  <link rel="stylesheet" href="/assets/index.1ac0acb5.css">
 <link rel="manifest" href="/manifest.webmanifest"><script src="/registerSW.js"></script></head>
   <body>
     <main>
       <h1>SVGcode</h1>
-      <div class="drop">Drop file here</div>
+      <div class="drop"></div>
       <div class="wrapper">
-        <button class="open" type="button">Open image</button>
-        <button class="save-image" type="button">Save image</button>
-        <button class="save-bw-svg" type="button">
-          Save Black &amp; White SVG
-        </button>
-        <button class="save-color-svg" type="button">Save Color SVG</button>
+        <button class="open" type="button"></button>
+        <button class="save-image" type="button"></button>
+        <button class="save-bw-svg" type="button"></button>
+        <button class="save-color-svg" type="button"></button>
       </div>
       <div class="wrapper">
         <div class="preprocess">
           <div class="preprocess-input">
-            <label
-              >Posterize <input type="checkbox" class="posterize" checked
-            /></label>
+            <label for="posterize"></label>
+            <input id="posterize" type="checkbox" class="posterize" checked/>
           </div>
           <div class="preprocess-input">
-            <button type="button" class="reset-all">Reset all</button>
+            <button type="button" class="reset-all"></button>
           </div>
         </div>
         <div>
@@ -47,12 +44,7 @@
           <canvas class="canvas-channel" hidden></canvas>
         </div>
       </div>
-      <footer>
-        Made with 🤩 enthusiasm by
-        <a href="https://twitter.com/tomayac">@tomayac</a>. Powered by
-        <a href="http://potrace.sourceforge.net/">Potrace</a> and
-        <a href="https://github.com/svg/svgo">svgo</a>.
-      </footer>
+      <footer></footer>
     </main>
   </body>
 </html>

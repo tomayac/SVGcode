@@ -1,29 +1,67 @@
-import i18next from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+const LOCAL_STORAGE_KEY = 'language';
+const SUPPORTED_LANGUAGES = ['en', 'de'];
 
-export default (async () => {
-  await i18next.use(LanguageDetector).init({
-    order: ['querystring', 'navigator'],
-    lookupQuerystring: 'lang',
-    debug: true,
-    resources: {
-      en: {
-        translation: {
-          red: '🔴 Red',
-          green: '🟢 Green',
-          blue: '🔵 Blue',
-          alpha: '𝝰 Alpha',
-        },
-      },
-      de: {
-        translation: {
-          red: '🔴 Rot',
-          green: '🟢 Grün',
-          blue: '🔵 Blau',
-          alpha: '𝝰 Alpha',
-        },
-      },
-    },
-  });
-  return i18next;
-})();
+/**
+ *
+ *
+ * @class I18N
+ */
+class I18N {
+  /**
+   *Creates an instance of I18N.
+   * @memberof I18N
+   */
+  constructor() {
+    this.currentLanguageAndLocale = this.detectLanguageAndLocal();
+    this.defaultLanguage = SUPPORTED_LANGUAGES[0];
+    this.translations = null;
+  }
+
+  /**
+   *
+   *
+   * @returns
+   * @memberof I18N
+   */
+  detectLanguageAndLocal () {
+    const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (storedLanguage) {
+      return JSON.parse(storedLanguage);
+    }
+    let [language, locale = null] = navigator.language?.split('-');
+    if (!language || !SUPPORTED_LANGUAGES.includes(language)) {
+      language = SUPPORTED_LANGUAGES[0];
+    }
+    const result = {
+      language,
+      locale,
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(result));
+    return result;
+  }
+
+  /**
+   *
+   *
+   * @memberof I18N
+   */
+  async getTranslations () {
+    const { language, locale } = this.currentLanguageAndLocale;
+    const path = '/src/i18n/' + language + (locale ? '-' + locale : '') + '.js';
+    const translations = (await import(path)).default;
+    this.translations = translations;
+  };
+
+  /**
+   *
+   *
+   * @param {*} key
+   * @returns
+   * @memberof I18N
+   */
+  t (key) {
+    return this.translations[key];
+  }
+}
+
+export default I18N;

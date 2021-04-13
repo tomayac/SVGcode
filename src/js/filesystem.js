@@ -101,3 +101,5 @@ saveColorSVGButton.addEventListener('click', async () => {
     console.error(err.name, err.message);
   }
 });
+
+export {fileOpenButton, saveImageButton, saveMonochromeSVGButton, saveColorSVGButton, dropContainer }
