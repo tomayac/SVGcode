@@ -17,6 +17,7 @@
     "svgo": "^2.3.0"
   },
   "devDependencies": {
+    "@rollup/plugin-dynamic-import-vars": "^1.1.1",
     "eslint": "^7.24.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.2.0",

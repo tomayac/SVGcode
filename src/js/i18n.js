@@ -47,8 +47,7 @@ class I18N {
    */
   async getTranslations() {
     const { language, locale } = this.currentLanguageAndLocale;
-    const path = '/src/i18n/' + language + (locale ? '-' + locale : '') + '.js';
-    const translations = (await import(path)).default;
+    const translations = (await import(`../i18n/${language}${(locale ? `-${locale}` : '')}.js`)).default;
     this.translations = translations;
   }
 

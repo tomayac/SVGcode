@@ -1,7 +1,11 @@
 import { VitePWA as vitePWA } from 'vite-plugin-pwa';
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 
 export default {
   plugins: [
+    dynamicImportVars({
+      include: './src/i18n/*',
+    }),
     vitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'script',
