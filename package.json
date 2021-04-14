@@ -4,7 +4,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && shx echo \"svgco.de\" > docs/CNAME && git add docs/",
     "serve": "vite preview",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
@@ -21,6 +21,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.2.0",
     "prettier": "^2.2.1",
+    "shx": "^0.3.3",
     "stylelint": "^13.12.0",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-order": "^4.1.0",

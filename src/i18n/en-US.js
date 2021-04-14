@@ -34,7 +34,7 @@ const translations = {
   footerNote: `Made with 🤩 enthusiasm by
         <a href="https://twitter.com/tomayac">@tomayac</a>. Powered by
         <a href="http://potrace.sourceforge.net/">Potrace</a> and
-        <a href="https://github.com/svg/svgo">svgo</a>.`
+        <a href="https://github.com/svg/svgo">svgo</a>.`,
 };
 
 export default translations;

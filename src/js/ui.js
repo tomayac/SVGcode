@@ -1,7 +1,13 @@
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import I18N from './i18n.js';
-import {fileOpenButton, saveImageButton, saveMonochromeSVGButton, saveColorSVGButton, dropContainer } from './filesystem.js';
+import {
+  fileOpenButton,
+  saveImageButton,
+  saveMonochromeSVGButton,
+  saveColorSVGButton,
+  dropContainer,
+} from './filesystem.js';
 
 const i18n = new I18N();
 
@@ -88,7 +94,9 @@ const createControls = (filter, props) => {
     input.dataset.unit = unit;
   }
   input.addEventListener('change', () => {
-    span.textContent = ` (${unit ? `${input.value}${i18n.t(unit)}` : input.value})`;
+    span.textContent = ` (${
+      unit ? `${input.value}${i18n.t(unit)}` : input.value
+    })`;
   });
   if (Object.keys(COLORS).includes(filter)) {
     input.addEventListener(
@@ -159,15 +167,15 @@ const initUI = async () => {
 };
 
 const changeLanguage = () => {
-  resetAllButton.textContent = i18n.t('resetAll')
+  resetAllButton.textContent = i18n.t('resetAll');
   posterizeLabel.textContent = i18n.t('posterize');
-  fileOpenButton.textContent = i18n.t('openImage'),
-  saveImageButton.textContent = i18n.t('saveImage')
-  saveMonochromeSVGButton.textContent = i18n.t('saveMonochromeSVG')
-  saveColorSVGButton.textContent = i18n.t('saveColorSVG')
-  dropContainer.textContent = i18n.t('dropFileHere')
-  footer.innerHTML = i18n.t('footerNote')
-}
+  fileOpenButton.textContent = i18n.t('openImage');
+  saveImageButton.textContent = i18n.t('saveImage');
+  saveMonochromeSVGButton.textContent = i18n.t('saveMonochromeSVG');
+  saveColorSVGButton.textContent = i18n.t('saveColorSVG');
+  dropContainer.textContent = i18n.t('dropFileHere');
+  footer.innerHTML = i18n.t('footerNote');
+};
 
 resetAllButton.addEventListener('click', async () => {
   const reset = (filter, unit, initial) => {

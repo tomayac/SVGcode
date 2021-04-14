@@ -102,4 +102,10 @@ saveColorSVGButton.addEventListener('click', async () => {
   }
 });
 
-export {fileOpenButton, saveImageButton, saveMonochromeSVGButton, saveColorSVGButton, dropContainer }
+export {
+  fileOpenButton,
+  saveImageButton,
+  saveMonochromeSVGButton,
+  saveColorSVGButton,
+  dropContainer,
+};

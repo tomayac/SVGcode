@@ -23,7 +23,7 @@ class I18N {
    * @returns
    * @memberof I18N
    */
-  detectLanguageAndLocal () {
+  detectLanguageAndLocal() {
     const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedLanguage) {
       return JSON.parse(storedLanguage);
@@ -45,12 +45,12 @@ class I18N {
    *
    * @memberof I18N
    */
-  async getTranslations () {
+  async getTranslations() {
     const { language, locale } = this.currentLanguageAndLocale;
     const path = '/src/i18n/' + language + (locale ? '-' + locale : '') + '.js';
     const translations = (await import(path)).default;
     this.translations = translations;
-  };
+  }
 
   /**
    *
@@ -59,7 +59,7 @@ class I18N {
    * @returns
    * @memberof I18N
    */
-  t (key) {
+  t(key) {
     return this.translations[key];
   }
 }

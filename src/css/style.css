@@ -26,6 +26,10 @@ input[type='range'] {
   display: block;
 }
 
+canvas {
+  image-rendering: pixelated;
+}
+
 img,
 canvas,
 svg {
