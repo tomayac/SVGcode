@@ -94,8 +94,4 @@ saveSVGButton.addEventListener('click', async () => {
   }
 });
 
-export {
-  fileOpenButton,
-  saveSVGButton,
-  dropContainer,
-};
+export { fileOpenButton, saveSVGButton, dropContainer };

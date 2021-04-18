@@ -1,7 +1,7 @@
 import {
   preProcessMainCanvas /* , preProcessInputImage*/,
 } from './preprocess.js';
-import {colorCheckbox} from './ui.js';
+import { colorCheckbox } from './ui.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
 import { optimizeSVG } from './svgo.js';
@@ -14,10 +14,8 @@ const startProcessing = async () => {
   // const imageData = await preProcessInputImage();
   if (colorCheckbox.checked) {
     convertToColorSVG(imageData)
-    .then(optimizeSVG)
-    .then(
-      (optimizedColorSVG) => (svgOutput.innerHTML = optimizedColorSVG),
-    );
+      .then(optimizeSVG)
+      .then((optimizedColorSVG) => (svgOutput.innerHTML = optimizedColorSVG));
   } else {
     convertToMonochromeSVG(imageData)
       .then(optimizeSVG)
@@ -25,7 +23,7 @@ const startProcessing = async () => {
         (optimizedMonochromeSVG) =>
           (svgOutput.innerHTML = optimizedMonochromeSVG),
       );
-      }
+  }
 };
 
 export { startProcessing, svgOutput };
