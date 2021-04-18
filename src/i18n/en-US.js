@@ -18,23 +18,18 @@ const translations = {
 
   '%': '%',
   deg: '°',
-  steps: ' Steps',
-  pixels: ' Pixels',
+  steps: 'Steps',
+  pixels: 'Pixels',
 
   reset: 'Reset',
   resetAll: 'Reset All',
 
   dropFileHere: 'Drop file here',
   openImage: 'Open image',
-  saveImage: 'Save image',
-  saveColorSVG: 'Save Color SVG',
-  saveMonochromeSVG: 'Save Monochrome SVG',
+  saveSVG: 'Save SVG',
 
-  posterize: 'Posterize',
-  footerNote: `Made with 🤩 enthusiasm by
-        <a href="https://twitter.com/tomayac">@tomayac</a>. Powered by
-        <a href="http://potrace.sourceforge.net/">Potrace</a> and
-        <a href="https://github.com/svg/svgo">svgo</a>.`,
+  posterizeInputImage: 'Posterize Input Image',
+  convertToColorSVG: 'Convert to Color SVG',
 };
 
 export default translations;

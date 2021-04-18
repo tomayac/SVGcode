@@ -7,6 +7,7 @@
       name="description"
       content="Convert color bitmap (PNG, JPG, JPEG, WEBP, AVIF, GIF,…) images to color SVG vector images."
     />
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()"/>
     <meta name="theme_color" content="#131313" />
     <title>SVGcode</title>
     <link rel="stylesheet" href="/src/css/style.css" />
@@ -15,33 +16,30 @@
   </head>
   <body>
     <main>
-      <h1>SVGcode</h1>
-      <div class="drop"></div>
       <div class="wrapper">
-        <button class="open" type="button"></button>
-        <button class="save-image" type="button"></button>
-        <button class="save-bw-svg" type="button"></button>
-        <button class="save-color-svg" type="button"></button>
-      </div>
-      <div class="wrapper">
+        <div class="menu">
+          <button class="open" type="button"></button>
+          <button class="save" type="button"></button>
+        </div>
         <div class="preprocess">
           <div class="preprocess-input">
-            <label for="posterize"></label>
             <input id="posterize" type="checkbox" class="posterize" checked />
+            <label for="posterize"></label>
+          </div>
+          <div class="preprocess-input">
+            <input id="color" type="checkbox" class="color" checked />
+            <label for="color"></label>
           </div>
           <div class="preprocess-input">
             <button type="button" class="reset-all"></button>
           </div>
         </div>
-        <div>
-          <img crossorigin="anonymous" src="/favicon.svg" alt="" />
-          <canvas class="canvas-main"></canvas>
-          <output class="output-monochrome"></output>
-          <output class="output-color"></output>
-          <canvas class="canvas-channel" hidden></canvas>
-        </div>
       </div>
-      <footer></footer>
+      <div class="output">
+        <img crossorigin="anonymous" src="/favicon.svg" alt="" />
+        <output></output>
+        <canvas></canvas>
+      </div>
     </main>
   </body>
 </html>

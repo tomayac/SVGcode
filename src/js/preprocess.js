@@ -4,7 +4,7 @@ import { filterInputs, filters, inputImage, COLORS, SCALE } from './ui.js';
 // const preProcessWorker = new PreProcessWorker();
 
 const posterizeCheckbox = document.querySelector('.posterize');
-const canvasMain = document.querySelector('.canvas-main');
+const canvasMain = document.querySelector('canvas');
 // const offscreen = canvasMain.transferControlToOffscreen();
 const ctxMain = canvasMain.getContext('2d');
 ctxMain.imageSmoothingEnabled = false;

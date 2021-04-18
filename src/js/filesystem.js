@@ -1,13 +1,11 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
 import { inputImage } from './ui.js';
 import { canvasMain } from './preprocess.js';
-import { monochromeSVGOutput, colorSVGOutput } from './orchestrate.js';
+import { svgOutput } from './orchestrate.js';
 
 const fileOpenButton = document.querySelector('.open');
-const saveImageButton = document.querySelector('.save-image');
-const saveMonochromeSVGButton = document.querySelector('.save-bw-svg');
-const saveColorSVGButton = document.querySelector('.save-color-svg');
-const dropContainer = document.querySelector('.drop');
+const saveSVGButton = document.querySelector('.save');
+const dropContainer = document.documentElement;
 
 const canvasToBlob = async (canvas, mimeType = 'image/png') => {
   return new Promise((resolve) => {
@@ -37,13 +35,27 @@ fileOpenButton.addEventListener('click', async () => {
   }
 });
 
-dropContainer.addEventListener('dragover', (event) => {
+document.addEventListener('dragover', (event) => {
   event.preventDefault();
-  event.dataTransfer.dropEffect = 'copy';
 });
 
-dropContainer.addEventListener('drop', async (event) => {
+document.addEventListener('dragenter', (event) => {
   event.preventDefault();
+  dropContainer.classList.add('dropenter');
+});
+
+document.addEventListener('dragleave', (event) => {
+  event.preventDefault();
+  if (event.target !== document.documentElement) {
+    return;
+  }
+  dropContainer.classList.remove('dropenter');
+});
+
+document.addEventListener('drop', async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  dropContainer.classList.remove('dropenter');
   const item = event.dataTransfer.items[0];
   if (item.kind === 'file') {
     let blobURL;
@@ -71,29 +83,9 @@ dropContainer.addEventListener('drop', async (event) => {
   }
 });
 
-saveImageButton.addEventListener('click', async () => {
+saveSVGButton.addEventListener('click', async () => {
   try {
-    const blob = await canvasToBlob(canvasMain);
-    await fileSave(blob, { fileName: '', description: 'PNG file' });
-  } catch (err) {
-    console.error(err.name, err.message);
-  }
-});
-
-saveMonochromeSVGButton.addEventListener('click', async () => {
-  try {
-    const blob = new Blob([monochromeSVGOutput.innerHTML], {
-      type: 'image/svg+xml',
-    });
-    await fileSave(blob, { fileName: '', description: 'SVG file' });
-  } catch (err) {
-    console.error(err.name, err.message);
-  }
-});
-
-saveColorSVGButton.addEventListener('click', async () => {
-  try {
-    const blob = new Blob([colorSVGOutput.innerHTML], {
+    const blob = new Blob([svgOutput.innerHTML], {
       type: 'image/svg+xml',
     });
     await fileSave(blob, { fileName: '', description: 'SVG file' });
@@ -104,8 +96,6 @@ saveColorSVGButton.addEventListener('click', async () => {
 
 export {
   fileOpenButton,
-  saveImageButton,
-  saveMonochromeSVGButton,
-  saveColorSVGButton,
+  saveSVGButton,
   dropContainer,
 };

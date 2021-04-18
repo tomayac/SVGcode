@@ -4,6 +4,7 @@
 
   color-scheme: dark light;
   accent-color: canvastext;
+  font-family: system-ui, sans-serif;
 }
 
 *,
@@ -13,64 +14,87 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 main {
   padding: var(--margin);
+  display: flex;
 }
 
 input[type='range'] {
   display: block;
+  width: 10rem;
 }
 
 canvas {
+  display: none;
   image-rendering: pixelated;
 }
 
-img,
-canvas,
-svg {
-  outline: solid 1px canvastext;
-  width: calc(50% - 4px);
+img {
+  height: 5rem;
+  width: auto;
+}
+
+svg,
+output {
+  width: 100%;
   height: auto;
-  padding: 0;
+}
+
+label {
+  font-variant-numeric: tabular-nums;
 }
 
 label,
-button,
-h1,
-.drop {
+button {
   user-select: none;
 }
 
-footer {
-  cursor: default;
+.preprocess-input {
+  display: flex;
+  margin: var(--margin);
+  height: 2.5rem;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: var(--margin);
+  gap: var(--margin);
+}
+
+.output {
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  width: 100%;
+}
+
+.reset-all {
+  width: 100%;
+}
+
+.dropenter::before {
+  display: grid;
+  place-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffffee;
+  content: attr(data-drop-text);
+  position: absolute;
 }
 
 @media (prefers-color-scheme: dark) {
   svg {
     background-color: #131313;
   }
-}
 
-.preprocess-input {
-  display: flex;
-  margin: var(--margin);
-}
-
-.drop {
-  height: 5rem;
-  border: solid var(--margin) red;
-  display: grid;
-  align-content: center;
-  justify-content: center;
-}
-
-.wrapper {
-  display: flex;
-  padding: var(--margin);
-  gap: var(--margin);
+  .dropenter::before {
+    background-color: #131313dd;
+  }
 }

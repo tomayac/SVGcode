@@ -3,9 +3,7 @@ import { startProcessing } from './orchestrate.js';
 import I18N from './i18n.js';
 import {
   fileOpenButton,
-  saveImageButton,
-  saveMonochromeSVGButton,
-  saveColorSVGButton,
+  saveSVGButton,
   dropContainer,
 } from './filesystem.js';
 
@@ -14,9 +12,10 @@ const i18n = new I18N();
 const preprocessContainer = document.querySelector('.preprocess');
 const posterizeCheckbox = document.querySelector('.posterize');
 const posterizeLabel = document.querySelector('[for=posterize]');
+const colorCheckbox = document.querySelector('.color');
+const colorLabel = document.querySelector('[for=color]');
 const inputImage = document.querySelector('img');
 const resetAllButton = document.querySelector('.reset-all');
-const footer = document.querySelector('footer');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -69,6 +68,11 @@ const potraceOptions = {
 const filterInputs = {};
 const filterSpans = {};
 
+const updateLabel = (unit, value) => {
+  const translatedUnit = i18n.t(unit);
+  return ` (${unit ? `${value}${translatedUnit.length === 1 ? translatedUnit : ` ${translatedUnit}`}` : value})`;
+}
+
 const createControls = (filter, props) => {
   const { unit, min, max, initial } = props;
   const div = document.createElement('div');
@@ -80,7 +84,7 @@ const createControls = (filter, props) => {
 
   const span = document.createElement('span');
   filterSpans[filter] = span;
-  span.textContent = ` (${unit ? `${initial}${i18n.t(unit)}` : initial})`;
+  span.textContent = updateLabel(unit, initial);
 
   const input = document.createElement('input');
   filterInputs[filter] = input;
@@ -93,10 +97,8 @@ const createControls = (filter, props) => {
   if (unit) {
     input.dataset.unit = unit;
   }
-  input.addEventListener('change', () => {
-    span.textContent = ` (${
-      unit ? `${input.value}${i18n.t(unit)}` : input.value
-    })`;
+  input.addEventListener('input', () => {
+    span.textContent = updateLabel(unit, input.value);
   });
   if (Object.keys(COLORS).includes(filter)) {
     input.addEventListener(
@@ -140,6 +142,10 @@ posterizeCheckbox.addEventListener('change', async () => {
   startProcessing();
 });
 
+colorCheckbox.addEventListener('change', async () => {
+  startProcessing();
+});
+
 const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
@@ -168,13 +174,11 @@ const initUI = async () => {
 
 const changeLanguage = () => {
   resetAllButton.textContent = i18n.t('resetAll');
-  posterizeLabel.textContent = i18n.t('posterize');
-  fileOpenButton.textContent = i18n.t('openImage');
-  saveImageButton.textContent = i18n.t('saveImage');
-  saveMonochromeSVGButton.textContent = i18n.t('saveMonochromeSVG');
-  saveColorSVGButton.textContent = i18n.t('saveColorSVG');
-  dropContainer.textContent = i18n.t('dropFileHere');
-  footer.innerHTML = i18n.t('footerNote');
+  posterizeLabel.textContent = i18n.t('posterizeInputImage');
+  colorLabel.textContent = i18n.t('convertToColorSVG');
+  fileOpenButton.textContent = i18n.t('openImage')
+  saveSVGButton.textContent = i18n.t('saveSVG');
+  dropContainer.dataset.dropText = i18n.t('dropFileHere');
 };
 
 resetAllButton.addEventListener('click', async () => {
@@ -200,4 +204,4 @@ resetAllButton.addEventListener('click', async () => {
   startProcessing();
 });
 
-export { initUI, filters, filterInputs, inputImage, COLORS, SCALE, POTRACE };
+export { initUI, filters, filterInputs, inputImage, colorCheckbox, COLORS, SCALE, POTRACE };

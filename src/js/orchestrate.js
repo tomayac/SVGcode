@@ -1,28 +1,31 @@
 import {
   preProcessMainCanvas /* , preProcessInputImage*/,
 } from './preprocess.js';
+import {colorCheckbox} from './ui.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
 import { optimizeSVG } from './svgo.js';
 
-const monochromeSVGOutput = document.querySelector('.output-monochrome');
-const colorSVGOutput = document.querySelector('.output-color');
+const svgOutput = document.querySelector('output');
 
 const startProcessing = async () => {
   const imageData = preProcessMainCanvas();
   // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
   // const imageData = await preProcessInputImage();
-  convertToMonochromeSVG(imageData)
+  if (colorCheckbox.checked) {
+    convertToColorSVG(imageData)
     .then(optimizeSVG)
     .then(
-      (optimizedMonochromeSVG) =>
-        (monochromeSVGOutput.innerHTML = optimizedMonochromeSVG),
+      (optimizedColorSVG) => (svgOutput.innerHTML = optimizedColorSVG),
     );
-  convertToColorSVG(imageData)
-    .then(optimizeSVG)
-    .then(
-      (optimizedColorSVG) => (colorSVGOutput.innerHTML = optimizedColorSVG),
-    );
+  } else {
+    convertToMonochromeSVG(imageData)
+      .then(optimizeSVG)
+      .then(
+        (optimizedMonochromeSVG) =>
+          (svgOutput.innerHTML = optimizedMonochromeSVG),
+      );
+      }
 };
 
-export { startProcessing, monochromeSVGOutput, colorSVGOutput };
+export { startProcessing, svgOutput };
