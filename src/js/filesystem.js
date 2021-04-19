@@ -1,5 +1,11 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
-import { inputImage, fileOpenButton, saveSVGButton, svgOutput, dropContainer } from './ui.js';
+import {
+  inputImage,
+  fileOpenButton,
+  saveSVGButton,
+  svgOutput,
+  dropContainer,
+} from './ui.js';
 
 fileOpenButton.addEventListener('click', async () => {
   try {
