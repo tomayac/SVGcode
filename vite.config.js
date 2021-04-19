@@ -1,6 +1,7 @@
 import { VitePWA as vitePWA } from 'vite-plugin-pwa';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 
+// ignore unused exports default
 export default {
   plugins: [
     dynamicImportVars({

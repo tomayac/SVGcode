@@ -1,17 +1,25 @@
+import {
+  canvasMain,
+  preprocessContainer,
+  posterizeCheckbox,
+  posterizeLabel,
+  colorRadio,
+  colorLabel,
+  monochromeRadio,
+  monochromeLabel,
+  inputImage,
+  resetAllButton,
+  fileOpenButton,
+  saveSVGButton,
+  svgOutput,
+  dropContainer,
+} from './domrefs.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import I18N from './i18n.js';
-import { fileOpenButton, saveSVGButton, dropContainer } from './filesystem.js';
+import './filesystem.js';
 
 const i18n = new I18N();
-
-const preprocessContainer = document.querySelector('.preprocess');
-const posterizeCheckbox = document.querySelector('.posterize');
-const posterizeLabel = document.querySelector('[for=posterize]');
-const colorCheckbox = document.querySelector('.color');
-const colorLabel = document.querySelector('[for=color]');
-const inputImage = document.querySelector('img');
-const resetAllButton = document.querySelector('.reset-all');
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -144,7 +152,11 @@ posterizeCheckbox.addEventListener('change', async () => {
   startProcessing();
 });
 
-colorCheckbox.addEventListener('change', async () => {
+colorRadio.addEventListener('change', async () => {
+  startProcessing();
+});
+
+monochromeRadio.addEventListener('change', async () => {
   startProcessing();
 });
 
@@ -177,7 +189,8 @@ const initUI = async () => {
 const changeLanguage = () => {
   resetAllButton.textContent = i18n.t('resetAll');
   posterizeLabel.textContent = i18n.t('posterizeInputImage');
-  colorLabel.textContent = i18n.t('convertToColorSVG');
+  colorLabel.textContent = i18n.t('colorSVG');
+  monochromeLabel.textContent = i18n.t('monochromeSVG');
   fileOpenButton.textContent = i18n.t('openImage');
   saveSVGButton.textContent = i18n.t('saveSVG');
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
@@ -186,9 +199,7 @@ const changeLanguage = () => {
 resetAllButton.addEventListener('click', async () => {
   const reset = (filter, unit, initial) => {
     filterInputs[filter].value = initial;
-    filterSpans[filter].textContent = ` (${
-      unit ? `${initial}${i18n.t(unit)}` : initial
-    })`;
+    filterSpans[filter].textContent = updateLabel(unit, initial);
   };
 
   for (const [filter, props] of Object.entries(posterizeComponents)) {
@@ -211,7 +222,13 @@ export {
   filters,
   filterInputs,
   inputImage,
-  colorCheckbox,
+  colorRadio,
+  posterizeCheckbox,
+  fileOpenButton,
+  dropContainer,
+  saveSVGButton,
+  canvasMain,
+  svgOutput,
   COLORS,
   SCALE,
   POTRACE,

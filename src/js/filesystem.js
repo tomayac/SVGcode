@@ -1,19 +1,5 @@
 import { fileOpen, fileSave, supported } from 'browser-fs-access';
-import { inputImage } from './ui.js';
-import { canvasMain } from './preprocess.js';
-import { svgOutput } from './orchestrate.js';
-
-const fileOpenButton = document.querySelector('.open');
-const saveSVGButton = document.querySelector('.save');
-const dropContainer = document.documentElement;
-
-const canvasToBlob = async (canvas, mimeType = 'image/png') => {
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => {
-      resolve(blob);
-    }, mimeType);
-  });
-};
+import { inputImage, fileOpenButton, saveSVGButton, svgOutput, dropContainer } from './ui.js';
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -93,5 +79,3 @@ saveSVGButton.addEventListener('click', async () => {
     console.error(err.name, err.message);
   }
 });
-
-export { fileOpenButton, saveSVGButton, dropContainer };

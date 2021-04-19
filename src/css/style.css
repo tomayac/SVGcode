@@ -34,8 +34,9 @@ canvas {
 }
 
 img {
-  height: 5rem;
   width: auto;
+  height: 5rem;
+  object-fit: contain;
 }
 
 svg,
@@ -84,7 +85,7 @@ button {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffffee;
+  background-color: #fffe;
   content: attr(data-drop-text);
   position: absolute;
 }

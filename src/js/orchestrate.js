@@ -1,18 +1,18 @@
 import {
   preProcessMainCanvas /* , preProcessInputImage*/,
 } from './preprocess.js';
-import { colorCheckbox } from './ui.js';
+import { colorRadio, svgOutput } from './ui.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
 import { optimizeSVG } from './svgo.js';
-
-const svgOutput = document.querySelector('output');
+import spinner from '/spinner.svg?raw';
 
 const startProcessing = async () => {
+  svgOutput.innerHTML = spinner;
   const imageData = preProcessMainCanvas();
   // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
   // const imageData = await preProcessInputImage();
-  if (colorCheckbox.checked) {
+  if (colorRadio.checked) {
     convertToColorSVG(imageData)
       .then(optimizeSVG)
       .then((optimizedColorSVG) => (svgOutput.innerHTML = optimizedColorSVG));
@@ -26,4 +26,4 @@ const startProcessing = async () => {
   }
 };
 
-export { startProcessing, svgOutput };
+export { startProcessing };

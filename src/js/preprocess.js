@@ -1,10 +1,16 @@
-import { filterInputs, filters, inputImage, COLORS, SCALE } from './ui.js';
+import {
+  filterInputs,
+  filters,
+  inputImage,
+  canvasMain,
+  posterizeCheckbox,
+  COLORS,
+  SCALE,
+} from './ui.js';
 // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
 // import PreProcessWorker from './preprocessworker.js?worker';
 // const preProcessWorker = new PreProcessWorker();
 
-const posterizeCheckbox = document.querySelector('.posterize');
-const canvasMain = document.querySelector('canvas');
 // const offscreen = canvasMain.transferControlToOffscreen();
 const ctxMain = canvasMain.getContext('2d');
 ctxMain.imageSmoothingEnabled = false;
@@ -113,4 +119,4 @@ const getFilterString = () => {
   return string.trim() || 'none';
 };
 
-export { preProcessMainCanvas, /* preProcessInputImage,*/ canvasMain };
+export { preProcessMainCanvas /* preProcessInputImage,*/ };

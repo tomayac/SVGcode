@@ -29,7 +29,9 @@ const translations = {
   saveSVG: 'Save SVG',
 
   posterizeInputImage: 'Posterize Input Image',
-  convertToColorSVG: 'Convert to Color SVG',
+  colorSVG: 'Color SVG',
+  monochromeSVG: 'Monochrome SVG',
 };
 
+// ignore unused exports default
 export default translations;

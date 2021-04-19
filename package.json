@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build && shx echo \"svgco.de\" > docs/CNAME && git add docs/",
     "serve": "vite preview",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
+    "lint:esm": "npx find-unused-exports",
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
     "lint:css": "npx stylelint \"**/*.css\" --fix",
     "fix": "npx prettier . --write"
@@ -21,6 +22,7 @@
     "eslint": "^7.24.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.2.0",
+    "find-unused-exports": "^1.2.0",
     "prettier": "^2.2.1",
     "shx": "^0.3.3",
     "stylelint": "^13.12.0",
