@@ -138,6 +138,7 @@ const createControls = (filter, props) => {
   button.textContent = i18n.t('reset');
   button.addEventListener('click', async () => {
     input.value = initial;
+    span.textContent = updateLabel(unit, initial);
     input.dispatchEvent(new Event('change'));
   });
 
