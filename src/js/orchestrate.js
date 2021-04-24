@@ -7,13 +7,19 @@ import { convertToColorSVG } from './color.js';
 import { optimizeSVG } from './svgo.js';
 import spinner from '/spinner.svg?raw';
 
-const displayResult = (optimizedSVG, img) => {
+const COLOR = 'color'
+const MONOCHROME = 'monochrome'
+
+const displayResult = (optimizedSVG, img, className) => {
   optimizedSVG = optimizedSVG
     .replace(/width="\d+" /, '')
     .replace(/height="\d+" /, '');
   img.src = URL.createObjectURL(
     new Blob([optimizedSVG], { type: 'image/svg+xml' }),
   );
+  img.classList.remove(COLOR)
+  img.classList.remove(MONOCHROME)
+  img.classList.add(className);
 };
 
 const startProcessing = async () => {
@@ -28,12 +34,12 @@ const startProcessing = async () => {
   if (colorRadio.checked) {
     convertToColorSVG(imageData)
       .then(optimizeSVG)
-      .then((optimizedColorSVG) => displayResult(optimizedColorSVG, img));
+      .then((optimizedColorSVG) => displayResult(optimizedColorSVG, img, COLOR));
   } else {
     convertToMonochromeSVG(imageData)
       .then(optimizeSVG)
       .then((optimizedMonochromeSVG) =>
-        displayResult(optimizedMonochromeSVG, img),
+        displayResult(optimizedMonochromeSVG, img, MONOCHROME),
       );
   }
 };

@@ -1,7 +1,7 @@
 :root {
   --margin: 0.25rem;
   --100vh: 100vh;
-  --menu-height: 3ex;
+  --menu-height: 2.5ex;
 
   color-scheme: dark light;
   accent-color: canvastext;
@@ -41,6 +41,7 @@ fieldset {
   border: none;
   margin-inline: 0;
   padding-inline: 0;
+  padding-block-start: 0;
 }
 
 .input-image {
@@ -48,7 +49,8 @@ fieldset {
   height: 5rem;
   object-fit: contain;
   position: absolute;
-  margin-top: calc(var(--menu-height) + var(--margin));
+  margin-inline-start: 1px;
+  margin-block-start: calc(var(--menu-height) + var(--margin) + 1px);
 }
 
 .output-image {
@@ -64,8 +66,8 @@ fieldset {
 }
 
 output {
-  border-left: 1px canvas solid;
-  border-top: 1px canvas solid;
+  border-left: 1px canvastext solid;
+  border-top: 1px canvastext solid;
   width: 100%;
   height: 0;
   flex-grow: 1;
@@ -105,7 +107,7 @@ form {
 .preprocess-input {
   display: flex;
   margin: var(--margin);
-  height: 2.5rem;
+  height: 4ex;
 }
 
 .wrapper {
@@ -122,6 +124,9 @@ form {
 
 .menu {
   height: var(--menu-height);
+  align-items: center;
+  display: flex;
+  gap: var(--margin);
 }
 
 .output {
@@ -157,6 +162,7 @@ form {
     background-color: #131313dd;
   }
 
+  .output-image.monochrome,
   .icon {
     filter: invert(100%);
   }
