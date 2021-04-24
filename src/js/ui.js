@@ -1,6 +1,6 @@
 import {
   canvasMain,
-  preprocessContainer,
+  fieldsetsContainer,
   posterizeCheckbox,
   posterizeLabel,
   colorRadio,
@@ -11,6 +11,8 @@ import {
   resetAllButton,
   fileOpenButton,
   saveSVGButton,
+  pasteButton,
+  copyButton,
   svgOutput,
   dropContainer,
 } from './domrefs.js';
@@ -18,6 +20,17 @@ import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import I18N from './i18n.js';
 import './filesystem.js';
+
+import monochromeIcon from 'material-design-icons/image/svg/production/ic_filter_b_and_w_48px.svg';
+import colorIcon from 'material-design-icons/image/svg/production/ic_palette_48px.svg';
+import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg';
+import scaleIcon from 'material-design-icons/image/svg/production/ic_straighten_48px.svg';
+import filterIcon from 'material-design-icons/image/svg/production/ic_filter_48px.svg';
+import tuneIcon from 'material-design-icons/image/svg/production/ic_tune_48px.svg';
+import openIcon from 'material-design-icons/file/svg/production/ic_folder_open_48px.svg';
+import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.svg';
+import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg';
+import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg';
 
 const i18n = new I18N();
 
@@ -69,8 +82,23 @@ const potraceOptions = {
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
 };
 
+const fieldsetsArray = [
+  { name: 'colorChannels', icon: paletteIcon },
+  { name: 'imageSize', icon: scaleIcon },
+  { name: 'imagePreprocessing', icon: filterIcon },
+  { name: 'svgpOtions', icon: tuneIcon },
+];
+
+const entriesArray = [
+  Object.entries(posterizeComponents),
+  Object.entries(scale),
+  Object.entries(filters),
+  Object.entries(potraceOptions),
+];
+
 const filterInputs = {};
 const filterSpans = {};
+const fieldsets = {};
 
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
@@ -83,7 +111,26 @@ const updateLabel = (unit, value) => {
   })`;
 };
 
-const createControls = (filter, props) => {
+const createIcon = (src) => {
+  const icon = document.createElement('img');
+  icon.classList.add('icon');
+  icon.src = src;
+  icon.alt = '';
+  return icon;
+};
+
+const createFieldset = (name, iconURL) => {
+  const fieldset = document.createElement('fieldset');
+  fieldsets[name] = fieldset;
+  const legend = document.createElement('legend');
+  const icon = createIcon(iconURL);
+  legend.append(icon);
+  legend.append(document.createTextNode(i18n.t(name)));
+  fieldset.append(legend);
+  return fieldset;
+};
+
+const createControls = (filter, props, fieldset) => {
   const { unit, min, max, initial } = props;
   const div = document.createElement('div');
   div.classList.add('preprocess-input');
@@ -146,10 +193,11 @@ const createControls = (filter, props) => {
   label.append(input);
   div.append(label);
   div.append(button);
-  preprocessContainer.append(div);
+  fieldset.append(div);
 };
 
 posterizeCheckbox.addEventListener('change', async () => {
+  fieldsets['colorChannels'].disabled = !posterizeCheckbox.checked;
   startProcessing();
 });
 
@@ -165,18 +213,15 @@ const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
 
-  for (const [filter, props] of Object.entries(posterizeComponents)) {
-    createControls(filter, props);
-  }
-  for (const [filter, props] of Object.entries(scale)) {
-    createControls(filter, props);
-  }
-  for (const [filter, props] of Object.entries(filters)) {
-    createControls(filter, props);
-  }
-  for (const [filter, props] of Object.entries(potraceOptions)) {
-    createControls(filter, props);
-  }
+  entriesArray.forEach((entries, i) => {
+    const { name, icon } = fieldsetsArray[i];
+    const fieldset = createFieldset(name, icon);
+    for (const [filter, props] of entries) {
+      createControls(filter, props, fieldset);
+    }
+    fieldsetsContainer.append(fieldset);
+  });
+
   inputImage.addEventListener('load', () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
@@ -190,10 +235,24 @@ const initUI = async () => {
 const changeLanguage = () => {
   resetAllButton.textContent = i18n.t('resetAll');
   posterizeLabel.textContent = i18n.t('posterizeInputImage');
-  colorLabel.textContent = i18n.t('colorSVG');
-  monochromeLabel.textContent = i18n.t('monochromeSVG');
-  fileOpenButton.textContent = i18n.t('openImage');
-  saveSVGButton.textContent = i18n.t('saveSVG');
+  colorLabel.innerHTML = '';
+  colorLabel.append(createIcon(colorIcon));
+  colorLabel.append(document.createTextNode(i18n.t('colorSVG')));
+  monochromeLabel.innerHTML = '';
+  monochromeLabel.append(createIcon(monochromeIcon));
+  monochromeLabel.append(document.createTextNode(i18n.t('monochromeSVG')));
+  fileOpenButton.innerHTML = '';
+  fileOpenButton.append(createIcon(openIcon));
+  fileOpenButton.append(document.createTextNode(i18n.t('openImage')));
+  saveSVGButton.innerHTML = '';
+  saveSVGButton.append(createIcon(saveIcon));
+  saveSVGButton.append(document.createTextNode(i18n.t('saveSVG')));
+  copyButton.innerHTML = '';
+  copyButton.append(createIcon(copyIcon));
+  copyButton.append(document.createTextNode(i18n.t('copySVG')));
+  pasteButton.innerHTML = '';
+  pasteButton.append(createIcon(pasteIcon));
+  pasteButton.append(document.createTextNode(i18n.t('pasteImage')));
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
 };
 
@@ -203,18 +262,11 @@ resetAllButton.addEventListener('click', async () => {
     filterSpans[filter].textContent = updateLabel(unit, initial);
   };
 
-  for (const [filter, props] of Object.entries(posterizeComponents)) {
-    reset(filter, props.unit, props.initial);
-  }
-  for (const [filter, props] of Object.entries(scale)) {
-    reset(filter, props.unit, props.initial);
-  }
-  for (const [filter, props] of Object.entries(filters)) {
-    reset(filter, props.unit, props.initial);
-  }
-  for (const [filter, props] of Object.entries(potraceOptions)) {
-    reset(filter, props.unit, props.initial);
-  }
+  entriesArray.forEach((entries) => {
+    for (const [filter, props] of entries) {
+      reset(filter, props.unit, props.initial);
+    }
+  });
   startProcessing();
 });
 

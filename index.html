@@ -16,40 +16,45 @@
   <body>
     <main>
       <div class="wrapper">
+        <form>
+          <div class="preprocess">
+            <div class="preprocess-input">
+              <input
+                id="color"
+                type="radio"
+                class="color"
+                name="output-option"
+                checked
+              />
+              <label for="color"></label>
+            </div>
+            <div class="preprocess-input">
+              <input
+                id="monochrome"
+                type="radio"
+                class="monochrome"
+                name="output-option"
+              />
+              <label for="monochrome"></label>
+            </div>
+            <div class="preprocess-input">
+              <button type="button" class="reset-all"></button>
+            </div>
+            <div class="preprocess-input">
+              <input id="posterize" type="checkbox" class="posterize" checked />
+              <label for="posterize"></label>
+            </div>
+            <div class="fieldsets"></div>
+          </div>
+        </form>
+      </div>
+      <div class="output">
         <div class="menu">
           <button class="open" type="button"></button>
           <button class="save" type="button"></button>
+          <button class="copy" type="button"></button>
+          <button class="paste" type="button"></button>
         </div>
-        <div class="preprocess">
-          <div class="preprocess-input">
-            <input id="posterize" type="checkbox" class="posterize" checked />
-            <label for="posterize"></label>
-          </div>
-          <div class="preprocess-input">
-            <input
-              id="color"
-              type="radio"
-              class="color"
-              name="output-option"
-              checked
-            />
-            <label for="color"></label>
-          </div>
-          <div class="preprocess-input">
-            <input
-              id="monochrome"
-              type="radio"
-              class="monochrome"
-              name="output-option"
-            />
-            <label for="monochrome"></label>
-          </div>
-          <div class="preprocess-input">
-            <button type="button" class="reset-all"></button>
-          </div>
-        </div>
-      </div>
-      <div class="output">
         <img
           class="input-image"
           crossorigin="anonymous"
