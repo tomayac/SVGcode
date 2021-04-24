@@ -23,12 +23,12 @@ export default {
           {
             src: './favicon.svg',
             type: 'image/svg+xml',
-            sizes: '150x150',
+            sizes: '340x340',
           },
           {
             src: './favicon.png',
             type: 'image/png',
-            sizes: '512x512',
+            sizes: '768x768',
           },
         ],
       },

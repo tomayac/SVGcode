@@ -2,9 +2,10 @@
   --margin: 0.25rem;
   --100vh: 100vh;
   --menu-height: 2.5ex;
+  --accent-color: hotpink;
 
   color-scheme: dark light;
-  accent-color: canvastext;
+  accent-color: var(--accent-color);
   font-family: system-ui, sans-serif;
 }
 
@@ -42,6 +43,7 @@ fieldset {
   margin-inline: 0;
   padding-inline: 0;
   padding-block-start: 0;
+  padding-block-end: 0.5rem;
 }
 
 .input-image {
@@ -60,14 +62,22 @@ fieldset {
 }
 
 .icon {
-  height: 2.5ex;
-  vertical-align: middle;
   margin-inline-end: var(--margin);
 }
 
+legend svg {
+  fill: var(--accent-color);
+}
+
+.icon svg {
+  width: 2.5ex;
+  height: 2.5ex;
+  fill: currentColor;
+  background-color: transparent;
+}
+
 output {
-  border-left: 1px canvastext solid;
-  border-top: 1px canvastext solid;
+  border: 1px canvastext solid;
   width: 100%;
   height: 0;
   flex-grow: 1;
@@ -85,13 +95,27 @@ output {
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
 }
 
+legend {
+  color: var(--accent-color);
+  display: flex;
+  align-content: center;
+}
+
 label {
+  font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
 }
 
 label,
 button {
   user-select: none;
+}
+
+button {
+  height: 3ex;
+  display: flex;
+  align-items: center;
+  place-content: center;
 }
 
 form {
@@ -107,10 +131,18 @@ form {
 .preprocess-input {
   display: flex;
   margin: var(--margin);
-  height: 4ex;
+  height: 4.5ex;
+  align-items: flex-end;
+}
+
+.other-input {
+  display: flex;
+  margin: var(--margin);
+  height: 2.75ex;
 }
 
 .wrapper {
+  width: 20rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -162,8 +194,7 @@ form {
     background-color: #131313dd;
   }
 
-  .output-image.monochrome,
-  .icon {
+  .output-image.monochrome {
     filter: invert(100%);
   }
 

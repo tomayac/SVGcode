@@ -1,7 +1,7 @@
 import {
   preProcessMainCanvas /* , preProcessInputImage*/,
 } from './preprocess.js';
-import { colorRadio, svgOutput } from './ui.js';
+import { colorRadio, svgOutput } from './domrefs.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
 import { optimizeSVG } from './svgo.js';
@@ -23,6 +23,10 @@ const displayResult = (optimizedSVG, img, className) => {
 };
 
 const startProcessing = async () => {
+  const previousImage = svgOutput.querySelector('img');
+  if (previousImage) {
+    URL.revokeObjectURL(previousImage.src);
+  }
   svgOutput.innerHTML = '';
   const img = document.createElement('img');
   img.classList.add('output-image');

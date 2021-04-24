@@ -1,5 +1,4 @@
 import {
-  canvasMain,
   fieldsetsContainer,
   posterizeCheckbox,
   posterizeLabel,
@@ -13,7 +12,6 @@ import {
   saveSVGButton,
   pasteButton,
   copyButton,
-  svgOutput,
   dropContainer,
 } from './domrefs.js';
 import { debounce } from './util.js';
@@ -21,16 +19,14 @@ import { startProcessing } from './orchestrate.js';
 import I18N from './i18n.js';
 import './filesystem.js';
 
-import monochromeIcon from 'material-design-icons/image/svg/production/ic_filter_b_and_w_48px.svg';
-import colorIcon from 'material-design-icons/image/svg/production/ic_palette_48px.svg';
-import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg';
-import scaleIcon from 'material-design-icons/image/svg/production/ic_straighten_48px.svg';
-import filterIcon from 'material-design-icons/image/svg/production/ic_filter_48px.svg';
-import tuneIcon from 'material-design-icons/image/svg/production/ic_tune_48px.svg';
-import openIcon from 'material-design-icons/file/svg/production/ic_folder_open_48px.svg';
-import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.svg';
-import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg';
-import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg';
+import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg?raw';
+import scaleIcon from 'material-design-icons/image/svg/production/ic_straighten_48px.svg?raw';
+import filterIcon from 'material-design-icons/image/svg/production/ic_filter_48px.svg?raw';
+import tuneIcon from 'material-design-icons/image/svg/production/ic_tune_48px.svg?raw';
+import openIcon from 'material-design-icons/file/svg/production/ic_folder_open_48px.svg?raw';
+import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.svg?raw';
+import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg?raw';
+import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg?raw';
 
 const i18n = new I18N();
 
@@ -83,17 +79,17 @@ const potraceOptions = {
 };
 
 const fieldsetsArray = [
+  { name: 'svgOptions', icon: tuneIcon },
   { name: 'colorChannels', icon: paletteIcon },
   { name: 'imageSize', icon: scaleIcon },
   { name: 'imagePreprocessing', icon: filterIcon },
-  { name: 'svgpOtions', icon: tuneIcon },
 ];
 
 const entriesArray = [
+  Object.entries(potraceOptions),
   Object.entries(posterizeComponents),
   Object.entries(scale),
   Object.entries(filters),
-  Object.entries(potraceOptions),
 ];
 
 const filterInputs = {};
@@ -112,10 +108,9 @@ const updateLabel = (unit, value) => {
 };
 
 const createIcon = (src) => {
-  const icon = document.createElement('img');
+  const icon = document.createElement('span');
   icon.classList.add('icon');
-  icon.src = src;
-  icon.alt = '';
+  icon.innerHTML = src;
   return icon;
 };
 
@@ -216,11 +211,18 @@ const initUI = async () => {
   entriesArray.forEach((entries, i) => {
     const { name, icon } = fieldsetsArray[i];
     const fieldset = createFieldset(name, icon);
+    if (name === 'colorChannels') {
+      fieldsets['colorChannels'].append(posterizeCheckbox.parentNode);
+    } else if (name === 'svgOptions') {
+      fieldsets['svgOptions'].append(colorRadio.parentNode);
+      fieldsets['svgOptions'].append(monochromeRadio.parentNode);
+    }
     for (const [filter, props] of entries) {
       createControls(filter, props, fieldset);
     }
     fieldsetsContainer.append(fieldset);
   });
+  fieldsetsContainer.append(resetAllButton.parentNode);
 
   inputImage.addEventListener('load', () => {
     inputImage.width = inputImage.naturalWidth;
@@ -235,12 +237,8 @@ const initUI = async () => {
 const changeLanguage = () => {
   resetAllButton.textContent = i18n.t('resetAll');
   posterizeLabel.textContent = i18n.t('posterizeInputImage');
-  colorLabel.innerHTML = '';
-  colorLabel.append(createIcon(colorIcon));
-  colorLabel.append(document.createTextNode(i18n.t('colorSVG')));
-  monochromeLabel.innerHTML = '';
-  monochromeLabel.append(createIcon(monochromeIcon));
-  monochromeLabel.append(document.createTextNode(i18n.t('monochromeSVG')));
+  colorLabel.textContent = i18n.t('colorSVG');
+  monochromeLabel.textContent = i18n.t('monochromeSVG');
   fileOpenButton.innerHTML = '';
   fileOpenButton.append(createIcon(openIcon));
   fileOpenButton.append(document.createTextNode(i18n.t('openImage')));
@@ -270,19 +268,4 @@ resetAllButton.addEventListener('click', async () => {
   startProcessing();
 });
 
-export {
-  initUI,
-  filters,
-  filterInputs,
-  inputImage,
-  colorRadio,
-  posterizeCheckbox,
-  fileOpenButton,
-  dropContainer,
-  saveSVGButton,
-  canvasMain,
-  svgOutput,
-  COLORS,
-  SCALE,
-  POTRACE,
-};
+export { initUI, filters, filterInputs, COLORS, SCALE, POTRACE };

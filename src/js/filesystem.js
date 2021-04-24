@@ -3,9 +3,11 @@ import {
   inputImage,
   fileOpenButton,
   saveSVGButton,
+  copyButton,
+  pasteButton,
   svgOutput,
   dropContainer,
-} from './ui.js';
+} from './domrefs.js';
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -77,11 +79,26 @@ document.addEventListener('drop', async (event) => {
 
 saveSVGButton.addEventListener('click', async () => {
   try {
-    const blob = new Blob([svgOutput.innerHTML], {
-      type: 'image/svg+xml',
-    });
+    const url = svgOutput.querySelector('img').src;
+    const blob = await fetch(url).then((res) => res.blob());
     await fileSave(blob, { fileName: '', description: 'SVG file' });
   } catch (err) {
     console.error(err.name, err.message);
   }
 });
+
+pasteButton.addEventListener('click', async () => {
+  const clipboardItems = await navigator.clipboard.read();
+  for (const clipboardItem of clipboardItems) {
+    for (const type of clipboardItem.types) {
+      if (type.startsWith('image/')) {
+        const image = await clipboardItem.getType(type);
+        const blobURL = URL.createObjectURL(image);
+        inputImage.src = blobURL;
+        return;
+      }
+    }
+  }
+});
+
+copyButton.addEventListener('click', () => {});

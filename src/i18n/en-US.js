@@ -35,9 +35,9 @@ const translations = {
   monochromeSVG: 'Monochrome SVG',
 
   colorChannels: 'Color Channels',
-  imageSize: 'Input Image Size',
-  imagePreprocessing: 'Input Image Preprocessing',
-  svgpOtions: 'SVG Options',
+  imageSize: 'Input Size',
+  imagePreprocessing: 'Input Preprocessing',
+  svgOptions: 'SVG Options',
 };
 
 // ignore unused exports default
