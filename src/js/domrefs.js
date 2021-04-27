@@ -13,7 +13,6 @@ const saveSVGButton = document.querySelector('.save');
 const copyButton = document.querySelector('.copy');
 const pasteButton = document.querySelector('.paste');
 const svgOutput = document.querySelector('output');
-const zoomInput = document.querySelector('.zoom')
 const dropContainer = document.documentElement;
 
 export {
@@ -32,6 +31,5 @@ export {
   copyButton,
   pasteButton,
   svgOutput,
-  zoomInput,
   dropContainer,
 };

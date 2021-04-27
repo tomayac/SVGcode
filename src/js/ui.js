@@ -13,6 +13,7 @@ import {
   pasteButton,
   copyButton,
   dropContainer,
+  svgOutput,
 } from './domrefs.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
@@ -95,6 +96,12 @@ const entriesArray = [
 const filterInputs = {};
 const filterSpans = {};
 const fieldsets = {};
+
+let x = 0;
+let y = 0;
+let img = null;
+let zoomScale = 1;
+const initialViewBox = {};
 
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
@@ -267,5 +274,57 @@ resetAllButton.addEventListener('click', async () => {
   });
   startProcessing();
 });
+
+const onPointerMove = (e) => {
+  img.style.transform = `translateX(${e.x - x}px) translateY(${e.y - y}px)`;
+}
+
+const onDragStart = (e) => {
+  e.preventDefault();
+  return false;
+}
+
+svgOutput.addEventListener('pointerdown', (e) => {
+  img = svgOutput.querySelector('img');
+  if (!img) {
+    return;
+  }
+  img.addEventListener('dragstart', onDragStart)
+  x = e.x - x;
+  y = e.y - y
+  img.style.transform = `translateX(${x}px) translateY(${y}px)`;
+  svgOutput.addEventListener('pointermove', onPointerMove)
+});
+
+svgOutput.addEventListener('pointerup', (e) => {
+  x = e.x - x;
+  y = e.y - y
+  img.removeEventListener('dragstart', onDragStart);
+  svgOutput.removeEventListener('pointermove', onPointerMove);
+});
+
+svgOutput.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const svg = svgOutput.querySelector('svg');
+  if (!svg) {
+    return;
+  }
+  zoomScale += e.deltaY * -0.1;
+  zoomScale = Math.min(Math.max(.1, zoomScale), 2);
+
+  const viewBox = svg.getAttribute('viewBox');
+  if (!initialViewBox.x) {
+    const [x, y, width, height] = viewBox.split(' ')
+    initialViewBox.x = Number(x);
+    initialViewBox.y = Number(y);
+    initialViewBox.width = Number(width);
+    initialViewBox.height = Number(height)
+  }
+  const newWidth = Math.ceil(initialViewBox.width * zoomScale);
+  const newHeight = Math.ceil(initialViewBox.height * zoomScale);
+  const newX = Math.floor(initialViewBox.x + (initialViewBox.width - newWidth) / 2);
+  const newY = Math.floor(initialViewBox.y + (initialViewBox.height - newHeight) / 2);
+  svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`)
+})
 
 export { initUI, filters, filterInputs, COLORS, SCALE, POTRACE };
