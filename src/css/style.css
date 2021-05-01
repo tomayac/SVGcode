@@ -2,7 +2,7 @@
   --space: 0.25rem;
   --100vh: 100vh;
   --menu-height: 2.5ex;
-  --accent-color: hotpink;
+  --accent-color: #e60073;
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -208,6 +208,10 @@ form {
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --accent-color: hotpink;
+  }
+
   .dropenter::before {
     background-color: #131313dd;
   }

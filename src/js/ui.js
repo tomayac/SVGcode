@@ -67,14 +67,14 @@ const filters = {
 };
 
 const posterizeComponents = {
-  [COLORS.red]: { unit: STEPS, initial: 10, min: 1, max: 55 },
-  [COLORS.green]: { unit: STEPS, initial: 10, min: 1, max: 55 },
-  [COLORS.blue]: { unit: STEPS, initial: 10, min: 1, max: 55 },
+  [COLORS.red]: { unit: STEPS, initial: 10, min: 1, max: 20 },
+  [COLORS.green]: { unit: STEPS, initial: 10, min: 1, max: 20 },
+  [COLORS.blue]: { unit: STEPS, initial: 10, min: 1, max: 20 },
   [COLORS.alpha]: { unit: STEPS, initial: 1, min: 1, max: 10 },
 };
 
 const scale = {
-  [SCALE.scale]: { unit: PERCENT, initial: 100, min: 1, max: 100 },
+  [SCALE.scale]: { unit: PERCENT, initial: 100, min: 1, max: 200 },
 };
 
 const potraceOptions = {
@@ -239,7 +239,9 @@ const initUI = async () => {
   inputImage.addEventListener('load', () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
-    startProcessing();
+    setTimeout(() => {
+      startProcessing();
+    }, 100);
   });
   if (inputImage.complete) {
     inputImage.dispatchEvent(new Event('load'));
