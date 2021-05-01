@@ -17,24 +17,12 @@ let lastClassName = null;
 */
 
 const displayResult = (optimizedSVG, img, className) => {
-  //URL.revokeObjectURL(img.src);
   optimizedSVG = optimizedSVG
     .replace(/width="\d+" /, '')
     .replace(/height="\d+" /, '');
-
-  /*
-  img.src = URL.createObjectURL(
-    new Blob([optimizedSVG], { type: 'image/svg+xml' }),
-  );
-  img.classList.remove(COLOR);
-  img.classList.remove(MONOCHROME);
-  img.classList.add(className);
-  *//*
-  if (!lastOptimizedSVG) {
-    lastOptimizedSVG = optimizedSVG;
-    lastImg = img;
-    lastClassName = className;
-  }*/
+  svgOutput.classList.remove(COLOR);
+  svgOutput.classList.remove(MONOCHROME);
+  svgOutput.classList.add(className);
   svgOutput.innerHTML = optimizedSVG;
 };
 
@@ -43,14 +31,9 @@ const startProcessing = async () => {
   if (previousImage) {
     URL.revokeObjectURL(previousImage.src);
   }
-  /*
-  lastOptimizedSVG = null;
-  lastImg = null;
-  lastClassName = null;
-  */
   svgOutput.innerHTML = '';
   const img = document.createElement('img');
-  img.classList.add('output-image');
+  img.classList.add('spinner');
   img.src = URL.createObjectURL(new Blob([spinner], { type: 'image/svg+xml' }));
   svgOutput.append(img);
   const imageData = preProcessMainCanvas();

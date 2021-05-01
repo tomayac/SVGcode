@@ -1,5 +1,5 @@
 :root {
-  --margin: 0.25rem;
+  --space: 0.25rem;
   --100vh: 100vh;
   --menu-height: 2.5ex;
   --accent-color: hotpink;
@@ -23,7 +23,7 @@ body {
 }
 
 main {
-  padding: var(--margin);
+  padding: var(--space);
   display: flex;
   height: 100%;
 }
@@ -52,18 +52,17 @@ fieldset {
   object-fit: contain;
   position: absolute;
   margin-inline-start: 2px;
-  margin-block-start: calc(var(--menu-height) + var(--margin) + 2px);
+  margin-block-start: calc(var(--menu-height) + var(--space) + 2px);
   z-index: 1;
 }
 
-.output-image {
+.spinner {
   width: 100%;
   height: 100%;
-  cursor: move;
 }
 
 .icon {
-  margin-inline-end: var(--margin);
+  margin-inline-end: var(--space);
 }
 
 legend svg {
@@ -95,6 +94,7 @@ output {
     ),
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
   overflow: hidden;
+  cursor: move;
 }
 
 legend {
@@ -132,14 +132,14 @@ form {
 
 .preprocess-input {
   display: flex;
-  margin: var(--margin);
+  margin: var(--space);
   height: 4.5ex;
   align-items: flex-end;
 }
 
 .other-input {
   display: flex;
-  margin: var(--margin);
+  margin: var(--space);
   height: 2.75ex;
 }
 
@@ -148,8 +148,8 @@ form {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: var(--margin);
-  gap: var(--margin);
+  padding: var(--space);
+  gap: var(--space);
 }
 
 .fieldsets {
@@ -160,14 +160,14 @@ form {
   height: var(--menu-height);
   align-items: center;
   display: flex;
-  gap: var(--margin);
+  gap: var(--space);
 }
 
 .output {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--margin);
+  gap: var(--space);
   width: 100%;
 }
 
@@ -192,7 +192,7 @@ form {
     background-color: #131313dd;
   }
 
-  .output-image.monochrome {
+  .monochrome svg {
     filter: invert(100%);
   }
 
