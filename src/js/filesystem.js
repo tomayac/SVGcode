@@ -78,9 +78,9 @@ document.addEventListener('drop', async (event) => {
 });
 
 saveSVGButton.addEventListener('click', async () => {
-  try {    
+  try {
     const svg = svgOutput.innerHTML;
-    const blob = new Blob([svg], {type: 'image/svg+xml'});
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
     await fileSave(blob, { fileName: '', description: 'SVG file' });
   } catch (err) {
     console.error(err.name, err.message);
@@ -91,7 +91,7 @@ pasteButton.addEventListener('click', async () => {
   const clipboardItems = await navigator.clipboard.read();
   for (const clipboardItem of clipboardItems) {
     for (const type of clipboardItem.types) {
-      if (type.startsWith('image/')) {       
+      if (type.startsWith('image/')) {
         const image = await clipboardItem.getType(type);
         if (!image) {
           return;
@@ -106,8 +106,10 @@ pasteButton.addEventListener('click', async () => {
 
 copyButton.addEventListener('click', () => {
   const svgCode = svgOutput.innerHTML;
-  const blob = new Blob([svgCode], {type: 'text/plain'});
-  navigator.clipboard.write([new ClipboardItem({
-    [blob.type]: blob
-  })])
+  const blob = new Blob([svgCode], { type: 'text/plain' });
+  navigator.clipboard.write([
+    new ClipboardItem({
+      [blob.type]: blob,
+    }),
+  ]);
 });
