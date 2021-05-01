@@ -4,15 +4,11 @@ import MonochromeSVGWorker from './monochromeworker.js?worker';
 const monochromeSVGWorker = new MonochromeSVGWorker();
 
 const convertToMonochromeSVG = async (imageData) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
       channel.port1.close();
-      if (data.error) {
-        reject(data.error);
-      } else {
-        resolve(data.result);
-      }
+      resolve(data.result);
     };
 
     const config = {

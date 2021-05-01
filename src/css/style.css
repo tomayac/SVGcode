@@ -80,13 +80,6 @@ legend svg {
   fill: var(--accent-color);
 }
 
-.icon svg {
-  width: 2.5ex;
-  height: 2.5ex;
-  fill: currentColor;
-  background-color: transparent;
-}
-
 output {
   border: 1px canvastext solid;
   width: 100%;
@@ -106,6 +99,22 @@ output {
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
   overflow: hidden;
   cursor: grab;
+}
+
+output img {
+  cursor: wait;
+}
+
+output svg {
+  width: 100%;
+  height: 100%;
+}
+
+.icon svg {
+  width: 2.5ex;
+  height: 2.5ex;
+  fill: currentColor;
+  background-color: transparent;
 }
 
 legend {

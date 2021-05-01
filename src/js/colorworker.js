@@ -20,13 +20,15 @@ const extractColors = (imageData) => {
   return colors;
 };
 
-const convertToColorSVG = async (imageData, config) => {
+const convertToColorSVG = async (imageData, config, progressPort) => {
   const colors = extractColors(imageData);
 
   let prefix = '';
   let suffix = '';
   let svgString = '';
 
+  const promises = [];
+  let processed = 0;
   for (const [color, occurrences] of Object.entries(colors)) {
     const newImageData = new ImageData(imageData.width, imageData.height);
     newImageData.data.fill(255);
@@ -41,17 +43,28 @@ const convertToColorSVG = async (imageData, config) => {
       newImageData.data[location + 2] = 0;
       newImageData.data[location + 3] = 255;
     }
-    let svg = await loadFromImageData(
-      newImageData.data,
-      newImageData.width,
-      newImageData.height,
-      config,
+    promises.push(
+      new Promise(async (resolve) => {
+        let svg = await loadFromImageData(
+          newImageData.data,
+          newImageData.width,
+          newImageData.height,
+          config,
+        );
+        svg = svg.replace(
+          'fill="#000000" stroke="none"',
+          `fill="rgba(${color})" stroke-width="1px" stroke="rgba(${color})"`,
+        );
+        processed++;
+        progressPort.postMessage({ processed, total });
+        console.log(`Potraced %c■■`, `color: rgba(${color})`);
+        resolve(svg);
+      }),
     );
-    svg = svg.replace(
-      'fill="#000000" stroke="none"',
-      `fill="rgba(${color})" stroke-width="1px" stroke="rgba(${color})"`,
-    );
-
+  }
+  const total = promises.length;
+  const svgs = await Promise.all(promises);
+  for (const svg of svgs) {
     if (!prefix) {
       prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
       suffix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');
@@ -59,11 +72,12 @@ const convertToColorSVG = async (imageData, config) => {
     }
     svgString += svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
   }
-  return svgString + suffix;
+  svgString += suffix;
+  return svgString;
 };
 
 self.addEventListener('message', async (e) => {
   const { imageData, config } = e.data;
-  const svg = await convertToColorSVG(imageData, config);
+  const svg = await convertToColorSVG(imageData, config, e.ports[1]);
   e.ports[0].postMessage({ result: svg });
 });

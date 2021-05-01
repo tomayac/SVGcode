@@ -4,54 +4,45 @@ import {
 import { colorRadio, svgOutput } from './domrefs.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
-import { optimizeSVG } from './svgo.js';
 
-import spinner from '/spinner.svg?raw';
+import spinnerSVG from '/spinner.svg?raw';
 
 const COLOR = 'color';
 const MONOCHROME = 'monochrome';
-/*
-let lastOptimizedSVG = null;
-let lastImg = null;
-let lastClassName = null;
-*/
 
-const displayResult = (optimizedSVG, img, className) => {
-  optimizedSVG = optimizedSVG
-    .replace(/width="\d+" /, '')
-    .replace(/height="\d+" /, '');
+const displayResult = (svg, className) => {
+  svg = svg
+    .replace(/\s+width="\d+(?:\.\d+)?"/, '')
+    .replace(/\s+height="\d+(?:\.\d+)"/, '');
   svgOutput.classList.remove(COLOR);
   svgOutput.classList.remove(MONOCHROME);
   svgOutput.classList.add(className);
-  svgOutput.innerHTML = optimizedSVG;
+  svgOutput.innerHTML = svg;
 };
 
 const startProcessing = async () => {
-  const previousImage = svgOutput.querySelector('img');
-  if (previousImage) {
-    URL.revokeObjectURL(previousImage.src);
-  }
   svgOutput.innerHTML = '';
-  const img = document.createElement('img');
-  img.classList.add('spinner');
-  img.src = URL.createObjectURL(new Blob([spinner], { type: 'image/svg+xml' }));
-  svgOutput.append(img);
+  let spinner = svgOutput.querySelector('img');
+  if (!spinner) {
+    spinner = document.createElement('img');
+    spinner.classList.add('spinner');
+    spinner.src = URL.createObjectURL(
+      new Blob([spinnerSVG], { type: 'image/svg+xml' }),
+    );
+    svgOutput.append(spinner);
+  }
+  spinner.style.display = 'block';
   const imageData = preProcessMainCanvas();
   // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
   // const imageData = await preProcessInputImage();
   if (colorRadio.checked) {
-    convertToColorSVG(imageData)
-      .then(optimizeSVG)
-      .then((optimizedColorSVG) =>
-        displayResult(optimizedColorSVG, img, COLOR),
-      );
+    const svg = await convertToColorSVG(imageData);
+    displayResult(svg, COLOR);
   } else {
-    convertToMonochromeSVG(imageData)
-      .then(optimizeSVG)
-      .then((optimizedMonochromeSVG) =>
-        displayResult(optimizedMonochromeSVG, img, MONOCHROME),
-      );
+    const svg = await convertToMonochromeSVG(imageData);
+    displayResult(svg, MONOCHROME);
   }
+  spinner.style.display = 'none';
 };
 
 export { startProcessing };

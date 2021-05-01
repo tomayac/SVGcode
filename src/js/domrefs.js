@@ -13,8 +13,9 @@ const saveSVGButton = document.querySelector('.save');
 const copyButton = document.querySelector('.copy');
 const pasteButton = document.querySelector('.paste');
 const svgOutput = document.querySelector('output');
-const dropContainer = document.documentElement;
 const debugCheckbox = document.querySelector('.debug');
+const progress = document.querySelector('progress');
+const dropContainer = document.documentElement;
 
 export {
   canvasMain,
@@ -34,4 +35,5 @@ export {
   svgOutput,
   dropContainer,
   debugCheckbox,
+  progress,
 };

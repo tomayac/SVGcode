@@ -8,6 +8,7 @@ import {
   svgOutput,
   dropContainer,
 } from './domrefs.js';
+import { optimizeSVG } from './svgo.js';
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -79,7 +80,8 @@ document.addEventListener('drop', async (event) => {
 
 saveSVGButton.addEventListener('click', async () => {
   try {
-    const svg = svgOutput.innerHTML;
+    let svg = svgOutput.innerHTML;
+    svg = await optimizeSVG(svg);
     const blob = new Blob([svg], { type: 'image/svg+xml' });
     await fileSave(blob, { fileName: '', description: 'SVG file' });
   } catch (err) {
@@ -104,9 +106,10 @@ pasteButton.addEventListener('click', async () => {
   }
 });
 
-copyButton.addEventListener('click', () => {
-  const svgCode = svgOutput.innerHTML;
-  const blob = new Blob([svgCode], { type: 'text/plain' });
+copyButton.addEventListener('click', async () => {
+  let svg = svgOutput.innerHTML;
+  svg = await optimizeSVG(svg);
+  const blob = new Blob([svg], { type: 'text/plain' });
   navigator.clipboard.write([
     new ClipboardItem({
       [blob.type]: blob,

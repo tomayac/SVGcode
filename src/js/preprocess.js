@@ -32,15 +32,11 @@ const preProcessMainCanvas = () => {
 // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
 /*
 const preProcessInputImage = async () => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({data}) => {
-      channel.port1.close();
-      if (data.error) {
-        reject(data.error);
-      } else {
-        resolve(data.result);
-      }
+      channel.port1.close();     
+      resolve(data.result);
     };
 
     const { width, height } = getScaledDimensions();
