@@ -6,7 +6,7 @@ import { inputImage, canvasMain, posterizeCheckbox } from './domrefs.js';
 // const preProcessWorker = new PreProcessWorker();
 
 // const offscreen = canvasMain.transferControlToOffscreen();
-const ctxMain = canvasMain.getContext('2d');
+const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
 ctxMain.imageSmoothingEnabled = false;
 
 const preProcessMainCanvas = () => {

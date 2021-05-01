@@ -48,9 +48,10 @@ const convertToColorSVG = async (imageData, config) => {
       config,
     );
     svg = svg.replace(
-      'fill="#000000"',
-      `fill="rgba(${color})" stroke="rgba(${color})"`,
+      'fill="#000000" stroke="none"',
+      `fill="rgba(${color})" stroke-width="1px" stroke="rgba(${color})"`,
     );
+
     if (!prefix) {
       prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
       suffix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');

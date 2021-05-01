@@ -14,6 +14,8 @@ import {
   copyButton,
   dropContainer,
   svgOutput,
+  debugCheckbox,
+  canvasMain,
 } from './domrefs.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
@@ -101,7 +103,7 @@ let x = 0;
 let y = 0;
 let svg = null;
 let zoomScale = 1;
-let initialViewBox = {};
+const initialViewBox = {};
 
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
@@ -199,7 +201,10 @@ const createControls = (filter, props, fieldset) => {
 };
 
 posterizeCheckbox.addEventListener('change', async () => {
-  fieldsets['colorChannels'].disabled = !posterizeCheckbox.checked;
+  const disabled = !posterizeCheckbox.checked;
+  Object.keys(COLORS).forEach((color) => {
+    filterInputs[color].disabled = disabled;
+  });
   startProcessing();
 });
 
@@ -281,53 +286,60 @@ const onDragStart = (e) => {
 };
 
 const onPointerMove = (e) => {
-  const viewBox = svg.getAttribute('viewBox');
-  const [, , width, height] = viewBox.split(' ');
   const newX = Math.floor(e.x - x);
   const newY = Math.floor(e.y - y);
-  svg.setAttribute('viewBox', `${-newX} ${-newY} ${width} ${height}`);
+  svg.setAttribute(
+    'viewBox',
+    `${-newX} ${-newY} ${initialViewBox.width} ${initialViewBox.height}`,
+  );
 };
 
 svgOutput.addEventListener('pointerdown', (e) => {
-  initialViewBox = {};
-  svg = svgOutput.querySelector('svg');
+  if (e.buttons > 1) {
+    return;
+  }
+  svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
   svg.addEventListener('dragstart', onDragStart);
-  const viewBox = svg.getAttribute('viewBox');
-  const [_x, _y] = viewBox.split(' ');
-  x = Math.floor(e.x - -1 * _x);
-  y = Math.floor(e.y - -1 * _y);
+  storeInitialViewBox();
+  x = Math.floor(e.x + initialViewBox.x);
+  y = Math.floor(e.y + initialViewBox.y);
   svgOutput.addEventListener('pointermove', onPointerMove);
+  svgOutput.style.cursor = 'grabbing';
 });
 
 svgOutput.addEventListener('pointerup', (e) => {
-  const viewBox = svg.getAttribute('viewBox');
-  const [_x, _y] = viewBox.split(' ');
-  x = _x;
-  y = _y;
-  svgOutput.removeEventListener('pointermove', onPointerMove);
-  svg.removeEventListener('dragstart', onDragStart);
-  initialViewBox = {};
-});
-
-svgOutput.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  const svg = svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
-  zoomScale += e.deltaY * -0.01;
+  svgOutput.removeEventListener('pointermove', onPointerMove);
+  svg.removeEventListener('dragstart', onDragStart);
+  storeInitialViewBox();
+  svgOutput.style.cursor = 'grab';
+});
 
+const storeInitialViewBox = () => {
   const viewBox = svg.getAttribute('viewBox');
-  if (!initialViewBox.x) {
-    const [x, y, width, height] = viewBox.split(' ');
-    initialViewBox.x = Number(x);
-    initialViewBox.y = Number(y);
-    initialViewBox.width = Number(width);
-    initialViewBox.height = Number(height);
+  const [x, y, width, height] = viewBox.split(' ');
+  initialViewBox.x = Number(x);
+  initialViewBox.y = Number(y);
+  initialViewBox.width = Number(width);
+  initialViewBox.height = Number(height);
+};
+
+svgOutput.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  svg = svg || svgOutput.querySelector('svg');
+  if (!svg) {
+    return;
   }
+  if (initialViewBox.width === undefined) {
+    storeInitialViewBox();
+  }
+  zoomScale += e.deltaY * -0.005;
+  zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
   const newWidth = Math.ceil(initialViewBox.width * zoomScale);
   const newHeight = Math.ceil(initialViewBox.height * zoomScale);
   if (newWidth <= 0 || newHeight <= 0) {
@@ -340,6 +352,10 @@ svgOutput.addEventListener('wheel', (e) => {
     initialViewBox.y + (initialViewBox.height - newHeight) / 2,
   );
   svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
+});
+
+debugCheckbox.addEventListener('click', () => {
+  canvasMain.classList.toggle('debug');
 });
 
 export { initUI, filters, filterInputs, COLORS, SCALE, POTRACE };

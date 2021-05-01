@@ -35,7 +35,17 @@ input[type='range'] {
 
 canvas {
   display: none;
+}
+
+canvas.debug {
+  display: block;
+  top: calc(5rem + var(--space));
   image-rendering: pixelated;
+  margin-inline-start: 2px;
+  margin-block-start: calc(var(--menu-height) + var(--space) + 2px);
+  position: absolute;
+  z-index: 1;
+  cursor: default;
 }
 
 fieldset {
@@ -54,6 +64,7 @@ fieldset {
   margin-inline-start: 2px;
   margin-block-start: calc(var(--menu-height) + var(--space) + 2px);
   z-index: 1;
+  cursor: default;
 }
 
 .spinner {
@@ -84,8 +95,7 @@ output {
   display: block;
   background-position: 0 0, 10px 10px;
   background-size: 20px 20px;
-  background-image:
-    linear-gradient(
+  background-image: linear-gradient(
       45deg,
       #eee 25%,
       transparent 25%,
@@ -95,7 +105,7 @@ output {
     ),
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
   overflow: hidden;
-  cursor: move;
+  cursor: grab;
 }
 
 legend {
@@ -198,8 +208,7 @@ form {
   }
 
   output {
-    background-image:
-      linear-gradient(
+    background-image: linear-gradient(
         45deg,
         #131313 25%,
         transparent 25%,
