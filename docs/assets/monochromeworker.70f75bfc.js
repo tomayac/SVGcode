@@ -1,1 +1,0 @@
-import{l as a}from"./vendor.73377355.js";self.addEventListener("message",(async s=>{const{imageData:t,config:e}=s.data,i=await(async(s,t)=>await a(s.data,s.width,s.height,t))(t,e);s.ports[0].postMessage({result:i})}));

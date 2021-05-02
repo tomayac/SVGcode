@@ -87,7 +87,7 @@ legend svg {
 }
 
 output {
-  border: 1px canvastext solid;
+  border: 1px #eee solid;
   width: 100%;
   flex-grow: 1;
   display: block;
@@ -143,6 +143,15 @@ button {
   display: flex;
   align-items: center;
   place-content: center;
+  background-color: transparent;
+  border: none;
+  margin-inline-end: var(--space);
+  cursor: pointer;
+}
+
+label:hover,
+button:hover {
+  color: var(--accent-color);
 }
 
 form {
@@ -234,6 +243,7 @@ form {
   }
 
   output {
+    border: 1px #000 solid;
     background-image: linear-gradient(
         45deg,
         #131313 25%,
