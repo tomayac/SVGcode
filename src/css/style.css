@@ -40,13 +40,18 @@ canvas {
 
 canvas.debug {
   display: block;
-  top: calc(var(--input-image-height) + var(--space));
   image-rendering: pixelated;
   margin-inline-start: var(--space);
-  margin-block-start: calc(var(--menu-height) + 2 * var(--space));
+  margin-block-start: calc(
+    var(--menu-height) + 4 * var(--space) + var(--input-image-height)
+  );
   position: absolute;
   z-index: 1;
   cursor: default;
+}
+
+progress.debug {
+  display: block;
 }
 
 fieldset {

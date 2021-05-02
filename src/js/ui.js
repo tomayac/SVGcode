@@ -17,6 +17,7 @@ import {
   debugCheckbox,
   canvasMain,
   toast,
+  progress,
 } from './domrefs.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
@@ -164,6 +165,7 @@ const createControls = (filter, props, fieldset) => {
     input.addEventListener(
       'change',
       debounce(async () => {
+        resetZoomAndPan();
         await startProcessing();
       }, 250),
     );
@@ -171,6 +173,7 @@ const createControls = (filter, props, fieldset) => {
     input.addEventListener(
       'change',
       debounce(async () => {
+        resetZoomAndPan();
         await startProcessing();
       }, 250),
     );
@@ -178,6 +181,7 @@ const createControls = (filter, props, fieldset) => {
     input.addEventListener(
       'change',
       debounce(async () => {
+        resetZoomAndPan();
         await startProcessing();
       }, 250),
     );
@@ -204,7 +208,8 @@ posterizeCheckbox.addEventListener('change', async () => {
   Object.keys(COLORS).forEach((color) => {
     filterInputs[color].disabled = disabled;
   });
-  startProcessing();
+  resetZoomAndPan();
+  await startProcessing();
 });
 
 const resetZoomAndPan = () => {
@@ -217,12 +222,12 @@ const resetZoomAndPan = () => {
 
 colorRadio.addEventListener('change', async () => {
   resetZoomAndPan();
-  startProcessing();
+  await startProcessing();
 });
 
 monochromeRadio.addEventListener('change', async () => {
   resetZoomAndPan();
-  startProcessing();
+  await startProcessing();
 });
 
 const initUI = async () => {
@@ -248,8 +253,9 @@ const initUI = async () => {
   inputImage.addEventListener('load', () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
-    setTimeout(() => {
-      startProcessing();
+    setTimeout(async () => {
+      resetZoomAndPan();
+      await startProcessing();
     }, 200);
   });
   if (inputImage.complete) {
@@ -288,7 +294,8 @@ resetAllButton.addEventListener('click', async () => {
       reset(filter, props.unit, props.initial);
     }
   });
-  startProcessing();
+  resetZoomAndPan();
+  await startProcessing();
 });
 
 const onDragStart = (e) => {
@@ -367,6 +374,7 @@ svgOutput.addEventListener('wheel', (e) => {
 
 debugCheckbox.addEventListener('click', () => {
   canvasMain.classList.toggle('debug');
+  progress.classList.toggle('debug');
 });
 
 const showToast = (message) => {

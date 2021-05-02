@@ -9,6 +9,9 @@ import { i18n } from './i18n.js';
     onOfflineReady() {
       showToast(i18n.t('readyToWorkOffline'));
     },
+    onNeedRefresh() {
+      location.reload();
+    },
   });
   updateSW();
 })();
