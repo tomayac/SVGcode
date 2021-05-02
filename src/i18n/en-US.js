@@ -38,6 +38,8 @@ const translations = {
   imageSize: 'Input Size',
   imagePreprocessing: 'Input Preprocessing',
   svgOptions: 'SVG Options',
+
+  readyToWorkOffline: 'Ready to work offline.',
 };
 
 // ignore unused exports default

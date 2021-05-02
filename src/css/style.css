@@ -3,6 +3,7 @@
   --100vh: 100vh;
   --menu-height: 2.5ex;
   --accent-color: #e60073;
+  --input-image-height: 5rem;
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -39,10 +40,10 @@ canvas {
 
 canvas.debug {
   display: block;
-  top: calc(5rem + var(--space));
+  top: calc(var(--input-image-height) + var(--space));
   image-rendering: pixelated;
-  margin-inline-start: 2px;
-  margin-block-start: calc(var(--menu-height) + var(--space) + 2px);
+  margin-inline-start: var(--space);
+  margin-block-start: calc(var(--menu-height) + 2 * var(--space));
   position: absolute;
   z-index: 1;
   cursor: default;
@@ -53,16 +54,16 @@ fieldset {
   margin-inline: 0;
   padding-inline: 0;
   padding-block-start: 0;
-  padding-block-end: 0.5rem;
+  padding-block-end: calc(2 * var(--space));
 }
 
 .input-image {
   width: auto;
-  height: 5rem;
+  height: var(--input-image-height);
   object-fit: contain;
   position: absolute;
-  margin-inline-start: 2px;
-  margin-block-start: calc(var(--menu-height) + var(--space) + 2px);
+  margin-inline-start: var(--space);
+  margin-block-start: calc(var(--menu-height) + 2 * var(--space));
   z-index: 1;
   cursor: default;
 }
@@ -83,11 +84,10 @@ legend svg {
 output {
   border: 1px canvastext solid;
   width: 100%;
-  height: 0;
   flex-grow: 1;
   display: block;
-  background-position: 0 0, 10px 10px;
-  background-size: 20px 20px;
+  background-position: 0 0, calc(2 * var(--space)) calc(2 * var(--space));
+  background-size: calc(4 * var(--space)) calc(4 * var(--space));
   background-image: linear-gradient(
       45deg,
       #eee 25%,
@@ -205,6 +205,14 @@ form {
   background-color: #fffe;
   content: attr(data-drop-text);
   position: absolute;
+}
+
+.toast {
+  align-self: center;
+  border: solid 1px canvastext;
+  padding: var(--space);
+  position: absolute;
+  bottom: 5ex;
 }
 
 @media (prefers-color-scheme: dark) {

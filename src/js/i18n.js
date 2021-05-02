@@ -65,4 +65,6 @@ class I18N {
   }
 }
 
-export default I18N;
+const i18n = new I18N();
+
+export { i18n };

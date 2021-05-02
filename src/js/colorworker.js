@@ -62,6 +62,7 @@ const convertToColorSVG = async (imageData, config, progressPort) => {
       }),
     );
   }
+
   const total = promises.length;
   const svgs = await Promise.all(promises);
   for (const svg of svgs) {

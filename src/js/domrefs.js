@@ -15,6 +15,7 @@ const pasteButton = document.querySelector('.paste');
 const svgOutput = document.querySelector('output');
 const debugCheckbox = document.querySelector('.debug');
 const progress = document.querySelector('progress');
+const toast = document.querySelector('.toast');
 const dropContainer = document.documentElement;
 
 export {
@@ -35,5 +36,6 @@ export {
   svgOutput,
   dropContainer,
   debugCheckbox,
+  toast,
   progress,
 };

@@ -16,10 +16,11 @@ import {
   svgOutput,
   debugCheckbox,
   canvasMain,
+  toast,
 } from './domrefs.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
-import I18N from './i18n.js';
+import { i18n } from './i18n.js';
 import './filesystem.js';
 
 import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg?raw';
@@ -30,8 +31,6 @@ import openIcon from 'material-design-icons/file/svg/production/ic_folder_open_4
 import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.svg?raw';
 import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg?raw';
 import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg?raw';
-
-const i18n = new I18N();
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -103,7 +102,7 @@ let x = 0;
 let y = 0;
 let svg = null;
 let zoomScale = 1;
-const initialViewBox = {};
+let initialViewBox = {};
 
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
@@ -208,11 +207,21 @@ posterizeCheckbox.addEventListener('change', async () => {
   startProcessing();
 });
 
+const resetZoomAndPan = () => {
+  x = 0;
+  y = 0;
+  svg = null;
+  zoomScale = 1;
+  initialViewBox = {};
+};
+
 colorRadio.addEventListener('change', async () => {
+  resetZoomAndPan();
   startProcessing();
 });
 
 monochromeRadio.addEventListener('change', async () => {
+  resetZoomAndPan();
   startProcessing();
 });
 
@@ -241,7 +250,7 @@ const initUI = async () => {
     inputImage.height = inputImage.naturalHeight;
     setTimeout(() => {
       startProcessing();
-    }, 100);
+    }, 200);
   });
   if (inputImage.complete) {
     inputImage.dispatchEvent(new Event('load'));
@@ -360,4 +369,13 @@ debugCheckbox.addEventListener('click', () => {
   canvasMain.classList.toggle('debug');
 });
 
-export { initUI, filters, filterInputs, COLORS, SCALE, POTRACE };
+const showToast = (message) => {
+  toast.innerHTML = message;
+  toast.hidden = false;
+  setTimeout(() => {
+    toast.hidden = true;
+    toast.textContent = '';
+  }, 5000);
+};
+
+export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };

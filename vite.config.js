@@ -9,7 +9,7 @@ export default {
     }),
     vitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'script',
+      injectRegister: 'auto',
       manifest: {
         name: 'SVGcode',
         short_name: 'SVGcode',
