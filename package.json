@@ -11,7 +11,8 @@
     "lint:esm": "npx find-unused-exports",
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
     "lint:css": "npx stylelint \"**/*.css\" --fix",
-    "fix": "npx prettier . --write"
+    "fix": "npx prettier . --write",
+    "deploy": "npm run lint && npm run fix && npm run build && git commit -a"
   },
   "dependencies": {
     "browser-fs-access": "^0.16.4",
