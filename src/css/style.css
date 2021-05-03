@@ -2,6 +2,7 @@
   --space: 0.25rem;
   --100vh: 100vh;
   --menu-height: 2.5ex;
+  --sidebar-width: 19rem;
   --accent-color: #e60073;
   --input-image-height: 5rem;
 
@@ -144,9 +145,14 @@ button {
   align-items: center;
   place-content: center;
   background-color: transparent;
-  border: none;
+  border: solid 1px currentColor;
+  border-radius: var(--space);
   margin-inline-end: var(--space);
   cursor: pointer;
+}
+
+button.menu {
+  border: none;
 }
 
 label:hover,
@@ -177,8 +183,8 @@ form {
   height: 2.75ex;
 }
 
-.wrapper {
-  width: 20rem;
+.sidebar {
+  width: var(--sidebar-width);
   height: 100%;
   display: flex;
   flex-direction: column;

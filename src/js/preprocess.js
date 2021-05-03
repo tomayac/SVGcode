@@ -52,7 +52,7 @@ const preProcessInputImage = async () => {
 */
 
 const getScaledDimensions = () => {
-  const scaleFactor = parseInt(filterInputs[SCALE.scale].value, 10) / 100;
+  const scaleFactor = (2 * Number(filterInputs[SCALE.scale].value)) / 100;
   return {
     width: Math.ceil(inputImage.naturalWidth * scaleFactor),
     height: Math.ceil(inputImage.naturalHeight * scaleFactor),
@@ -61,7 +61,7 @@ const getScaledDimensions = () => {
 
 const getPosterizeFilter = () => {
   const getRange = (input) => {
-    const value = parseInt(input.value, 10);
+    const value = Number(input.value);
     const array = [];
     for (let i = 0; i <= value; i++) {
       array[i] = ((1 / value) * i).toFixed(1);
@@ -101,7 +101,7 @@ const getFilterString = () => {
   }`;
   for (const [filter, props] of Object.entries(filters)) {
     const input = filterInputs[filter];
-    if (props.initial === parseInt(input.value, 10)) {
+    if (props.initial === Number(input.value)) {
       continue;
     }
     string += `${filter}(${input.value}${input.dataset.unit}) `;

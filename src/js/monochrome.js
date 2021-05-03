@@ -12,7 +12,7 @@ const convertToMonochromeSVG = async (imageData) => {
     };
 
     const config = {
-      turdsize: parseInt(filterInputs[POTRACE.turdsize].value, 10),
+      turdsize: Number(filterInputs[POTRACE.turdsize].value),
     };
     monochromeSVGWorker.postMessage({ imageData, config }, [channel.port2]);
   });
