@@ -29,6 +29,10 @@ class I18N {
       return JSON.parse(storedLanguage);
     }
     let [language, locale = null] = navigator.language?.split('-');
+    if (locale) {
+      // Safari reports the locale as lowercase.
+      locale = locale.toUpperCase();
+    }
     if (!language || !SUPPORTED_LANGUAGES.includes(language)) {
       language = SUPPORTED_LANGUAGES[0];
     }
