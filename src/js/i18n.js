@@ -30,7 +30,8 @@ class I18N {
     }
     let [language, locale = null] = navigator.language?.split('-');
     if (locale) {
-      // Safari reports the locale as lowercase.
+      // Safari reports the locale as lowercase:
+      // https://bugs.webkit.org/show_bug.cgi?id=163096.
       locale = locale.toUpperCase();
     }
     if (!language || !SUPPORTED_LANGUAGES.includes(language)) {
