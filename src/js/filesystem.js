@@ -107,12 +107,13 @@ pasteButton.addEventListener('click', async () => {
 });
 
 copyButton.addEventListener('click', async () => {
-  let svg = svgOutput.innerHTML;
-  svg = await optimizeSVG(svg);
-  const blob = new Blob([svg], { type: 'text/plain' });
   navigator.clipboard.write([
     new ClipboardItem({
-      [blob.type]: blob,
+      'text/plain': new Promise(async (resolve) => {
+        let svg = svgOutput.innerHTML;
+        svg = await optimizeSVG(svg);
+        resolve(new Blob([svg], { type: 'text/plain' }));
+      }),
     }),
   ]);
 });
