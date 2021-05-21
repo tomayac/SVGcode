@@ -15,24 +15,24 @@
     "deploy": "npm run lint && npm run fix && npm run build && git commit -a"
   },
   "dependencies": {
-    "browser-fs-access": "^0.16.4",
+    "browser-fs-access": "^0.17.2",
     "potrace-wasm": "github:tomayac/potrace-wasm#patch-1",
     "svgo": "^2.3.0"
   },
   "devDependencies": {
     "@rollup/plugin-dynamic-import-vars": "^1.1.1",
-    "eslint": "^7.25.0",
+    "eslint": "^7.26.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
-    "find-unused-exports": "^1.2.0",
-    "https-localhost": "^4.6.4",
+    "find-unused-exports": "^2.0.0",
+    "https-localhost": "^4.6.5",
     "material-design-icons": "^3.0.1",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.0",
     "shx": "^0.3.3",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
-    "vite": "^2.2.3",
+    "vite": "^2.3.3",
     "vite-plugin-pwa": "^0.7.3"
   },
   "eslintConfig": {
