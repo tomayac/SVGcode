@@ -39,6 +39,8 @@ const translations = {
   imagePreprocessing: 'Input Preprocessing',
   svgOptions: 'SVG Options',
 
+  menu: 'Menu',
+
   readyToWorkOffline: 'Ready to work offline.',
 };
 

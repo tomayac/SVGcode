@@ -15,45 +15,48 @@
   </head>
   <body>
     <main>
-      <div class="sidebar">
-        <form>
-          <div class="preprocess">
-            <div class="other-input">
-              <input
-                id="color"
-                type="radio"
-                class="color"
-                name="output-option"
-                checked
-              />
-              <label for="color"></label>
-            </div>
-            <div class="other-input">
-              <input
-                id="monochrome"
-                type="radio"
-                class="monochrome"
-                name="output-option"
-              />
-              <label for="monochrome"></label>
-            </div>
-            <div class="fieldsets">
-              <div>
+      <details>
+        <summary></summary>
+        <div class="sidebar">
+          <form>
+            <div class="preprocess">
+              <div class="other-input">
                 <input
-                  id="posterize"
-                  type="checkbox"
-                  class="posterize"
+                  id="color"
+                  type="radio"
+                  class="color"
+                  name="output-option"
                   checked
                 />
-                <label for="posterize"></label>
+                <label for="color"></label>
+              </div>
+              <div class="other-input">
+                <input
+                  id="monochrome"
+                  type="radio"
+                  class="monochrome"
+                  name="output-option"
+                />
+                <label for="monochrome"></label>
+              </div>
+              <div class="fieldsets">
+                <div>
+                  <input
+                    id="posterize"
+                    type="checkbox"
+                    class="posterize"
+                    checked
+                  />
+                  <label for="posterize"></label>
+                </div>
+              </div>
+              <div class="other-input">
+                <button type="button" class="reset-all"></button>
               </div>
             </div>
-            <div class="other-input">
-              <button type="button" class="reset-all"></button>
-            </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      </details>
       <div class="output">
         <div class="menu">
           <button class="open menu" type="button"></button>

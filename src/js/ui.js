@@ -18,6 +18,8 @@ import {
   canvasMain,
   toast,
   progress,
+  details,
+  summary,
 } from './domrefs.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
@@ -234,6 +236,19 @@ const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
 
+  const mediaQueryList = window.matchMedia('(max-width: 400px)');
+  const onMaxWidthMatch = () => {
+    if (mediaQueryList.matches) {
+      details.open = false;
+      summary.innerHTML = `<span aria-hidden="true">☰</span> ${i18n.t('menu')}`;
+      return;
+    }
+    details.open = true;
+    summary.innerHTML = '';
+  };
+  onMaxWidthMatch();
+  mediaQueryList.addEventListener('change', onMaxWidthMatch);
+
   entriesArray.forEach((entries, i) => {
     const { name, icon } = fieldsetsArray[i];
     const fieldset = createFieldset(name, icon);
@@ -385,5 +400,20 @@ const showToast = (message) => {
     toast.textContent = '';
   }, 5000);
 };
+
+document.documentElement.style.setProperty(
+  '--100vh',
+  `${window.innerHeight}px`,
+);
+
+window.addEventListener(
+  'resize',
+  debounce(() => {
+    document.documentElement.style.setProperty(
+      '--100vh',
+      `${window.innerHeight}px`,
+    );
+  }, 250),
+);
 
 export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };

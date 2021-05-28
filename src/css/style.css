@@ -5,6 +5,7 @@
   --sidebar-width: 19rem;
   --accent-color: #e60073;
   --input-image-height: 5rem;
+  --menu-background-color: rgba(255,255,255,0.9);
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -61,6 +62,36 @@ fieldset {
   padding-inline: 0;
   padding-block-start: 0;
   padding-block-end: calc(2 * var(--space));
+}
+
+summary {
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+summary::marker {
+  content: "";
+}
+
+details {
+  height: fit-content;
+  padding-inline-end: var(--space);
+}
+
+@media (max-width: 400px) {
+  details[open] > summary {
+    position: absolute;
+    width: 100vw;
+    height: var(--100vh);
+    cursor: auto;
+    opacity: 0;
+  }
+
+  details[open] > div {
+    position: absolute;
+    background-color: var(--menu-background-color);
+    z-index: 2;
+  }
 }
 
 .input-image {
@@ -134,8 +165,10 @@ label {
   font-variant-numeric: tabular-nums;
 }
 
+summary,
 label,
 button {
+  white-space: nowrap;
   user-select: none;
 }
 
@@ -155,6 +188,7 @@ button.menu {
   border: none;
 }
 
+summary:hover,
 label:hover,
 button:hover {
   color: var(--accent-color);
@@ -184,7 +218,7 @@ form {
 }
 
 .sidebar {
-  width: var(--sidebar-width);
+  max-width: var(--sidebar-width);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -238,6 +272,7 @@ form {
 @media (prefers-color-scheme: dark) {
   :root {
     --accent-color: hotpink;
+    --menu-background-color: rgba(0,0,0,0.9);
   }
 
   .dropenter::before {

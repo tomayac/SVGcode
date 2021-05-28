@@ -17,6 +17,8 @@ const debugCheckbox = document.querySelector('.debug');
 const progress = document.querySelector('progress');
 const toast = document.querySelector('.toast');
 const dropContainer = document.documentElement;
+const details = document.querySelector('details');
+const summary = document.querySelector('summary');
 
 export {
   canvasMain,
@@ -38,4 +40,6 @@ export {
   debugCheckbox,
   toast,
   progress,
+  details,
+  summary,
 };

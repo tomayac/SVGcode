@@ -10,19 +10,4 @@ const debounce = (func, wait) => {
   };
 };
 
-document.documentElement.style.setProperty(
-  '--100vh',
-  `${window.innerHeight}px`,
-);
-
-window.addEventListener(
-  'resize',
-  debounce(() => {
-    document.documentElement.style.setProperty(
-      '--100vh',
-      `${window.innerHeight}px`,
-    );
-  }, 250),
-);
-
 export { debounce };
