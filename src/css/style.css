@@ -5,7 +5,7 @@
   --sidebar-width: 19rem;
   --accent-color: #e60073;
   --input-image-height: 5rem;
-  --menu-background-color: rgba(255,255,255,0.9);
+  --menu-background-color: rgba(255, 255, 255, 0.9);
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -70,7 +70,7 @@ summary {
 }
 
 summary::marker {
-  content: "";
+  content: '';
 }
 
 details {
@@ -272,7 +272,7 @@ form {
 @media (prefers-color-scheme: dark) {
   :root {
     --accent-color: hotpink;
-    --menu-background-color: rgba(0,0,0,0.9);
+    --menu-background-color: rgba(0, 0, 0, 0.9);
   }
 
   .dropenter::before {
