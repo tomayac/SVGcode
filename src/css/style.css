@@ -64,7 +64,11 @@ fieldset {
   padding-block-end: calc(2 * var(--space));
 }
 
-summary {
+summary,
+label,
+button {
+  white-space: nowrap;
+  user-select: none;
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -73,8 +77,11 @@ summary::marker {
   content: '';
 }
 
+summary::-webkit-details-marker {
+  display: none;
+}
+
 details {
-  height: fit-content;
   padding-inline-end: var(--space);
 }
 
@@ -87,8 +94,16 @@ details {
     opacity: 0;
   }
 
-  details[open] > div {
+  details {
     position: absolute;
+    background-color: var(--menu-background-color);
+    left: calc(2 * var(--space));
+    top: calc(var(--menu-height) + 4 * var(--space));
+    padding: var(--space);
+    z-index: 2;
+  }
+
+  details[open] > div {
     background-color: var(--menu-background-color);
     z-index: 2;
   }
@@ -99,6 +114,7 @@ details {
   height: var(--input-image-height);
   object-fit: contain;
   position: absolute;
+  right: var(--space);
   margin-inline-start: var(--space);
   margin-block-start: calc(var(--menu-height) + 2 * var(--space));
   z-index: 1;
@@ -163,13 +179,6 @@ legend {
 label {
   font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
-}
-
-summary,
-label,
-button {
-  white-space: nowrap;
-  user-select: none;
 }
 
 button {
