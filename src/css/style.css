@@ -92,6 +92,11 @@ summary::-webkit-details-marker {
 details {
   padding-inline-end: var(--space);
   overflow: hidden auto;
+  scrollbar-width: none;
+}
+
+details::-webkit-scrollbar {
+  display: none;
 }
 
 details[open] {
@@ -126,7 +131,6 @@ details[open] {
   }
 
   summary {
-    height: 3ex;
     display: flex;
     align-items: center;
     place-content: center;
@@ -241,6 +245,7 @@ button.menu {
   border: none;
   width: max-content;
   flex-shrink: 0;
+  margin-inline-end: calc(4 * var(--space));
 }
 
 summary:hover,
