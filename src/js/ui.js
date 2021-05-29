@@ -240,11 +240,9 @@ const initUI = async () => {
   const onMaxWidthMatch = () => {
     if (mediaQueryList.matches) {
       details.open = false;
-      summary.innerHTML = `<span aria-hidden="true">☰</span> ${i18n.t('menu')}`;
       return;
     }
     details.open = true;
-    summary.innerHTML = '';
   };
   onMaxWidthMatch();
   mediaQueryList.addEventListener('change', onMaxWidthMatch);
@@ -296,6 +294,7 @@ const changeLanguage = () => {
   pasteButton.append(createIcon(pasteIcon));
   pasteButton.append(document.createTextNode(i18n.t('pasteImage')));
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
+  summary.innerHTML = `<span aria-hidden="true">☰</span> ${i18n.t('menu')}`;
 };
 
 resetAllButton.addEventListener('click', async () => {
