@@ -109,7 +109,7 @@ details[open] {
 
   details {
     position: absolute;
-    margin-inline-start: calc(2 * var(--space));
+    margin-inline-start: var(--space);
     margin-block-start: calc(var(--menu-height) + 4 * var(--space));
     padding: var(--space);
     z-index: 2;
@@ -126,7 +126,15 @@ details[open] {
   }
 
   summary {
-    display: block;
+    height: 3ex;
+    display: flex;
+    align-items: center;
+    place-content: center;
+    background-color: transparent;
+    border: solid 1px currentColor;
+    border-radius: var(--space);
+    padding: var(--space);
+    cursor: pointer;
   }
 
   /* Make the summary occupy the whole space so clicking anywhere closes. */
@@ -334,12 +342,12 @@ button:hover {
     border: 1px #000 solid;
   }
 
-  button:hover {
-    color: var(--accent-color);
-  }
-
   button {
     color: #fff;
+  }
+
+  button:hover {
+    color: var(--accent-color);
   }
 
   .spinner {
