@@ -1,7 +1,7 @@
 :root {
   --space: 0.25rem;
   --100vh: 100vh;
-  --menu-height: 2.5ex;
+  --menu-height: 5ex;
   --sidebar-width: 15rem;
   --accent-color: #e60073;
   --input-image-height: 5rem;
@@ -71,9 +71,9 @@ button,
 legend,
 .fieldsets {
   font-family: inherit;
+  font-size: inherit;
   white-space: nowrap;
   user-select: none;
-  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -99,6 +99,14 @@ details[open] {
 }
 
 @media (max-width: 400px) {
+  summary,
+  label,
+  button,
+  legend,
+  .fieldsets {
+    font-size: 0.9rem;
+  }
+
   details {
     position: absolute;
     margin-inline-start: calc(2 * var(--space));
@@ -223,6 +231,8 @@ button {
 
 button.menu {
   border: none;
+  width: max-content;
+  flex-shrink: 0;
 }
 
 summary:hover,
@@ -258,6 +268,7 @@ button:hover {
 }
 
 .menu {
+  width: 100%;
   height: var(--menu-height);
   align-items: center;
   display: flex;
@@ -265,12 +276,17 @@ button:hover {
   gap: var(--space);
 }
 
+.menu::-webkit-scrollbar {
+  display: none;
+}
+
 .output {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space);
-  width: 100%;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .reset-all {

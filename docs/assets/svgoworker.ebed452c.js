@@ -1,1 +1,0 @@
-import{h as s,i as e}from"./vendor.9e5b744b.js";self.addEventListener("message",(async a=>{const{svg:t}=a.data,o=s(t,{multipass:!0,plugins:e([{name:"removeViewBox",active:!1}])});a.ports[0].postMessage({result:o.data})}));
