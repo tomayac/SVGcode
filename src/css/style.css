@@ -2,9 +2,10 @@
   --space: 0.25rem;
   --100vh: 100vh;
   --menu-height: 2.5ex;
-  --sidebar-width: 19rem;
+  --sidebar-width: 15rem;
   --accent-color: #e60073;
   --input-image-height: 5rem;
+  --input-width: 10rem;
   --sidebar-background-color: rgba(255, 255, 255, 0.9);
 
   color-scheme: dark light;
@@ -37,7 +38,7 @@ main {
 
 input[type='range'] {
   display: block;
-  width: 10rem;
+  width: var(--input-width);
 }
 
 canvas {
@@ -45,6 +46,7 @@ canvas {
 }
 
 canvas.debug {
+  display: block;
   image-rendering: pixelated;
   margin-inline-start: var(--space);
   margin-block-start: calc(
@@ -53,10 +55,6 @@ canvas.debug {
   position: absolute;
   z-index: 1;
   cursor: default;
-}
-
-.debug {
-  display: block;
 }
 
 fieldset {
@@ -93,11 +91,11 @@ summary::-webkit-details-marker {
 
 details {
   padding-inline-end: var(--space);
-  overflow-y: auto;
+  overflow: hidden auto;
 }
 
 details[open] {
-  width: var(--sidebar-width);
+  flex-shrink: 0;
 }
 
 @media (max-width: 400px) {
@@ -111,11 +109,12 @@ details[open] {
 
   details[open] {
     width: 100vw;
-    max-height: calc(var(--100vh) - var(--menu-height) - 8 * var(--space));
+    max-height: calc(var(--100vh) - var(--menu-height) - 9 * var(--space));
   }
 
   details[open] > .sidebar {
     background-color: var(--sidebar-background-color);
+    width: var(--sidebar-width);
   }
 
   summary {
@@ -124,12 +123,14 @@ details[open] {
 
   /* Make the summary occupy the whole space so clicking anywhere closes. */
   details[open] > summary {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: var(--100vh);
     cursor: auto;
+    z-index: -1;
     opacity: 0;
-    z-index: 1;
   }
 }
 
@@ -230,10 +231,6 @@ button:hover {
   color: var(--accent-color);
 }
 
-form {
-  height: 100%;
-}
-
 .preprocess {
   display: flex;
   flex-direction: column;
@@ -254,18 +251,17 @@ form {
 }
 
 .sidebar {
-  width: var(--sidebar-width);
   display: flex;
   flex-direction: column;
   padding: var(--space);
   gap: var(--space);
-  overflow-y: auto;
 }
 
 .menu {
   height: var(--menu-height);
   align-items: center;
   display: flex;
+  overflow: auto hidden;
   gap: var(--space);
 }
 
@@ -321,20 +317,20 @@ form {
 
   .checkerboard {
     background-image: linear-gradient(
-      45deg,
-      #131313 25%,
-      transparent 25%,
-      transparent 75%,
-      #131313 75%,
-      #131313 100%
-    ),
-    linear-gradient(
-      45deg,
-      #131313 25%,
-      #000 25%,
-      #000 75%,
-      #131313 75%,
-      #131313 100%
-    );
+        45deg,
+        #131313 25%,
+        transparent 25%,
+        transparent 75%,
+        #131313 75%,
+        #131313 100%
+      ),
+      linear-gradient(
+        45deg,
+        #131313 25%,
+        #000 25%,
+        #000 75%,
+        #131313 75%,
+        #131313 100%
+      );
   }
 }
