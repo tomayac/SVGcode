@@ -156,8 +156,8 @@ details[open] {
 }
 
 .spinner {
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
 }
 
 legend svg {
@@ -250,14 +250,13 @@ button:hover {
 .preprocess-input {
   display: flex;
   margin: var(--space);
-  height: 4.5ex;
   align-items: flex-end;
 }
 
 .other-input {
   display: flex;
   margin: var(--space);
-  height: 2.75ex;
+  height: 3ex;
 }
 
 .sidebar {
@@ -274,6 +273,7 @@ button:hover {
   display: flex;
   overflow: auto hidden;
   gap: var(--space);
+  scrollbar-width: none;
 }
 
 .menu::-webkit-scrollbar {
@@ -317,6 +317,9 @@ button:hover {
   :root {
     --accent-color: hotpink;
     --sidebar-background-color: rgba(0, 0, 0, 0.9);
+
+    background-color: #131313;
+    color: #fff;
   }
 
   .dropenter::before {
@@ -329,6 +332,18 @@ button:hover {
 
   output {
     border: 1px #000 solid;
+  }
+
+  button:hover {
+    color: var(--accent-color);
+  }
+
+  button {
+    color: #fff;
+  }
+
+  .spinner {
+    filter: invert(1);
   }
 
   .checkerboard {

@@ -34,6 +34,7 @@ import openIcon from 'material-design-icons/file/svg/production/ic_folder_open_4
 import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.svg?raw';
 import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg?raw';
 import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg?raw';
+import optionsIcon from 'material-design-icons/content/svg/production/ic_tune_48px.svg?raw';
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -294,7 +295,9 @@ const changeLanguage = () => {
   pasteButton.append(createIcon(pasteIcon));
   pasteButton.append(document.createTextNode(i18n.t('pasteImage')));
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
-  summary.innerHTML = `<span aria-hidden="true">☰</span> ${i18n.t('menu')}`;
+  summary.innerHTML = '';
+  summary.append(createIcon(optionsIcon));
+  summary.append(document.createTextNode(i18n.t('svgOptions')));
 };
 
 resetAllButton.addEventListener('click', async () => {
