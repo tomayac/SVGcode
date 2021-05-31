@@ -1,5 +1,6 @@
 const LOCAL_STORAGE_KEY = 'language';
 const SUPPORTED_LANGUAGES = ['en', 'de'];
+const SUPPORTED_LOCALES = ['en-US', 'de-DE'];
 
 /**
  *
@@ -14,6 +15,7 @@ class I18N {
   constructor() {
     this.currentLanguageAndLocale = this.detectLanguageAndLocal();
     this.defaultLanguage = SUPPORTED_LANGUAGES[0];
+    this.defaultLocale = SUPPORTED_LOCALES[0];
     this.translations = null;
   }
 
@@ -52,10 +54,11 @@ class I18N {
    */
   async getTranslations() {
     const { language, locale } = this.currentLanguageAndLocale;
-    const translations = (
-      await import(`../i18n/${language}${locale ? `-${locale}` : ''}.js`)
+    this.translations = (
+      await import(`../i18n/${language}${locale ? `-${locale}` : ''}.js`).catch(
+        () => import(`../i18n/${this.defaultLocale}.js`),
+      )
     ).default;
-    this.translations = translations;
   }
 
   /**
