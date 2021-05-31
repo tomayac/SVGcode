@@ -103,7 +103,7 @@ details[open] {
   flex-shrink: 0;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 414px) {
   summary,
   label,
   button,

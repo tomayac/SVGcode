@@ -1,4 +1,4 @@
-import OptimizeSVGWorker from './svgoworker.js?worker&inline';
+import OptimizeSVGWorker from './svgoworker.js?worker';
 
 const optimizeSVGWorker = new OptimizeSVGWorker();
 
