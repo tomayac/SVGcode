@@ -36,6 +36,6 @@ export default {
   ],
   build: {
     outDir: 'docs',
-    target: 'esnext',
+    target: 'modules', // Switch to 'esnext' once Module Workers work in Firefox and Safari.
   },
 };
