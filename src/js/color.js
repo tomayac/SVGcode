@@ -1,6 +1,6 @@
 import { filterInputs, POTRACE } from './ui.js';
 import { progress } from './domrefs.js';
-import ColorWorker from './colorworker?worker';
+import ColorWorker from './colorworker?worker&inline';
 
 const colorWorker = new ColorWorker();
 

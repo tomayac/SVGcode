@@ -1,5 +1,5 @@
 import { filterInputs, POTRACE } from './ui.js';
-import MonochromeSVGWorker from './monochromeworker.js?worker';
+import MonochromeSVGWorker from './monochromeworker.js?worker&inline';
 
 const monochromeSVGWorker = new MonochromeSVGWorker();
 

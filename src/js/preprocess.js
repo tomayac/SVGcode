@@ -2,7 +2,7 @@ import { filterInputs, filters, COLORS, SCALE } from './ui.js';
 import { inputImage, canvasMain, posterizeCheckbox } from './domrefs.js';
 
 // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
-// import PreProcessWorker from './preprocessworker.js?worker';
+// import PreProcessWorker from './preprocessworker.js?worker&inline';
 // const preProcessWorker = new PreProcessWorker();
 
 // const offscreen = canvasMain.transferControlToOffscreen();
@@ -35,7 +35,7 @@ const preProcessInputImage = async () => {
   return new Promise(async (resolve) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({data}) => {
-      channel.port1.close();     
+      channel.port1.close();
       resolve(data.result);
     };
 
