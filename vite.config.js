@@ -36,6 +36,6 @@ export default {
   ],
   build: {
     outDir: 'docs',
-    target: 'safari14',
+    target: 'safari12',
   },
 };
