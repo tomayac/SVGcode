@@ -6,7 +6,7 @@
   --accent-color: #e60073;
   --input-image-height: 5rem;
   --input-width: 10rem;
-  --sidebar-background-color: rgba(255, 255, 255, 0.9);
+  --sidebar-background-color: rgba(255, 255, 255, 0.8);
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -103,7 +103,7 @@ details[open] {
   flex-shrink: 0;
 }
 
-@media (max-width: 415px) {
+@media (max-width: 414px) {
   summary,
   label,
   button,
@@ -126,6 +126,7 @@ details[open] {
   }
 
   details[open] > .sidebar {
+    backdrop-filter: saturate(180%) blur(20px);
     background-color: var(--sidebar-background-color);
     width: var(--sidebar-width);
   }
@@ -329,7 +330,7 @@ button:hover {
 @media (prefers-color-scheme: dark) {
   :root {
     --accent-color: hotpink;
-    --sidebar-background-color: rgba(0, 0, 0, 0.9);
+    --sidebar-background-color: rgba(0, 0, 0, 0.8);
 
     background-color: #131313;
     color: #fff;
