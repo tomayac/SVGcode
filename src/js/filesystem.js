@@ -81,9 +81,19 @@ document.addEventListener('drop', async (event) => {
 saveSVGButton.addEventListener('click', async () => {
   try {
     let svg = svgOutput.innerHTML;
+    let handle = null;
+    // To not consume the user gesture obtain the handle before preparing the
+    // blob, which may take longer.
+    if (supported) {
+      handle = await showSaveFilePicker({
+        types: [
+          { description: 'SVG file', accept: { 'image/svg+xml': ['.svg'] } },
+        ],
+      });
+    }
     svg = await optimizeSVG(svg);
     const blob = new Blob([svg], { type: 'image/svg+xml' });
-    await fileSave(blob, { fileName: '', description: 'SVG file' });
+    await fileSave(blob, { fileName: '', description: 'SVG file' }, handle);
   } catch (err) {
     console.error(err.name, err.message);
   }
