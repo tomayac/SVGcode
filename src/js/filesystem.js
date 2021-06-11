@@ -117,26 +117,31 @@ pasteButton.addEventListener('click', async () => {
 });
 
 copyButton.addEventListener('click', async () => {
+  let svg = svgOutput.innerHTML;
   try {
     // Safari treats user activation differently:
     // https://bugs.webkit.org/show_bug.cgi?id=222262.
     navigator.clipboard.write([
       new ClipboardItem({
         'text/plain': new Promise(async (resolve) => {
-          let svg = svgOutput.innerHTML;
           svg = await optimizeSVG(svg);
           resolve(new Blob([svg], { type: 'text/plain' }));
+        }),
+        'image/svg+xml': new Promise(async (resolve) => {
+          svg = await optimizeSVG(svg);
+          resolve(new Blob([svg], { type: 'image/svg+xml' }));
         }),
       }),
     ]);
   } catch {
     // Chromium
-    let svg = svgOutput.innerHTML;
     svg = await optimizeSVG(svg);
-    const blob = new Blob([svg], { type: 'text/plain' });
+    const textBlob = new Blob([svg], { type: 'text/plain' });
+    const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
     navigator.clipboard.write([
       new ClipboardItem({
-        [blob.type]: blob,
+        [svgBlob.type]: svgBlob,
+        [textBlob.type]: textBlob,
       }),
     ]);
   }
