@@ -12,10 +12,10 @@
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
     "lint:css": "npx stylelint \"**/*.css\" --fix",
     "fix": "npx prettier . --write",
-    "deploy": "npm run lint && npm run fix && npm run build && git commit -a"
+    "deploy": "npm run lint && npm run fix && npm run build && git commit -a && git push"
   },
   "dependencies": {
-    "browser-fs-access": "^0.17.2",
+    "browser-fs-access": "^0.17.3",
     "potrace-wasm": "github:tomayac/potrace-wasm#patch-1",
     "svgo": "^2.3.0"
   },
@@ -32,8 +32,8 @@
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.1.0",
-    "vite": "^2.3.6",
-    "vite-plugin-pwa": "^0.7.3"
+    "vite": "^2.3.7",
+    "vite-plugin-pwa": "^0.8.1"
   },
   "eslintConfig": {
     "parserOptions": {
