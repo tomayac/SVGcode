@@ -53,6 +53,7 @@ canvas.debug {
     var(--menu-height) + 4 * var(--space) + var(--input-image-height)
   );
   position: absolute;
+  right: var(--space);
   z-index: 1;
   cursor: default;
 }

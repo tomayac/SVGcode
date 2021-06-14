@@ -1,5 +1,11 @@
 import { filterInputs, filters, COLORS, SCALE } from './ui.js';
-import { inputImage, canvasMain, posterizeCheckbox } from './domrefs.js';
+import {
+  inputImage,
+  canvasMain,
+  posterizeCheckbox,
+  dpr,
+  considerDPRCheckbox,
+} from './domrefs.js';
 
 // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
 // import PreProcessWorker from './preprocessworker.js?worker';
@@ -7,10 +13,12 @@ import { inputImage, canvasMain, posterizeCheckbox } from './domrefs.js';
 
 // const offscreen = canvasMain.transferControlToOffscreen();
 const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
+ctxMain.scale(dpr, dpr);
 ctxMain.imageSmoothingEnabled = false;
 
 const preProcessMainCanvas = () => {
   const { width, height } = getScaledDimensions();
+  const factor = considerDPRCheckbox.checked ? dpr : 1;
   canvasMain.width = width;
   canvasMain.height = height;
   ctxMain.clearRect(0, 0, width, height);
@@ -19,8 +27,8 @@ const preProcessMainCanvas = () => {
     inputImage,
     0,
     0,
-    inputImage.naturalWidth,
-    inputImage.naturalHeight,
+    factor * inputImage.naturalWidth,
+    factor * inputImage.naturalHeight,
     0,
     0,
     width,
@@ -29,7 +37,7 @@ const preProcessMainCanvas = () => {
   return ctxMain.getImageData(0, 0, width, height);
 };
 
-// ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
+// ToDo: Run on main thread until https://crbug.com/1169216 gets resolved.
 /*
 const preProcessInputImage = async () => {
   return new Promise(async (resolve) => {
@@ -52,10 +60,10 @@ const preProcessInputImage = async () => {
 */
 
 const getScaledDimensions = () => {
-  const scaleFactor = (2 * Number(filterInputs[SCALE.scale].value)) / 100;
+  const scaleFactor = Number(filterInputs[SCALE.scale].value) / 100;
   return {
-    width: Math.ceil(inputImage.naturalWidth * scaleFactor),
-    height: Math.ceil(inputImage.naturalHeight * scaleFactor),
+    width: Math.ceil(dpr * inputImage.naturalWidth * scaleFactor),
+    height: Math.ceil(dpr * inputImage.naturalHeight * scaleFactor),
   };
 };
 

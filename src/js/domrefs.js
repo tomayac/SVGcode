@@ -6,6 +6,8 @@ const colorRadio = document.querySelector('.color');
 const colorLabel = document.querySelector('[for=color]');
 const monochromeRadio = document.querySelector('.monochrome');
 const monochromeLabel = document.querySelector('[for=monochrome]');
+const considerDPRCheckbox = document.querySelector('.consider-dpr');
+const considerDPRLabel = document.querySelector('[for="consider-dpr"]');
 const inputImage = document.querySelector('img');
 const resetAllButton = document.querySelector('.reset-all');
 const fileOpenButton = document.querySelector('.open');
@@ -20,6 +22,8 @@ const dropContainer = document.documentElement;
 const details = document.querySelector('details');
 const summary = document.querySelector('summary');
 
+const dpr = window.devicePixelRatio;
+
 export {
   canvasMain,
   fieldsetsContainer,
@@ -29,6 +33,8 @@ export {
   colorLabel,
   monochromeRadio,
   monochromeLabel,
+  considerDPRCheckbox,
+  considerDPRLabel,
   inputImage,
   resetAllButton,
   fileOpenButton,
@@ -42,4 +48,5 @@ export {
   progress,
   details,
   summary,
+  dpr,
 };

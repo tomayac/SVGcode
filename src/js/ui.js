@@ -6,6 +6,8 @@ import {
   colorLabel,
   monochromeRadio,
   monochromeLabel,
+  considerDPRCheckbox,
+  considerDPRLabel,
   inputImage,
   resetAllButton,
   fileOpenButton,
@@ -233,6 +235,11 @@ monochromeRadio.addEventListener('change', async () => {
   await startProcessing();
 });
 
+considerDPRCheckbox.addEventListener('change', async () => {
+  resetZoomAndPan();
+  await startProcessing();
+});
+
 const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
@@ -256,6 +263,8 @@ const initUI = async () => {
     } else if (name === 'svgOptions') {
       fieldsets['svgOptions'].append(colorRadio.parentNode);
       fieldsets['svgOptions'].append(monochromeRadio.parentNode);
+    } else if (name === 'imageSize') {
+      fieldsets['imageSize'].append(considerDPRCheckbox.parentNode);
     }
     for (const [filter, props] of entries) {
       createControls(filter, props, fieldset);
@@ -282,6 +291,7 @@ const changeLanguage = () => {
   posterizeLabel.textContent = i18n.t('posterizeInputImage');
   colorLabel.textContent = i18n.t('colorSVG');
   monochromeLabel.textContent = i18n.t('monochromeSVG');
+  considerDPRLabel.textContent = i18n.t('considerDPR');
   fileOpenButton.innerHTML = '';
   fileOpenButton.append(createIcon(openIcon));
   fileOpenButton.append(document.createTextNode(i18n.t('openImage')));

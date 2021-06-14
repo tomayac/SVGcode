@@ -39,6 +39,8 @@ const translations = {
   imagePreprocessing: 'Input Preprocessing',
   svgOptions: 'SVG Options',
 
+  considerDPR: 'Consider Device Pixel Ration',
+
   tweak: 'Tweak',
 
   readyToWorkOffline: 'Ready to work offline.',

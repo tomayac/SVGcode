@@ -1,3 +1,5 @@
+import { dpr } from './domrefs';
+
 const preProcessMainCanvas = (
   ctxOffscreen,
   inputImageBitmap,
@@ -24,6 +26,7 @@ const preProcessMainCanvas = (
 self.addEventListener('message', (e) => {
   const { offscreen, inputImageBitmap, filterString, width, height } = e.data;
   const ctxOffscreen = offscreen.getContext('2d');
+  ctxOffscreen.scale(dpr, dpr);
   offscreen.width = width;
   offscreen.height = height;
   const imageData = preProcessMainCanvas(
