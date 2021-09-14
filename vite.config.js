@@ -5,7 +5,7 @@ import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 export default {
   plugins: [
     dynamicImportVars({
-      include: './src/i18n/*',
+      include: ['./src/i18n/*', './src/js/filehandling.js'],
     }),
     vitePWA({
       registerType: 'autoUpdate',
@@ -29,6 +29,23 @@ export default {
             src: './favicon.png',
             type: 'image/png',
             sizes: '768x768',
+          },
+        ],
+        file_handlers: [
+          {
+            action: './',
+            accept: {
+              'image/*': [
+                '.jpg',
+                '.jpeg',
+                '.webp',
+                '.png',
+                '.avif',
+                '.gif',
+                '.svg',
+                '.bmp',
+              ],
+            },
           },
         ],
       },
