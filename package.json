@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "browser-fs-access": "^0.20.5",
-    "potrace-wasm": "github:nohtcoltd/potrace-wasm#add-config",
+    "esm-potrace-wasm": "^0.0.5",
     "svgo": "^2.6.0"
   },
   "devDependencies": {

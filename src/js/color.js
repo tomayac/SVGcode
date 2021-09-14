@@ -22,10 +22,10 @@ const convertToColorSVG = async (imageData) => {
       }
     };
 
-    const config = {
+    const params = {
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
     };
-    colorWorker.postMessage({ imageData, config }, [
+    colorWorker.postMessage({ imageData, params }, [
       channel.port2,
       progressChannel.port2,
     ]);

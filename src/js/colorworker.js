@@ -1,4 +1,4 @@
-import { loadFromImageData } from 'potrace-wasm';
+import { loadFromImageData } from 'esm-potrace-wasm';
 
 const extractColors = (imageData) => {
   const colors = {};
@@ -20,7 +20,7 @@ const extractColors = (imageData) => {
   return colors;
 };
 
-const convertToColorSVG = async (imageData, config, progressPort) => {
+const convertToColorSVG = async (imageData, params, progressPort) => {
   const colors = extractColors(imageData);
 
   let prefix = '';
@@ -33,7 +33,7 @@ const convertToColorSVG = async (imageData, config, progressPort) => {
     const newImageData = new ImageData(imageData.width, imageData.height);
     newImageData.data.fill(255);
     const len = occurrences.length;
-    if (len <= config.turdsize) {
+    if (len <= params.turdsize) {
       continue;
     }
     for (let i = 0; i < len; i++) {
@@ -49,7 +49,8 @@ const convertToColorSVG = async (imageData, config, progressPort) => {
           newImageData.data,
           newImageData.width,
           newImageData.height,
-          config,
+          {},
+          params,
         );
         svg = svg.replace(
           'fill="#000000" stroke="none"',
@@ -78,7 +79,7 @@ const convertToColorSVG = async (imageData, config, progressPort) => {
 };
 
 self.addEventListener('message', async (e) => {
-  const { imageData, config } = e.data;
-  const svg = await convertToColorSVG(imageData, config, e.ports[1]);
+  const { imageData, params } = e.data;
+  const svg = await convertToColorSVG(imageData, params, e.ports[1]);
   e.ports[0].postMessage({ result: svg });
 });

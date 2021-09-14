@@ -58,7 +58,16 @@ const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 
 const SCALE = { scale: 'scale' };
 
-const POTRACE = { turdsize: 'turdsize' };
+const POTRACE = {
+  // 0 to Infinity, default 2
+  turdsize: 'turdsize',
+  // 0.0 to 1.3334, default 1.0
+  alphamax: 'alphamax',
+  // true or false, default true
+  opticurve: 'opticurve',
+  // 0 to Infinity, default 0.2
+  opttolerance: 'opttolerance',
+};
 
 const filters = {
   [FILTERS.brightness]: { unit: PERCENT, initial: 100, min: 0, max: 200 },

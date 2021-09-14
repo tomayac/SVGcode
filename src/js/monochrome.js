@@ -11,10 +11,10 @@ const convertToMonochromeSVG = async (imageData) => {
       resolve(data.result);
     };
 
-    const config = {
+    const params = {
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
     };
-    monochromeSVGWorker.postMessage({ imageData, config }, [channel.port2]);
+    monochromeSVGWorker.postMessage({ imageData, params }, [channel.port2]);
   });
 };
 
