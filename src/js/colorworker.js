@@ -1,4 +1,4 @@
-import { loadFromImageData } from 'esm-potrace-wasm';
+import potrace from 'esm-potrace-wasm';
 
 const extractColors = (imageData) => {
   const colors = {};
@@ -45,11 +45,10 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
     }
     promises.push(
       new Promise(async (resolve) => {
-        let svg = await loadFromImageData(
-          newImageData.data,
+        let svg = await potrace(
+          newImageData,
           newImageData.width,
           newImageData.height,
-          {},
           params,
         );
         svg = svg.replace(

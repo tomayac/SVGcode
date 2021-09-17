@@ -1,11 +1,10 @@
-import { loadFromImageData } from 'esm-potrace-wasm';
+import potrace from 'esm-potrace-wasm';
 
 const convertToMonochromeSVG = async (imageData, params) => {
-  const svg = await loadFromImageData(
-    imageData.data,
+  const svg = await potrace(
+    imageData,
     imageData.width,
     imageData.height,
-    {},
     params,
   );
   return svg;
