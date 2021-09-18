@@ -1,12 +1,7 @@
 import potrace from 'esm-potrace-wasm';
 
 const convertToMonochromeSVG = async (imageData, params) => {
-  const svg = await potrace(
-    imageData,
-    imageData.width,
-    imageData.height,
-    params,
-  );
+  const svg = await potrace(imageData, params);
   return svg;
 };
 

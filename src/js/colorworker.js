@@ -45,12 +45,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
     }
     promises.push(
       new Promise(async (resolve) => {
-        let svg = await potrace(
-          newImageData,
-          newImageData.width,
-          newImageData.height,
-          params,
-        );
+        let svg = await potrace(newImageData, params);
         svg = svg.replace(
           'fill="#000000" stroke="none"',
           `fill="rgba(${color})" stroke-width="1px" stroke="rgba(${color})"`,
