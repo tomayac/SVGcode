@@ -18,6 +18,7 @@ const displayResult = (svg, className) => {
   svgOutput.classList.remove(MONOCHROME);
   svgOutput.classList.add(className);
   svgOutput.innerHTML = svg;
+  console.log(`SVG size: ${svg.length} bytes`);
 };
 
 const startProcessing = async () => {

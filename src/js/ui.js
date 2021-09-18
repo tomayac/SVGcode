@@ -42,6 +42,7 @@ const PERCENT = '%';
 const DEGREES = 'deg';
 const STEPS = 'steps';
 const PIXELS = 'pixels';
+const NONE = '';
 
 const FILTERS = {
   brightness: 'brightness',
@@ -63,6 +64,8 @@ const POTRACE = {
   turdsize: 'turdsize',
   // 0.0 to 1.3334, default 1.0
   alphamax: 'alphamax',
+  // 0 to 6, default 4
+  turnpolicy: 'turnpolicy',
   // true or false, default true
   opticurve: 'opticurve',
   // 0 to Infinity, default 0.2
@@ -93,6 +96,8 @@ const scale = {
 
 const potraceOptions = {
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
+  [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
+  [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
 };
 
 const fieldsetsArray = [
@@ -171,6 +176,8 @@ const createControls = (filter, props, fieldset) => {
   input.value = initial;
   if (unit) {
     input.dataset.unit = unit;
+  } else {
+    input.step = 0.01;
   }
   input.addEventListener('input', () => {
     span.textContent = updateLabel(unit, input.value);

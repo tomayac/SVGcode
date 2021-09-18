@@ -24,6 +24,8 @@ const convertToColorSVG = async (imageData) => {
 
     const params = {
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
+      alphamax: Number(filterInputs[POTRACE.alphamax].value),
+      turnpolicy: Number(filterInputs[POTRACE.turnpolicy].value),
     };
     colorWorker.postMessage({ imageData, params }, [
       channel.port2,

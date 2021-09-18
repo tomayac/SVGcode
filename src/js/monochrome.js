@@ -13,6 +13,8 @@ const convertToMonochromeSVG = async (imageData) => {
 
     const params = {
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
+      alphamax: Number(filterInputs[POTRACE.alphamax].value),
+      turnpolicy: Number(filterInputs[POTRACE.turnpolicy].value),
     };
     monochromeSVGWorker.postMessage({ imageData, params }, [channel.port2]);
   });
