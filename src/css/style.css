@@ -246,6 +246,7 @@ button {
   border-radius: var(--space);
   margin-inline-end: var(--space);
   cursor: pointer;
+  padding: 1px 6px;
 }
 
 button.menu {
