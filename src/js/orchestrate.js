@@ -13,9 +13,13 @@ const COLOR = 'color';
 const MONOCHROME = 'monochrome';
 
 const displayResult = (svg, className, initialViewBox) => {
+  // Remove `width` and `height` attributes.
   svg = svg
     .replace(/\s+width="\d+(?:\.\d+)?"/, '')
     .replace(/\s+height="\d+(?:\.\d+)"/, '');
+  // Store the original `viewBox`.
+  svgOutput.dataset.originalViewBox = /viewBox="([^"]+)"/.exec(svg)[1];
+  // Restore the previous pan and zoom settings.
   if (initialViewBox.width) {
     svg = svg.replace(
       /viewBox="([^"]+)"/,
@@ -26,7 +30,7 @@ const displayResult = (svg, className, initialViewBox) => {
   svgOutput.classList.remove(MONOCHROME);
   svgOutput.classList.add(className);
   svgOutput.innerHTML = svg;
-  showToast(`${i18n.t('svgSize')} ${svg.length} ${i18n.t('bytes')}`, 3000);
+  showToast(`${i18n.t('svgSize')}: ${svg.length} ${i18n.t('bytes')}`, 3000);
 };
 
 const startProcessing = async (initialViewBox = {}) => {

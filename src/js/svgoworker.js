@@ -1,15 +1,20 @@
-import { optimize, extendDefaultPlugins } from 'svgo/dist/svgo.browser.js';
+import { optimize } from 'svgo/dist/svgo.browser.js';
 
 self.addEventListener('message', async (e) => {
-  const { svg } = e.data;
+  let { svg, originalViewBox } = e.data;
+  svg = svg.replace(/viewBox="[^"]+"/, `viewBox="${originalViewBox}"`);
   const optimized = optimize(svg, {
     multipass: true,
-    plugins: extendDefaultPlugins([
+    plugins: [
       {
-        name: 'removeViewBox',
-        active: false,
+        name: 'preset-default',
+        params: {
+          overrides: {
+            removeViewBox: false,
+          },
+        },
       },
-    ]),
+    ],
   });
   e.ports[0].postMessage({ result: optimized.data });
 });

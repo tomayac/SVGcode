@@ -405,7 +405,6 @@ svgOutput.addEventListener('wheel', (e) => {
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
   }
-  console.log(e.deltaY);
   zoomScale += e.deltaY * -0.005;
   zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
   const newWidth = Math.ceil(initialViewBox.width * zoomScale);
