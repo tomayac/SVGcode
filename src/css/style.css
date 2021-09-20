@@ -203,7 +203,7 @@ output {
   display: block;
   overflow: hidden;
   cursor: grab;
-  touch-action: manipulation;
+  touch-action: none;
 }
 
 output img {
