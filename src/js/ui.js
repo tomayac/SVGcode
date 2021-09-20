@@ -98,6 +98,8 @@ const potraceOptions = {
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
+  [POTRACE.opticurve]: { unit: STEPS, initial: 1, min: 0, max: 1 },
+  [POTRACE.opttolerance]: { unit: NONE, initial: 0.2, min: 0, max: 1 },
 };
 
 const fieldsetsArray = [
@@ -171,14 +173,15 @@ const createControls = (filter, props, fieldset) => {
   input.id = filter;
   input.type = 'range';
   input.class = filter;
+  if (unit) {
+    input.dataset.unit = unit;
+  }
+  if (unit === NONE) {
+    input.step = 0.01;
+  }
   input.min = min;
   input.max = max;
   input.value = initial;
-  if (unit) {
-    input.dataset.unit = unit;
-  } else {
-    input.step = 0.01;
-  }
   input.addEventListener('input', () => {
     span.textContent = updateLabel(unit, input.value);
   });
@@ -186,24 +189,24 @@ const createControls = (filter, props, fieldset) => {
     input.addEventListener(
       'change',
       debounce(async () => {
-        resetZoomAndPan();
-        await startProcessing();
+        storeInitialViewBox();
+        await startProcessing(initialViewBox);
       }, 250),
     );
   } else if (Object.keys(POTRACE).includes(filter)) {
     input.addEventListener(
       'change',
       debounce(async () => {
-        resetZoomAndPan();
-        await startProcessing();
+        storeInitialViewBox();
+        await startProcessing(initialViewBox);
       }, 250),
     );
   } else {
     input.addEventListener(
       'change',
       debounce(async () => {
-        resetZoomAndPan();
-        await startProcessing();
+        storeInitialViewBox();
+        await startProcessing(initialViewBox);
       }, 250),
     );
   }
@@ -229,8 +232,8 @@ posterizeCheckbox.addEventListener('change', async () => {
   Object.keys(COLORS).forEach((color) => {
     filterInputs[color].disabled = disabled;
   });
-  resetZoomAndPan();
-  await startProcessing();
+  storeInitialViewBox();
+  await startProcessing(initialViewBox);
 });
 
 const resetZoomAndPan = () => {
@@ -242,18 +245,18 @@ const resetZoomAndPan = () => {
 };
 
 colorRadio.addEventListener('change', async () => {
-  resetZoomAndPan();
-  await startProcessing();
+  storeInitialViewBox();
+  await startProcessing(initialViewBox);
 });
 
 monochromeRadio.addEventListener('change', async () => {
-  resetZoomAndPan();
-  await startProcessing();
+  storeInitialViewBox();
+  await startProcessing(initialViewBox);
 });
 
 considerDPRCheckbox.addEventListener('change', async () => {
-  resetZoomAndPan();
-  await startProcessing();
+  storeInitialViewBox();
+  await startProcessing(initialViewBox);
 });
 
 const initUI = async () => {
@@ -347,11 +350,13 @@ const onDragStart = (e) => {
 };
 
 const onPointerMove = (e) => {
-  const newX = Math.floor(e.x - x);
-  const newY = Math.floor(e.y - y);
+  const newX = Math.floor(e.offsetX - x);
+  const newY = Math.floor(e.offsetY - y);
   svg.setAttribute(
     'viewBox',
-    `${-newX} ${-newY} ${initialViewBox.width} ${initialViewBox.height}`,
+    `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
+      initialViewBox.height
+    }`,
   );
 };
 
@@ -359,14 +364,14 @@ svgOutput.addEventListener('pointerdown', (e) => {
   if (e.buttons > 1) {
     return;
   }
-  svg = svg || svgOutput.querySelector('svg');
+  svg = svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
   svg.addEventListener('dragstart', onDragStart);
   storeInitialViewBox();
-  x = Math.floor(e.x + initialViewBox.x);
-  y = Math.floor(e.y + initialViewBox.y);
+  x = Math.floor(e.offsetX + initialViewBox.x);
+  y = Math.floor(e.offsetY + initialViewBox.y);
   svgOutput.addEventListener('pointermove', onPointerMove);
   svgOutput.style.cursor = 'grabbing';
 });
@@ -382,6 +387,7 @@ svgOutput.addEventListener('pointerup', (e) => {
 });
 
 const storeInitialViewBox = () => {
+  svg = svgOutput.querySelector('svg');
   const viewBox = svg.getAttribute('viewBox');
   const [x, y, width, height] = viewBox.split(' ');
   initialViewBox.x = Number(x);
@@ -392,13 +398,14 @@ const storeInitialViewBox = () => {
 
 svgOutput.addEventListener('wheel', (e) => {
   e.preventDefault();
-  svg = svg || svgOutput.querySelector('svg');
+  svg = svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
   }
+  console.log(e.deltaY);
   zoomScale += e.deltaY * -0.005;
   zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
   const newWidth = Math.ceil(initialViewBox.width * zoomScale);
@@ -420,13 +427,17 @@ debugCheckbox.addEventListener('click', () => {
   progress.classList.toggle('debug');
 });
 
-const showToast = (message) => {
+let toastTimeout = null;
+const showToast = (message, duration = 5000) => {
   toast.innerHTML = message;
   toast.hidden = false;
-  setTimeout(() => {
+  if (toastTimeout) {
+    clearTimeout(toastTimeout);
+  }
+  toastTimeout = setTimeout(() => {
     toast.hidden = true;
     toast.textContent = '';
-  }, 5000);
+  }, duration);
 };
 
 document.documentElement.style.setProperty(

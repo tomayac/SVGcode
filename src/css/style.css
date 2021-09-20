@@ -19,18 +19,19 @@
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
   overscroll-behavior: none;
+  overflow: hidden;
+  width: 100vw;
+  height: var(--100vh);
+  max-height: var(--100vh);
+  max-width: 100vw;
 }
 
 body {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: var(--100vh);
-  max-height: var(--100vh);
-  max-width: 100vw;
-  overflow: hidden;
 }
 
 main {

@@ -44,6 +44,8 @@ const translations = {
   tweak: 'Tweak',
 
   readyToWorkOffline: 'Ready to work offline.',
+  svgSize: 'SVG size',
+  bytes: 'bytes',
 };
 
 // ignore unused exports default

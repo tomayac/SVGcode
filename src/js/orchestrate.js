@@ -4,24 +4,32 @@ import {
 import { colorRadio, svgOutput } from './domrefs.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG } from './color.js';
+import { showToast } from './ui.js';
+import { i18n } from './i18n.js';
 
 import spinnerSVG from '/spinner.svg?raw';
 
 const COLOR = 'color';
 const MONOCHROME = 'monochrome';
 
-const displayResult = (svg, className) => {
+const displayResult = (svg, className, initialViewBox) => {
   svg = svg
     .replace(/\s+width="\d+(?:\.\d+)?"/, '')
     .replace(/\s+height="\d+(?:\.\d+)"/, '');
+  if (initialViewBox.width) {
+    svg = svg.replace(
+      /viewBox="([^"]+)"/,
+      `viewBox="${initialViewBox.x} ${initialViewBox.y} ${initialViewBox.width} ${initialViewBox.height}"`,
+    );
+  }
   svgOutput.classList.remove(COLOR);
   svgOutput.classList.remove(MONOCHROME);
   svgOutput.classList.add(className);
   svgOutput.innerHTML = svg;
-  console.log(`SVG size: ${svg.length} bytes`);
+  showToast(`${i18n.t('svgSize')} ${svg.length} ${i18n.t('bytes')}`, 3000);
 };
 
-const startProcessing = async () => {
+const startProcessing = async (initialViewBox = {}) => {
   svgOutput.innerHTML = '';
   let spinner = svgOutput.querySelector('img');
   if (!spinner) {
@@ -38,10 +46,10 @@ const startProcessing = async () => {
   // const imageData = await preProcessInputImage();
   if (colorRadio.checked) {
     const svg = await convertToColorSVG(imageData);
-    displayResult(svg, COLOR);
+    displayResult(svg, COLOR, initialViewBox);
   } else {
     const svg = await convertToMonochromeSVG(imageData);
-    displayResult(svg, MONOCHROME);
+    displayResult(svg, MONOCHROME, initialViewBox);
   }
   spinner.style.display = 'none';
 };
