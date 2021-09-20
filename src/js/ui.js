@@ -398,6 +398,7 @@ const storeInitialViewBox = () => {
 
 svgOutput.addEventListener('wheel', (e) => {
   e.preventDefault();
+  console.log(e.deltaY);
   svg = svgOutput.querySelector('svg');
   if (!svg) {
     return;
