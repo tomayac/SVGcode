@@ -135,7 +135,7 @@ const pointerDownHandler = (e) => {
 
 const pointerMoveHandler = (e) => {
   // Find this event in the cache and update its record with this event
-  for (const i = 0; i < pointerEventCache.length; i++) {
+  for (let i = 0; i < pointerEventCache.length; i++) {
     if (e.pointerId === pointerEventCache[i].pointerId) {
       pointerEventCache[i] = e;
       break;
@@ -168,7 +168,7 @@ const pointerUpHandler = (e) => {
 
 const removeEvent = (e) => {
   // Remove this event from the target's cache
-  for (const i = 0; i < pointerEventCache.length; i++) {
+  for (let i = 0; i < pointerEventCache.length; i++) {
     if (pointerEventCache[i].pointerId === e.pointerId) {
       pointerEventCache.splice(i, 1);
       break;
