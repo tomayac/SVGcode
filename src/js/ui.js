@@ -134,7 +134,6 @@ const pointerDownHandler = (e) => {
 };
 
 const pointerMoveHandler = (e) => {
-  // Find this event in the cache and update its record with this event
   for (let i = 0; i < pointerEventCache.length; i++) {
     if (e.pointerId === pointerEventCache[i].pointerId) {
       pointerEventCache[i] = e;
@@ -142,32 +141,31 @@ const pointerMoveHandler = (e) => {
     }
   }
 
-  if (pointerEventCache.length == 2) {
+  if (pointerEventCache.length === 2) {
     const currentDifference = Math.abs(
       pointerEventCache[0].clientX - pointerEventCache[1].clientX,
     );
 
     if (previousDifference > 0) {
       if (currentDifference > previousDifference) {
-        console.log('Zoom out');
+        zoomOutput(1 * -0.005);
       }
       if (currentDifference < previousDifference) {
-        console.log('Zoom in');
+        zoomOutput(1 * 0.005);
       }
     }
-
-    // Cache the distance for the next move event
     previousDifference = currentDifference;
   }
 };
 
 const pointerUpHandler = (e) => {
   removeEvent(e);
-  if (pointerEventCache.length < 2) previousDifference = -1;
+  if (pointerEventCache.length < 2) {
+    previousDifference = -1;
+  }
 };
 
 const removeEvent = (e) => {
-  // Remove this event from the target's cache
   for (let i = 0; i < pointerEventCache.length; i++) {
     if (pointerEventCache[i].pointerId === e.pointerId) {
       pointerEventCache.splice(i, 1);
@@ -180,7 +178,6 @@ const initTouchEvents = () => {
   const output = document.querySelector('output');
   output.onpointerdown = pointerDownHandler;
   output.onpointermove = pointerMoveHandler;
-
   output.onpointerup = pointerUpHandler;
   output.onpointercancel = pointerUpHandler;
   output.onpointerout = pointerUpHandler;
@@ -459,18 +456,15 @@ const storeInitialViewBox = () => {
   initialViewBox.height = Number(height);
 };
 
-svgOutput.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  console.log(e.deltaY);
+const zoomOutput = (zoomScale) => {
   svg = svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
+  zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
   }
-  zoomScale += e.deltaY * -0.005;
-  zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
   const newWidth = Math.ceil(initialViewBox.width * zoomScale);
   const newHeight = Math.ceil(initialViewBox.height * zoomScale);
   if (newWidth <= 0 || newHeight <= 0) {
@@ -483,6 +477,12 @@ svgOutput.addEventListener('wheel', (e) => {
     initialViewBox.y + (initialViewBox.height - newHeight) / 2,
   );
   svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
+};
+
+svgOutput.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  zoomScale += e.deltaY * -0.005;
+  zoomOutput(zoomScale);
 });
 
 debugCheckbox.addEventListener('click', () => {
