@@ -126,6 +126,69 @@ let svg = null;
 let zoomScale = 1;
 let initialViewBox = {};
 
+const pointerEventCache = [];
+let previousDifference = -1;
+
+const pointerDownHandler = (e) => {
+  pointerEventCache.push(e);
+};
+
+const pointerMoveHandler = (e) => {
+  // Find this event in the cache and update its record with this event
+  for (const i = 0; i < pointerEventCache.length; i++) {
+    if (e.pointerId === pointerEventCache[i].pointerId) {
+      pointerEventCache[i] = e;
+      break;
+    }
+  }
+
+  if (pointerEventCache.length == 2) {
+    const currentDifference = Math.abs(
+      pointerEventCache[0].clientX - pointerEventCache[1].clientX,
+    );
+
+    if (previousDifference > 0) {
+      if (currentDifference > previousDifference) {
+        console.log('Zoom out');
+      }
+      if (currentDifference < previousDifference) {
+        console.log('Zoom in');
+      }
+    }
+
+    // Cache the distance for the next move event
+    previousDifference = currentDifference;
+  }
+};
+
+const pointerUpHandler = (e) => {
+  removeEvent(e);
+  if (pointerEventCache.length < 2) previousDifference = -1;
+};
+
+const removeEvent = (e) => {
+  // Remove this event from the target's cache
+  for (const i = 0; i < pointerEventCache.length; i++) {
+    if (pointerEventCache[i].pointerId === e.pointerId) {
+      pointerEventCache.splice(i, 1);
+      break;
+    }
+  }
+};
+
+const initTouchEvents = () => {
+  const output = document.querySelector('output');
+  output.onpointerdown = pointerDownHandler;
+  output.onpointermove = pointerMoveHandler;
+
+  output.onpointerup = pointerUpHandler;
+  output.onpointercancel = pointerUpHandler;
+  output.onpointerout = pointerUpHandler;
+  output.onpointerleave = pointerUpHandler;
+};
+
+initTouchEvents();
+
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
   return ` (${
