@@ -14,7 +14,7 @@ import {
 // const offscreen = canvasMain.transferControlToOffscreen();
 const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
 ctxMain.scale(dpr, dpr);
-ctxMain.imageSmoothingEnabled = false;
+ctxMain.imageSmoothingEnabled = true;
 
 const preProcessMainCanvas = () => {
   const { width, height } = getScaledDimensions();

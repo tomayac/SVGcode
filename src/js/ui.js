@@ -395,6 +395,9 @@ svgOutput.addEventListener('pointerup', (e) => {
 
 const storeInitialViewBox = () => {
   svg = svg || svgOutput.querySelector('svg');
+  if (!svg) {
+    return;
+  }
   const viewBox = svg.getAttribute('viewBox');
   const [x, y, width, height] = viewBox.split(' ');
   initialViewBox.x = Number(x);
@@ -404,7 +407,6 @@ const storeInitialViewBox = () => {
 };
 
 const zoomOutput = (zoomScale) => {
-  console.log(zoomScale);
   svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
