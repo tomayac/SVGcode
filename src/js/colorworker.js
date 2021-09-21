@@ -33,9 +33,6 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
     const newImageData = new ImageData(imageData.width, imageData.height);
     newImageData.data.fill(255);
     const len = occurrences.length;
-    if (len <= params.turdsize) {
-      continue;
-    }
     for (let i = 0; i < len; i++) {
       const location = occurrences[i];
       newImageData.data[location] = 0;
@@ -46,10 +43,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
     promises.push(
       new Promise(async (resolve) => {
         let svg = await potrace(newImageData, params);
-        svg = svg.replace(
-          'fill="#000000" stroke="none"',
-          `fill="rgba(${color})" stroke-width="1px" stroke="rgba(${color})"`,
-        );
+        svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
         processed++;
         progressPort.postMessage({ processed, total });
         console.log(`Potraced %c■■`, `color: rgba(${color})`);

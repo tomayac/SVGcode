@@ -126,65 +126,6 @@ let svg = null;
 let zoomScale = 1;
 let initialViewBox = {};
 
-const pointerEventCache = [];
-let previousDifference = -1;
-
-const pointerDownHandler = (e) => {
-  pointerEventCache.push(e);
-};
-
-const pointerMoveHandler = (e) => {
-  for (let i = 0; i < pointerEventCache.length; i++) {
-    if (e.pointerId === pointerEventCache[i].pointerId) {
-      pointerEventCache[i] = e;
-      break;
-    }
-  }
-
-  if (pointerEventCache.length === 2) {
-    const currentDifference = Math.abs(
-      pointerEventCache[0].clientX - pointerEventCache[1].clientX,
-    );
-
-    if (previousDifference > 0) {
-      if (currentDifference > previousDifference) {
-        zoomOutput(1 * -0.005);
-      }
-      if (currentDifference < previousDifference) {
-        zoomOutput(1 * 0.005);
-      }
-    }
-    previousDifference = currentDifference;
-  }
-};
-
-const pointerUpHandler = (e) => {
-  removeEvent(e);
-  if (pointerEventCache.length < 2) {
-    previousDifference = -1;
-  }
-};
-
-const removeEvent = (e) => {
-  for (let i = 0; i < pointerEventCache.length; i++) {
-    if (pointerEventCache[i].pointerId === e.pointerId) {
-      pointerEventCache.splice(i, 1);
-      break;
-    }
-  }
-};
-
-const initTouchEvents = () => {
-  svgOutput.addEventListener('pointerdown', pointerDownHandler);
-  svgOutput.addEventListener('pointermove', pointerMoveHandler);
-  svgOutput.addEventListener('pointerup', pointerUpHandler);
-  svgOutput.addEventListener('pointercancel', pointerUpHandler);
-  svgOutput.addEventListener('pointerout', pointerUpHandler);
-  svgOutput.addEventListener('pointerleave', pointerUpHandler);
-};
-
-initTouchEvents();
-
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
   return ` (${
@@ -249,6 +190,7 @@ const createControls = (filter, props, fieldset) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
+        svg = null;
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -257,6 +199,7 @@ const createControls = (filter, props, fieldset) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
+        svg = null;
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -265,6 +208,7 @@ const createControls = (filter, props, fieldset) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
+        svg = null;
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -292,6 +236,7 @@ posterizeCheckbox.addEventListener('change', async () => {
     filterInputs[color].disabled = disabled;
   });
   storeInitialViewBox();
+  svg = null;
   await startProcessing(initialViewBox);
 });
 
@@ -305,16 +250,19 @@ const resetZoomAndPan = () => {
 
 colorRadio.addEventListener('change', async () => {
   storeInitialViewBox();
+  svg = null;
   await startProcessing(initialViewBox);
 });
 
 monochromeRadio.addEventListener('change', async () => {
   storeInitialViewBox();
+  svg = null;
   await startProcessing(initialViewBox);
 });
 
 considerDPRCheckbox.addEventListener('change', async () => {
   storeInitialViewBox();
+  svg = null;
   await startProcessing(initialViewBox);
 });
 
@@ -420,10 +368,10 @@ const onPointerMove = (e) => {
 };
 
 svgOutput.addEventListener('pointerdown', (e) => {
-  if (e.buttons > 1) {
+  if (pointerEventCache.length === 2 || e.buttons > 1) {
     return;
   }
-  svg = svgOutput.querySelector('svg');
+  svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
@@ -436,17 +384,17 @@ svgOutput.addEventListener('pointerdown', (e) => {
 });
 
 svgOutput.addEventListener('pointerup', (e) => {
+  svgOutput.removeEventListener('pointermove', onPointerMove);
   if (!svg) {
     return;
   }
-  svgOutput.removeEventListener('pointermove', onPointerMove);
   svg.removeEventListener('dragstart', onDragStart);
   storeInitialViewBox();
   svgOutput.style.cursor = 'grab';
 });
 
 const storeInitialViewBox = () => {
-  svg = svgOutput.querySelector('svg');
+  svg = svg || svgOutput.querySelector('svg');
   const viewBox = svg.getAttribute('viewBox');
   const [x, y, width, height] = viewBox.split(' ');
   initialViewBox.x = Number(x);
@@ -457,7 +405,7 @@ const storeInitialViewBox = () => {
 
 const zoomOutput = (zoomScale) => {
   console.log(zoomScale);
-  svg = svgOutput.querySelector('svg');
+  svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
@@ -481,9 +429,64 @@ const zoomOutput = (zoomScale) => {
 
 svgOutput.addEventListener('wheel', (e) => {
   e.preventDefault();
-  zoomScale += e.deltaY * -0.005;
+  zoomScale += e.deltaY * 0.005;
   zoomOutput(zoomScale);
 });
+
+const pointerEventCache = [];
+let previousDifference = -1;
+
+const pointerDownHandler = (e) => {
+  pointerEventCache.push(e);
+};
+
+const pointerMoveHandler = (e) => {
+  for (let i = 0; i < pointerEventCache.length; i++) {
+    if (e.pointerId === pointerEventCache[i].pointerId) {
+      pointerEventCache[i] = e;
+      break;
+    }
+  }
+
+  if (pointerEventCache.length === 2) {
+    const currentDifference = Math.abs(
+      pointerEventCache[0].clientX - pointerEventCache[1].clientX,
+    );
+
+    if (previousDifference > 0) {
+      if (currentDifference > previousDifference) {
+        zoomOutput(1 * 0.005);
+      }
+      if (currentDifference < previousDifference) {
+        zoomOutput(1 * -0.005);
+      }
+    }
+    previousDifference = currentDifference;
+  }
+};
+
+const removeEvent = (e) => {
+  for (let i = 0; i < pointerEventCache.length; i++) {
+    if (pointerEventCache[i].pointerId === e.pointerId) {
+      pointerEventCache.splice(i, 1);
+      break;
+    }
+  }
+};
+
+const pointerUpHandler = (e) => {
+  removeEvent(e);
+  if (pointerEventCache.length < 2) {
+    previousDifference = -1;
+  }
+};
+
+svgOutput.addEventListener('pointerdown', pointerDownHandler);
+svgOutput.addEventListener('pointermove', pointerMoveHandler);
+svgOutput.addEventListener('pointerup', pointerUpHandler);
+svgOutput.addEventListener('pointercancel', pointerUpHandler);
+svgOutput.addEventListener('pointerout', pointerUpHandler);
+svgOutput.addEventListener('pointerleave', pointerUpHandler);
 
 debugCheckbox.addEventListener('click', () => {
   canvasMain.classList.toggle('debug');

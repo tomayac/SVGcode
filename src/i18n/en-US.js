@@ -7,7 +7,7 @@ const translations = {
   brightness: 'Brightness',
   contrast: 'Contrast',
   grayscale: 'Grayscale',
-  'hue-rotate': 'Hue rotate',
+  'hue-rotate': 'Hue Rotate',
   invert: 'Invert',
   opacity: 'Opacity',
   saturate: 'Saturate',
@@ -39,13 +39,13 @@ const translations = {
   imagePreprocessing: 'Input Preprocessing',
   svgOptions: 'SVG Options',
 
-  considerDPR: 'Consider Device Pixel Ration',
+  considerDPR: 'Consider Device Pixel Ratio',
 
   tweak: 'Tweak',
 
-  readyToWorkOffline: 'Ready to work offline.',
-  svgSize: 'SVG size',
-  bytes: 'bytes',
+  readyToWorkOffline: 'Ready to Work Offline.',
+  svgSize: 'SVG Size',
+  bytes: 'Bytes',
 };
 
 // ignore unused exports default
