@@ -175,13 +175,12 @@ const removeEvent = (e) => {
 };
 
 const initTouchEvents = () => {
-  const output = document.querySelector('output');
-  output.onpointerdown = pointerDownHandler;
-  output.onpointermove = pointerMoveHandler;
-  output.onpointerup = pointerUpHandler;
-  output.onpointercancel = pointerUpHandler;
-  output.onpointerout = pointerUpHandler;
-  output.onpointerleave = pointerUpHandler;
+  svgOutput.addEventListener('pointerdown', pointerDownHandler);
+  svgOutput.addEventListener('pointermove', pointerMoveHandler);
+  svgOutput.addEventListener('pointerup', pointerUpHandler);
+  svgOutput.addEventListener('pointercancel', pointerUpHandler);
+  svgOutput.addEventListener('pointerout', pointerUpHandler);
+  svgOutput.addEventListener('pointerleave', pointerUpHandler);
 };
 
 initTouchEvents();
@@ -457,6 +456,7 @@ const storeInitialViewBox = () => {
 };
 
 const zoomOutput = (zoomScale) => {
+  console.log(zoomScale);
   svg = svgOutput.querySelector('svg');
   if (!svg) {
     return;
