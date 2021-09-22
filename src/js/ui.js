@@ -371,11 +371,11 @@ const onPointerMove = (e) => {
 
     if (previousDifference > 0) {
       if (currentDifference > previousDifference) {
-        zoomScale *= 0.005;
+        zoomScale *= 0.995;
         zoomOutput(zoomScale);
       }
       if (currentDifference < previousDifference) {
-        zoomScale *= -0.005;
+        zoomScale *= 1.005;
         zoomOutput(zoomScale);
       }
     }
