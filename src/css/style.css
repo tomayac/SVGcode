@@ -7,6 +7,7 @@
   --input-image-height: 5rem;
   --input-width: 10rem;
   --sidebar-background-color: rgba(255, 255, 255, 0.8);
+  --canvas-text: #000;
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -327,7 +328,7 @@ button:hover {
 
 .toast {
   align-self: center;
-  border: solid 1px canvastext;
+  border: solid 1px var(--canvas-text);
   padding: var(--space);
   position: absolute;
   bottom: 5ex;
@@ -337,6 +338,7 @@ button:hover {
   :root {
     --accent-color: hotpink;
     --sidebar-background-color: rgba(0, 0, 0, 0.8);
+    --canvas-text: #fff;
 
     background-color: #131313;
     color: #fff;
@@ -356,10 +358,6 @@ button:hover {
 
   button {
     color: #fff;
-  }
-
-  button:hover {
-    color: var(--accent-color);
   }
 
   .spinner {

@@ -371,10 +371,12 @@ const onPointerMove = (e) => {
 
     if (previousDifference > 0) {
       if (currentDifference > previousDifference) {
-        zoomOutput(1 * 0.005);
+        zoomScale = 0.005;
+        zoomOutput(zoomScale);
       }
       if (currentDifference < previousDifference) {
-        zoomOutput(1 * -0.005);
+        zoomScale = -0.005;
+        zoomOutput(zoomScale);
       }
     }
     previousDifference = currentDifference;
@@ -460,11 +462,12 @@ const zoomOutput = (zoomScale) => {
   if (!svg) {
     return;
   }
+  showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 1000);
   zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
   }
-  showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 1000);
+
   const newWidth = Math.ceil(initialViewBox.width * zoomScale);
   const newHeight = Math.ceil(initialViewBox.height * zoomScale);
   if (newWidth <= 0 || newHeight <= 0) {
