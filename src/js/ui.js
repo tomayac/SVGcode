@@ -357,24 +357,54 @@ const onDragStart = (e) => {
 };
 
 const onPointerMove = (e) => {
-  const newX = Math.floor(e.offsetX - x);
-  const newY = Math.floor(e.offsetY - y);
-  svg.setAttribute(
-    'viewBox',
-    `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
-      initialViewBox.height
-    }`,
-  );
+  for (let i = 0; i < pointerEventCache.length; i++) {
+    if (e.pointerId === pointerEventCache[i].pointerId) {
+      pointerEventCache[i] = e;
+      break;
+    }
+  }
+  if (pointerEventCache.length === 2) {
+    console.log('pinch');
+    const currentDifference = Math.abs(
+      pointerEventCache[0].clientX - pointerEventCache[1].clientX,
+    );
+
+    if (previousDifference > 0) {
+      if (currentDifference > previousDifference) {
+        zoomOutput(1 * 0.005);
+      }
+      if (currentDifference < previousDifference) {
+        zoomOutput(1 * -0.005);
+      }
+    }
+    previousDifference = currentDifference;
+  } else if (pointerEventCache.length === 1) {
+    console.log('pan');
+    const newX = Math.floor(e.offsetX - x);
+    const newY = Math.floor(e.offsetY - y);
+    console.log(
+      'viewBox',
+      `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
+        initialViewBox.height
+      }`,
+    );
+    svg.setAttribute(
+      'viewBox',
+      `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
+        initialViewBox.height
+      }`,
+    );
+  }
 };
 
 svgOutput.addEventListener('pointerdown', (e) => {
-  if (pointerEventCache.length === 2 || e.buttons > 1) {
-    return;
-  }
+  console.log('pointerdown');
   svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
+  pointerEventCache.push(e);
+  console.log(pointerEventCache);
   svg.addEventListener('dragstart', onDragStart);
   storeInitialViewBox();
   x = Math.floor(e.offsetX + initialViewBox.x);
@@ -383,14 +413,33 @@ svgOutput.addEventListener('pointerdown', (e) => {
   svgOutput.style.cursor = 'grabbing';
 });
 
-svgOutput.addEventListener('pointerup', (e) => {
+const onPointerUp = (e) => {
   svgOutput.removeEventListener('pointermove', onPointerMove);
+  svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
+  }
+  removeEvent(e);
+  if (pointerEventCache.length < 2) {
+    previousDifference = -1;
   }
   svg.removeEventListener('dragstart', onDragStart);
   storeInitialViewBox();
   svgOutput.style.cursor = 'grab';
+};
+
+svgOutput.addEventListener('pointerup', (e) => {
+  console.log('pointerup');
+  onPointerUp(e);
+});
+svgOutput.addEventListener('pointercancel', (e) => {
+  console.log('pointercancel');
+  onPointerUp(e);
+});
+// svgOutput.addEventListener('pointerout', (e) => {console.log('pointerout');onPointerUp(e)});
+svgOutput.addEventListener('pointerleave', (e) => {
+  console.log('pointerleave');
+  onPointerUp(e);
 });
 
 const storeInitialViewBox = () => {
@@ -426,10 +475,12 @@ const zoomOutput = (zoomScale) => {
   const newY = Math.floor(
     initialViewBox.y + (initialViewBox.height - newHeight) / 2,
   );
+  console.log('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
   svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
 };
 
 svgOutput.addEventListener('wheel', (e) => {
+  console.log('wheel');
   e.preventDefault();
   zoomScale += e.deltaY * 0.005;
   zoomOutput(zoomScale);
@@ -438,57 +489,16 @@ svgOutput.addEventListener('wheel', (e) => {
 const pointerEventCache = [];
 let previousDifference = -1;
 
-const pointerDownHandler = (e) => {
-  pointerEventCache.push(e);
-};
-
-const pointerMoveHandler = (e) => {
-  for (let i = 0; i < pointerEventCache.length; i++) {
-    if (e.pointerId === pointerEventCache[i].pointerId) {
-      pointerEventCache[i] = e;
-      break;
-    }
-  }
-
-  if (pointerEventCache.length === 2) {
-    const currentDifference = Math.abs(
-      pointerEventCache[0].clientX - pointerEventCache[1].clientX,
-    );
-
-    if (previousDifference > 0) {
-      if (currentDifference > previousDifference) {
-        zoomOutput(1 * 0.005);
-      }
-      if (currentDifference < previousDifference) {
-        zoomOutput(1 * -0.005);
-      }
-    }
-    previousDifference = currentDifference;
-  }
-};
-
 const removeEvent = (e) => {
+  console.log('removeEvent');
   for (let i = 0; i < pointerEventCache.length; i++) {
     if (pointerEventCache[i].pointerId === e.pointerId) {
       pointerEventCache.splice(i, 1);
       break;
     }
   }
+  console.log(pointerEventCache);
 };
-
-const pointerUpHandler = (e) => {
-  removeEvent(e);
-  if (pointerEventCache.length < 2) {
-    previousDifference = -1;
-  }
-};
-
-svgOutput.addEventListener('pointerdown', pointerDownHandler);
-svgOutput.addEventListener('pointermove', pointerMoveHandler);
-svgOutput.addEventListener('pointerup', pointerUpHandler);
-svgOutput.addEventListener('pointercancel', pointerUpHandler);
-svgOutput.addEventListener('pointerout', pointerUpHandler);
-svgOutput.addEventListener('pointerleave', pointerUpHandler);
 
 debugCheckbox.addEventListener('click', () => {
   canvasMain.classList.toggle('debug');
