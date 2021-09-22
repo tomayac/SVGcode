@@ -464,6 +464,7 @@ const zoomOutput = (zoomScale) => {
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
   }
+  showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 1000);
   const newWidth = Math.ceil(initialViewBox.width * zoomScale);
   const newHeight = Math.ceil(initialViewBox.height * zoomScale);
   if (newWidth <= 0 || newHeight <= 0) {
