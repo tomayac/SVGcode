@@ -8,6 +8,7 @@
   --input-width: 10rem;
   --sidebar-background-color: rgba(255, 255, 255, 0.8);
   --canvas-text: #000;
+  --canvas: #fff;
 
   color-scheme: dark light;
   accent-color: var(--accent-color);
@@ -327,6 +328,7 @@ button:hover {
 }
 
 .toast {
+  background-color: var(--canvas);
   align-self: center;
   border: solid 1px var(--canvas-text);
   padding: var(--space);
@@ -339,6 +341,7 @@ button:hover {
     --accent-color: hotpink;
     --sidebar-background-color: rgba(0, 0, 0, 0.8);
     --canvas-text: #fff;
+    --canvas: #000;
 
     background-color: #131313;
     color: #fff;

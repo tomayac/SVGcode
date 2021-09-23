@@ -381,7 +381,7 @@ const onPointerMove = (e) => {
     }
     previousDifference = currentDifference;
   } else if (pointerEventCache.length === 1) {
-    console.log('pan');
+    console.log('pan', 'zoom', zoomScale);
     const newX = Math.floor(e.offsetX - x);
     const newY = Math.floor(e.offsetY - y);
     console.log(
@@ -462,8 +462,8 @@ const zoomOutput = (zoomScale) => {
   if (!svg) {
     return;
   }
-  showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 1000);
-  zoomScale = Math.min(Math.max(0.1, zoomScale), 10);
+  // zoomScale = Math.min(Math.max(0.1, Math.abs(zoomScale)), 10);
+  showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 2000);
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
   }
@@ -484,9 +484,8 @@ const zoomOutput = (zoomScale) => {
 };
 
 svgOutput.addEventListener('wheel', (e) => {
-  console.log('wheel');
   e.preventDefault();
-  zoomScale += e.deltaY * 0.005;
+  zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.05), 10));
   zoomOutput(zoomScale);
 });
 

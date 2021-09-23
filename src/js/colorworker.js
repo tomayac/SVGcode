@@ -46,6 +46,22 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
         processed++;
         progressPort.postMessage({ processed, total });
+        const pathRegEx = /<path\s*d="([^"]+)"\/>/g;
+        let matches;
+        const shortPaths = [];
+        while ((matches = pathRegEx.exec(svg)) !== null) {
+          const path = matches[1];
+          if (path.length < 110) {
+            shortPaths.push(matches[0]);
+          }
+        }
+        shortPaths.forEach((path) => {
+          svg = svg.replace(path, '');
+        });
+        if (!/<path/.test(svg)) {
+          resolve('');
+          return;
+        }
         console.log(`Potraced %c■■`, `color: rgba(${color})`);
         resolve(svg);
       }),

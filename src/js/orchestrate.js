@@ -13,6 +13,9 @@ const COLOR = 'color';
 const MONOCHROME = 'monochrome';
 
 const displayResult = (svg, className, initialViewBox) => {
+  if (!svg) {
+    return;
+  }
   // Remove `width` and `height` attributes.
   svg = svg
     .replace(/\s+width="\d+(?:\.\d+)?"/, '')
