@@ -485,7 +485,7 @@ const zoomOutput = (zoomScale) => {
 
 svgOutput.addEventListener('wheel', (e) => {
   e.preventDefault();
-  zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.05), 10));
+  zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.005), 10));
   zoomOutput(zoomScale);
 });
 
