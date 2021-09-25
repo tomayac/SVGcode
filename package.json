@@ -17,7 +17,7 @@
   "dependencies": {
     "browser-fs-access": "^0.20.5",
     "esm-potrace-wasm": "^0.1.1",
-    "svgo": "^2.6.1"
+    "svgo": "^2.7.0"
   },
   "devDependencies": {
     "@rollup/plugin-dynamic-import-vars": "^1.4.0",

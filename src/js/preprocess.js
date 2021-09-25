@@ -17,8 +17,16 @@ ctxMain.scale(dpr, dpr);
 ctxMain.imageSmoothingEnabled = true;
 
 const preProcessMainCanvas = () => {
-  const { width, height } = getScaledDimensions();
+  let { width, height } = getScaledDimensions();
   const factor = considerDPRCheckbox.checked ? dpr : 1;
+  // Don't exceed the maximum canvas size.
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas#maximum_canvas_size
+  let shrinkFactor = 1;
+  while (width * height > 268435456) {
+    width = Math.floor(width / 2);
+    height = Math.floor(height / 2);
+    shrinkFactor /= 2;
+  }
   canvasMain.width = width;
   canvasMain.height = height;
   ctxMain.clearRect(0, 0, width, height);
@@ -27,8 +35,8 @@ const preProcessMainCanvas = () => {
     inputImage,
     0,
     0,
-    factor * inputImage.naturalWidth,
-    factor * inputImage.naturalHeight,
+    factor * inputImage.naturalWidth * shrinkFactor,
+    factor * inputImage.naturalHeight * shrinkFactor,
     0,
     0,
     width,

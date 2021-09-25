@@ -60,6 +60,7 @@ const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 const SCALE = { scale: 'scale' };
 
 const POTRACE = {
+  minPathLenght: 'minPathLength',
   // 0 to Infinity, default 2
   turdsize: 'turdsize',
   // 0.0 to 1.3334, default 1.0
@@ -95,6 +96,7 @@ const scale = {
 };
 
 const potraceOptions = {
+  [POTRACE.minPathLenght]: { unit: STEPS, initial: 0, min: 0, max: 500 },
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
@@ -364,7 +366,6 @@ const onPointerMove = (e) => {
     }
   }
   if (pointerEventCache.length === 2) {
-    console.log('pinch');
     const currentDifference = Math.abs(
       pointerEventCache[0].clientX - pointerEventCache[1].clientX,
     );
@@ -381,15 +382,8 @@ const onPointerMove = (e) => {
     }
     previousDifference = currentDifference;
   } else if (pointerEventCache.length === 1) {
-    console.log('pan', 'zoom', zoomScale);
     const newX = Math.floor(e.offsetX - x);
     const newY = Math.floor(e.offsetY - y);
-    console.log(
-      'viewBox',
-      `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
-        initialViewBox.height
-      }`,
-    );
     svg.setAttribute(
       'viewBox',
       `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
@@ -400,13 +394,11 @@ const onPointerMove = (e) => {
 };
 
 svgOutput.addEventListener('pointerdown', (e) => {
-  console.log('pointerdown');
   svg = svg || svgOutput.querySelector('svg');
   if (!svg) {
     return;
   }
   pointerEventCache.push(e);
-  console.log(pointerEventCache);
   svg.addEventListener('dragstart', onDragStart);
   storeInitialViewBox();
   x = Math.floor(e.offsetX + initialViewBox.x);
@@ -431,16 +423,14 @@ const onPointerUp = (e) => {
 };
 
 svgOutput.addEventListener('pointerup', (e) => {
-  console.log('pointerup');
   onPointerUp(e);
 });
+
 svgOutput.addEventListener('pointercancel', (e) => {
-  console.log('pointercancel');
   onPointerUp(e);
 });
-// svgOutput.addEventListener('pointerout', (e) => {console.log('pointerout');onPointerUp(e)});
+
 svgOutput.addEventListener('pointerleave', (e) => {
-  console.log('pointerleave');
   onPointerUp(e);
 });
 
@@ -479,7 +469,6 @@ const zoomOutput = (zoomScale) => {
   const newY = Math.floor(
     initialViewBox.y + (initialViewBox.height - newHeight) / 2,
   );
-  console.log('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
   svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
 };
 
@@ -493,14 +482,12 @@ const pointerEventCache = [];
 let previousDifference = -1;
 
 const removeEvent = (e) => {
-  console.log('removeEvent');
   for (let i = 0; i < pointerEventCache.length; i++) {
     if (pointerEventCache[i].pointerId === e.pointerId) {
       pointerEventCache.splice(i, 1);
       break;
     }
   }
-  console.log(pointerEventCache);
 };
 
 debugCheckbox.addEventListener('click', () => {

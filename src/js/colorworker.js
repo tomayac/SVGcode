@@ -51,7 +51,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         const shortPaths = [];
         while ((matches = pathRegEx.exec(svg)) !== null) {
           const path = matches[1];
-          if (path.length < 110) {
+          if (path.length < params.minPathLength) {
             shortPaths.push(matches[0]);
           }
         }
@@ -59,18 +59,24 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
           svg = svg.replace(path, '');
         });
         if (!/<path/.test(svg)) {
-          resolve('');
-          return;
+          return resolve('');
         }
         console.log(`Potraced %c■■`, `color: rgba(${color})`);
         resolve(svg);
       }),
     );
   }
-
   const total = promises.length;
-  const svgs = await Promise.all(promises);
-  for (const svg of svgs) {
+  const promiseChunks = [];
+  const chunkSize = navigator.hardwareConcurrency || 8;
+  while (promises.length > 0) {
+    promiseChunks.push(promises.splice(0, chunkSize));
+  }
+  const svgs = [];
+  for (const chunk of promiseChunks) {
+    svgs.push(await Promise.all(chunk));
+  }
+  for (const svg of svgs.flat()) {
     if (!prefix) {
       prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
       suffix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');

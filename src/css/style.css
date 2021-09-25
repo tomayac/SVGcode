@@ -51,8 +51,11 @@ canvas {
   display: none;
 }
 
-canvas.debug {
+.debug {
   display: block;
+}
+
+canvas.debug {
   margin-inline-start: var(--space);
   margin-block-start: calc(
     var(--menu-height) + 4 * var(--space) + var(--input-image-height)
