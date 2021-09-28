@@ -3,7 +3,7 @@ import {
 } from './preprocess.js';
 import { colorRadio, svgOutput } from './domrefs.js';
 import { convertToMonochromeSVG } from './monochrome.js';
-import { convertToColorSVG } from './color.js';
+import { convertToColorSVG, intervalID } from './color.js';
 import { showToast } from './ui.js';
 import { i18n } from './i18n.js';
 
@@ -38,6 +38,10 @@ const displayResult = (svg, className, initialViewBox) => {
 
 const startProcessing = async (initialViewBox = {}) => {
   svgOutput.innerHTML = '';
+  if (intervalID.current) {
+    clearInterval(intervalID.current);
+    intervalID.current = null;
+  }
   let spinner = svgOutput.querySelector('img');
   if (!spinner) {
     spinner = document.createElement('img');

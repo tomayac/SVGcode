@@ -1,8 +1,9 @@
-import { filterInputs, POTRACE } from './ui.js';
+import { filterInputs, initialViewBox, POTRACE } from './ui.js';
 import { progress, svgOutput } from './domrefs.js';
 import ColorWorker from './colorworker?worker';
 
 const colorWorker = new ColorWorker();
+const intervalID = {};
 
 const convertToColorSVG = async (imageData) => {
   return new Promise(async (resolve) => {
@@ -17,24 +18,44 @@ const convertToColorSVG = async (imageData) => {
     let prefix = '';
     let suffix = '';
     let paths = '';
+    let lastLength = 0;
 
-    const intervalID = setInterval(() => {
-      svgOutput.innerHTML = prefix + paths + suffix;
-    }, 100);
+    if (intervalID.current) {
+      clearInterval(intervalID.current);
+      intervalID.current = null;
+    }
+    intervalID.current = setInterval(() => {
+      const innerHTML = `${prefix}${paths}${suffix}`;
+      if (innerHTML.length !== lastLength) {
+        svgOutput.innerHTML = innerHTML;
+        lastLength = innerHTML.length;
+      }
+    }, 3000);
+
     const progressChannel = new MessageChannel();
     progressChannel.port1.onmessage = ({ data }) => {
       const percentage = Math.floor((data.processed / data.total) * 100);
       progress.value = percentage;
       if (data.svg) {
         if (!prefix) {
-          prefix = data.svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
+          prefix = data.svg
+            .replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1')
+            .replace(/\s+width="\d+(?:\.\d+)?"/, '')
+            .replace(/\s+height="\d+(?:\.\d+)"/, '');
           suffix = data.svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');
+          if (initialViewBox.width) {
+            prefix = prefix.replace(
+              /viewBox="([^"]+)"/,
+              `viewBox="${initialViewBox.x} ${initialViewBox.y} ${initialViewBox.width} ${initialViewBox.height}"`,
+            );
+          }
         }
         const path = data.svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
         paths += path;
       }
       if (data.processed === data.total) {
-        clearInterval(intervalID);
+        clearInterval(intervalID.current);
+        intervalID.current = null;
         progressChannel.port1.close();
         progress.value = 0;
         progress.style.visibility = 'hidden';
@@ -56,4 +77,4 @@ const convertToColorSVG = async (imageData) => {
   });
 };
 
-export { convertToColorSVG };
+export { convertToColorSVG, intervalID };

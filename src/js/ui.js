@@ -97,7 +97,7 @@ const scale = {
 
 const potraceOptions = {
   [POTRACE.minPathLenght]: { unit: STEPS, initial: 0, min: 0, max: 30 },
-  [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
+  [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 0, max: 50 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
   [POTRACE.opticurve]: { unit: STEPS, initial: 1, min: 0, max: 1 },
@@ -523,4 +523,13 @@ window.addEventListener(
   }, 250),
 );
 
-export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };
+export {
+  initUI,
+  filters,
+  filterInputs,
+  initialViewBox,
+  showToast,
+  COLORS,
+  SCALE,
+  POTRACE,
+};

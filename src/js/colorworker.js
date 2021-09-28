@@ -59,6 +59,9 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         });
         processed++;
         if (!/<path/.test(svg)) {
+          if (total === processed) {
+            console.log(`Potraced 100% %c■■`, `color: rgba(${color})`);
+          }
           progressPort.postMessage({ processed, total });
           return resolve('');
         }
