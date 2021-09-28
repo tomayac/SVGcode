@@ -30,19 +30,20 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
   const promises = [];
   let processed = 0;
   for (const [color, occurrences] of Object.entries(colors)) {
-    const newImageData = new ImageData(imageData.width, imageData.height);
-    newImageData.data.fill(255);
-    const len = occurrences.length;
-    for (let i = 0; i < len; i++) {
-      const location = occurrences[i];
-      newImageData.data[location] = 0;
-      newImageData.data[location + 1] = 0;
-      newImageData.data[location + 2] = 0;
-      newImageData.data[location + 3] = 255;
-    }
-    promises.push(
-      new Promise(async (resolve) => {
+    promises.push(() => {
+      let newImageData = new ImageData(imageData.width, imageData.height);
+      newImageData.data.fill(255);
+      const len = occurrences.length;
+      for (let i = 0; i < len; i++) {
+        const location = occurrences[i];
+        newImageData.data[location] = 0;
+        newImageData.data[location + 1] = 0;
+        newImageData.data[location + 2] = 0;
+        newImageData.data[location + 3] = 255;
+      }
+      return new Promise(async (resolve) => {
         let svg = await potrace(newImageData, params);
+        newImageData = null;
         svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
         processed++;
         progressPort.postMessage({ processed, total });
@@ -51,7 +52,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         const shortPaths = [];
         while ((matches = pathRegEx.exec(svg)) !== null) {
           const path = matches[1];
-          if (path.length < params.minPathLength) {
+          if (path.split(' ').length < params.minPathSegments) {
             shortPaths.push(matches[0]);
           }
         }
@@ -63,8 +64,8 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         }
         console.log(`Potraced %c■■`, `color: rgba(${color})`);
         resolve(svg);
-      }),
-    );
+      });
+    });
   }
   const total = promises.length;
   const promiseChunks = [];
@@ -74,7 +75,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
   }
   const svgs = [];
   for (const chunk of promiseChunks) {
-    svgs.push(await Promise.all(chunk));
+    svgs.push(await Promise.all(chunk.map((f) => f())));
   }
   for (const svg of svgs.flat()) {
     if (!prefix) {

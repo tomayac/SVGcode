@@ -13,17 +13,20 @@ const convertToColorSVG = async (imageData) => {
     };
 
     progress.value = 0;
+    progress.hidden = false;
     const progressChannel = new MessageChannel();
     progressChannel.port1.onmessage = ({ data }) => {
       const percentage = Math.floor((data.processed / data.total) * 100);
       progress.value = percentage;
       if (data.processed === data.total) {
         progressChannel.port1.close();
+        progress.value = 0;
+        progress.hidden = true;
       }
     };
 
     const params = {
-      minPathLength: Number(filterInputs[POTRACE.minPathLenght].value),
+      minPathSegments: Number(filterInputs[POTRACE.minPathLenght].value),
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
       alphamax: Number(filterInputs[POTRACE.alphamax].value),
       turnpolicy: Number(filterInputs[POTRACE.turnpolicy].value),

@@ -60,7 +60,7 @@ const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 const SCALE = { scale: 'scale' };
 
 const POTRACE = {
-  minPathLenght: 'minPathLength',
+  minPathLenght: 'minPathSegments',
   // 0 to Infinity, default 2
   turdsize: 'turdsize',
   // 0.0 to 1.3334, default 1.0
@@ -96,7 +96,7 @@ const scale = {
 };
 
 const potraceOptions = {
-  [POTRACE.minPathLenght]: { unit: STEPS, initial: 0, min: 0, max: 500 },
+  [POTRACE.minPathLenght]: { unit: STEPS, initial: 0, min: 0, max: 30 },
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 1, max: 50 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
