@@ -359,6 +359,10 @@ const onDragStart = (e) => {
 };
 
 const onPointerMove = (e) => {
+  svg = svg || svgOutput.querySelector('svg');
+  if (!svg) {
+    return;
+  }
   for (let i = 0; i < pointerEventCache.length; i++) {
     if (e.pointerId === pointerEventCache[i].pointerId) {
       pointerEventCache[i] = e;
