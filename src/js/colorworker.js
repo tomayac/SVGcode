@@ -45,8 +45,6 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         let svg = await potrace(newImageData, params);
         newImageData = null;
         svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
-        processed++;
-        progressPort.postMessage({ processed, total });
         const pathRegEx = /<path\s*d="([^"]+)"\/>/g;
         let matches;
         const shortPaths = [];
@@ -59,17 +57,23 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         shortPaths.forEach((path) => {
           svg = svg.replace(path, '');
         });
+        processed++;
         if (!/<path/.test(svg)) {
+          progressPort.postMessage({ processed, total });
           return resolve('');
         }
-        console.log(`Potraced %c■■`, `color: rgba(${color})`);
+        console.log(
+          `Potraced ${((processed / total) * 100).toFixed()}% %c■■`,
+          `color: rgba(${color})`,
+        );
+        progressPort.postMessage({ processed, total, svg });
         resolve(svg);
       });
     });
   }
   const total = promises.length;
   const promiseChunks = [];
-  const chunkSize = navigator.hardwareConcurrency || 8;
+  const chunkSize = 2 * navigator.hardwareConcurrency || 16;
   while (promises.length > 0) {
     promiseChunks.push(promises.splice(0, chunkSize));
   }

@@ -51,11 +51,14 @@ canvas {
   display: none;
 }
 
-.debug {
-  display: block;
+progress {
+  visibility: hidden;
 }
 
 canvas.debug {
+  width: auto;
+  height: var(--input-image-height);
+  display: block;
   margin-inline-start: var(--space);
   margin-block-start: calc(
     var(--menu-height) + 4 * var(--space) + var(--input-image-height)
@@ -175,6 +178,13 @@ details[open] {
   z-index: 1;
   cursor: default;
   user-select: none;
+}
+
+.input-image:hover,
+canvas.debug:hover {
+  transform: scale(2);
+  transform-origin: top right;
+  z-index: 2;
 }
 
 .spinner {

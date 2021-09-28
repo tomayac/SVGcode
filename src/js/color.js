@@ -1,5 +1,5 @@
 import { filterInputs, POTRACE } from './ui.js';
-import { progress } from './domrefs.js';
+import { progress, svgOutput } from './domrefs.js';
 import ColorWorker from './colorworker?worker';
 
 const colorWorker = new ColorWorker();
@@ -13,15 +13,31 @@ const convertToColorSVG = async (imageData) => {
     };
 
     progress.value = 0;
-    progress.hidden = false;
+    progress.style.visibility = 'visible';
+    let prefix = '';
+    let suffix = '';
+    let paths = '';
+
+    const intervalID = setInterval(() => {
+      svgOutput.innerHTML = prefix + paths + suffix;
+    }, 100);
     const progressChannel = new MessageChannel();
     progressChannel.port1.onmessage = ({ data }) => {
       const percentage = Math.floor((data.processed / data.total) * 100);
       progress.value = percentage;
+      if (data.svg) {
+        if (!prefix) {
+          prefix = data.svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');
+          suffix = data.svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$3');
+        }
+        const path = data.svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$2');
+        paths += path;
+      }
       if (data.processed === data.total) {
+        clearInterval(intervalID);
         progressChannel.port1.close();
         progress.value = 0;
-        progress.hidden = true;
+        progress.style.visibility = 'hidden';
       }
     };
 
