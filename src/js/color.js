@@ -30,7 +30,7 @@ const convertToColorSVG = async (imageData) => {
         svgOutput.innerHTML = innerHTML;
         lastLength = innerHTML.length;
       }
-    }, 3000);
+    }, 500);
 
     const progressChannel = new MessageChannel();
     progressChannel.port1.onmessage = ({ data }) => {
