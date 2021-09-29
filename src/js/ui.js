@@ -15,7 +15,6 @@ import {
   pasteButton,
   copyButton,
   dropContainer,
-  svgOutput,
   debugCheckbox,
   canvasMain,
   toast,
@@ -23,6 +22,11 @@ import {
   details,
   summary,
 } from './domrefs.js';
+import {
+  resetZoomAndPan,
+  initialViewBox,
+  storeInitialViewBox,
+} from './panzoom.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import { i18n } from './i18n.js';
@@ -60,6 +64,7 @@ const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 const SCALE = { scale: 'scale' };
 
 const POTRACE = {
+  // 0 to Infinity, default 0
   minPathLenght: 'minPathSegments',
   // 0 to Infinity, default 2
   turdsize: 'turdsize',
@@ -121,12 +126,6 @@ const entriesArray = [
 const filterInputs = {};
 const filterSpans = {};
 const fieldsets = {};
-
-let x = 0;
-let y = 0;
-let svg = null;
-let zoomScale = 1;
-let initialViewBox = {};
 
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
@@ -192,7 +191,6 @@ const createControls = (filter, props, fieldset) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
-        svg = null;
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -201,7 +199,6 @@ const createControls = (filter, props, fieldset) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
-        svg = null;
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -210,7 +207,6 @@ const createControls = (filter, props, fieldset) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
-        svg = null;
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -238,33 +234,21 @@ posterizeCheckbox.addEventListener('change', async () => {
     filterInputs[color].disabled = disabled;
   });
   storeInitialViewBox();
-  svg = null;
   await startProcessing(initialViewBox);
 });
 
-const resetZoomAndPan = () => {
-  x = 0;
-  y = 0;
-  svg = null;
-  zoomScale = 1;
-  initialViewBox = {};
-};
-
 colorRadio.addEventListener('change', async () => {
   storeInitialViewBox();
-  svg = null;
   await startProcessing(initialViewBox);
 });
 
 monochromeRadio.addEventListener('change', async () => {
   storeInitialViewBox();
-  svg = null;
   await startProcessing(initialViewBox);
 });
 
 considerDPRCheckbox.addEventListener('change', async () => {
   storeInitialViewBox();
-  svg = null;
   await startProcessing(initialViewBox);
 });
 
@@ -353,147 +337,6 @@ resetAllButton.addEventListener('click', async () => {
   await startProcessing();
 });
 
-const onDragStart = (e) => {
-  e.preventDefault();
-  return false;
-};
-
-const onPointerMove = (e) => {
-  svg = svg || svgOutput.querySelector('svg');
-  if (!svg) {
-    return;
-  }
-  for (let i = 0; i < pointerEventCache.length; i++) {
-    if (e.pointerId === pointerEventCache[i].pointerId) {
-      pointerEventCache[i] = e;
-      break;
-    }
-  }
-  if (pointerEventCache.length === 2) {
-    const currentDifference = Math.abs(
-      pointerEventCache[0].clientX - pointerEventCache[1].clientX,
-    );
-
-    if (previousDifference > 0) {
-      if (currentDifference > previousDifference) {
-        zoomScale *= 0.995;
-        zoomOutput(zoomScale);
-      }
-      if (currentDifference < previousDifference) {
-        zoomScale *= 1.005;
-        zoomOutput(zoomScale);
-      }
-    }
-    previousDifference = currentDifference;
-  } else if (pointerEventCache.length === 1) {
-    const newX = Math.floor(e.offsetX - x);
-    const newY = Math.floor(e.offsetY - y);
-    svg.setAttribute(
-      'viewBox',
-      `${-1 * newX} ${-1 * newY} ${initialViewBox.width} ${
-        initialViewBox.height
-      }`,
-    );
-  }
-};
-
-svgOutput.addEventListener('pointerdown', (e) => {
-  svg = svg || svgOutput.querySelector('svg');
-  if (!svg) {
-    return;
-  }
-  pointerEventCache.push(e);
-  svg.addEventListener('dragstart', onDragStart);
-  storeInitialViewBox();
-  x = Math.floor(e.offsetX + initialViewBox.x);
-  y = Math.floor(e.offsetY + initialViewBox.y);
-  svgOutput.addEventListener('pointermove', onPointerMove);
-  svgOutput.style.cursor = 'grabbing';
-});
-
-const onPointerUp = (e) => {
-  svgOutput.removeEventListener('pointermove', onPointerMove);
-  svg = svg || svgOutput.querySelector('svg');
-  if (!svg) {
-    return;
-  }
-  removeEvent(e);
-  if (pointerEventCache.length < 2) {
-    previousDifference = -1;
-  }
-  svg.removeEventListener('dragstart', onDragStart);
-  storeInitialViewBox();
-  svgOutput.style.cursor = 'grab';
-};
-
-svgOutput.addEventListener('pointerup', (e) => {
-  onPointerUp(e);
-});
-
-svgOutput.addEventListener('pointercancel', (e) => {
-  onPointerUp(e);
-});
-
-svgOutput.addEventListener('pointerleave', (e) => {
-  onPointerUp(e);
-});
-
-const storeInitialViewBox = () => {
-  svg = svg || svgOutput.querySelector('svg');
-  if (!svg) {
-    return;
-  }
-  const viewBox = svg.getAttribute('viewBox');
-  const [x, y, width, height] = viewBox.split(' ');
-  initialViewBox.x = Number(x);
-  initialViewBox.y = Number(y);
-  initialViewBox.width = Number(width);
-  initialViewBox.height = Number(height);
-};
-
-const zoomOutput = (zoomScale) => {
-  svg = svg || svgOutput.querySelector('svg');
-  if (!svg) {
-    return;
-  }
-  // zoomScale = Math.min(Math.max(0.1, Math.abs(zoomScale)), 10);
-  showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 2000);
-  if (initialViewBox.width === undefined) {
-    storeInitialViewBox();
-  }
-
-  const newWidth = Math.ceil(initialViewBox.width * zoomScale);
-  const newHeight = Math.ceil(initialViewBox.height * zoomScale);
-  if (newWidth <= 0 || newHeight <= 0) {
-    return;
-  }
-  const newX = Math.floor(
-    initialViewBox.x + (initialViewBox.width - newWidth) / 2,
-  );
-  const newY = Math.floor(
-    initialViewBox.y + (initialViewBox.height - newHeight) / 2,
-  );
-  svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
-};
-
-svgOutput.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.005), 10));
-  zoomOutput(zoomScale);
-});
-
-const pointerEventCache = [];
-let previousDifference = -1;
-
-const removeEvent = (e) => {
-  for (let i = 0; i < pointerEventCache.length; i++) {
-    if (pointerEventCache[i].pointerId === e.pointerId) {
-      pointerEventCache.splice(i, 1);
-      break;
-    }
-  }
-};
-
 debugCheckbox.addEventListener('click', () => {
   canvasMain.classList.toggle('debug');
   progress.classList.toggle('debug');
@@ -527,13 +370,4 @@ window.addEventListener(
   }, 250),
 );
 
-export {
-  initUI,
-  filters,
-  filterInputs,
-  initialViewBox,
-  showToast,
-  COLORS,
-  SCALE,
-  POTRACE,
-};
+export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };

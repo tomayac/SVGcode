@@ -1,4 +1,5 @@
-import { filterInputs, initialViewBox, POTRACE } from './ui.js';
+import { filterInputs, POTRACE } from './ui.js';
+import { initialViewBox } from './panzoom';
 import { progress, svgOutput } from './domrefs.js';
 import ColorWorker from './colorworker?worker';
 
