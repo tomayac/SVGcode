@@ -6,6 +6,7 @@ import {
   dpr,
   considerDPRCheckbox,
 } from './domrefs.js';
+import canvasSize from 'canvas-size';
 
 // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
 // import PreProcessWorker from './preprocessworker.js?worker';
@@ -20,13 +21,14 @@ const preProcessMainCanvas = () => {
   let { width, height } = getScaledDimensions();
   const factor = considerDPRCheckbox.checked ? dpr : 1;
   // Don't exceed the maximum canvas size.
-  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas#maximum_canvas_size
   let shrinkFactor = 1;
-  while (width * height > 268435456) {
+  console.log('before', width, height);
+  while (!canvasSize.test({ width, height })) {
     width = Math.floor(width / 2);
     height = Math.floor(height / 2);
     shrinkFactor /= 2;
   }
+  console.log('after', width, height);
   canvasMain.width = width;
   canvasMain.height = height;
   ctxMain.clearRect(0, 0, width, height);

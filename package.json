@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "browser-fs-access": "^0.20.5",
+    "canvas-size": "^1.2.5",
     "esm-potrace-wasm": "^0.1.1",
     "svgo": "^2.7.0"
   },
