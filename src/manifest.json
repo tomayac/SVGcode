@@ -1,0 +1,43 @@
+{
+  "registerType": "autoUpdate",
+  "injectRegister": "auto",
+  "manifest": {
+    "name": "SVGcode",
+    "short_name": "SVGcode",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#131313",
+    "background_color": "#131313",
+    "icons": [
+      {
+        "src": "./favicon.svg",
+        "type": "image/svg+xml",
+        "sizes": "340x340"
+      },
+      {
+        "src": "./favicon.png",
+        "type": "image/png",
+        "sizes": "768x768"
+      }
+    ],
+    "file_handlers": [
+      {
+        "action": "./",
+        "accept": {
+          "image/*": [
+            ".jpg",
+            ".jpeg",
+            ".webp",
+            ".png",
+            ".avif",
+            ".gif",
+            ".svg",
+            ".bmp"
+          ]
+        }
+      }
+    ]
+  }
+}
