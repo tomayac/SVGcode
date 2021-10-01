@@ -14,12 +14,16 @@ const translations = {
   sepia: 'Sepia',
 
   scale: 'Scale',
-  turdsize: 'Despeckle',
+  turdsize: 'Suppress speckles',
+  alphamax: 'Corner Threshold',
+  minPathSegments: 'Min. Path Length',
+  turnpolicy: 'Turn Policy',
 
   '%': '%',
   deg: '°',
   steps: 'Steps',
   pixels: 'Pixels',
+  segments: 'Segments',
 
   reset: 'Reset',
   resetAll: 'Reset All',

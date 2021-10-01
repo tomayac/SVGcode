@@ -8,7 +8,11 @@ export default {
     dynamicImportVars({
       include: ['./src/i18n/*', './src/js/filehandling.js'],
     }),
-    vitePWA(webmanifest),
+    vitePWA({
+      registerType: 'autoUpdate',
+      injectRegister: 'auto',
+      manifest: webmanifest,
+    }),
   ],
   build: {
     outDir: 'docs',

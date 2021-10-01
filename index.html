@@ -14,11 +14,12 @@
     <title>SVGcode</title>
     <link rel="stylesheet" href="/src/css/style.css" />
     <link rel="icon" type="image/svg" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <script src="/src/js/main.js" type="module"></script>
   </head>
   <body>
     <main>
-      <details>
+      <details class="main">
         <summary></summary>
         <div class="sidebar">
           <form>
@@ -46,7 +47,7 @@
                 <input id="consider-dpr" type="checkbox" class="consider-dpr" />
                 <label for="consider-dpr"></label>
               </div>
-              <div class="fieldsets">
+              <div class="details">
                 <div>
                   <input
                     id="posterize"
@@ -76,7 +77,7 @@
         <img
           class="input-image"
           crossorigin="anonymous"
-          src="/favicon.svg"
+          src="/favicon.png"
           alt=""
           draggable="false"
         />

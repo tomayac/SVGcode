@@ -3,7 +3,8 @@
   --100vh: 100vh;
   --menu-height: 5ex;
   --sidebar-width: 15rem;
-  --accent-color: #e60073;
+  --main-accent-color: #e60073;
+  --alternative-accent-color: #337eff;
   --input-image-height: 5rem;
   --input-width: 10rem;
   --sidebar-background-color: rgba(255, 255, 255, 0.8);
@@ -11,7 +12,7 @@
   --canvas: #fff;
 
   color-scheme: dark light;
-  accent-color: var(--accent-color);
+  accent-color: var(--main-accent-color);
   font-family: system-ui, sans-serif;
 }
 
@@ -43,7 +44,7 @@ main {
 }
 
 input[type='range'] {
-  display: block;
+  display: inline-block;
   width: var(--input-width);
 }
 
@@ -69,27 +70,32 @@ canvas.debug {
   cursor: default;
 }
 
-fieldset {
-  border: none;
-  margin-inline: 0;
-  padding-inline: 0;
-  padding-block-start: 0;
-  padding-block-end: calc(2 * var(--space));
-}
-
 summary,
 label,
 button,
-legend,
-.fieldsets {
+details {
   font-family: inherit;
   font-size: inherit;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
+  margin-block-end: var(--space);
+}
+
+details {
+  margin-block-end: calc(2 * var(--space));
+  padding-inline-end: var(--space);
+  overflow: hidden auto;
+  scrollbar-width: none;
 }
 
 summary {
+  color: var(--alternative-accent-color);
+  display: flex;
+  align-content: center;
+}
+
+summary::-webkit-details-marker {
   display: none;
 }
 
@@ -97,14 +103,8 @@ summary::marker {
   content: '';
 }
 
-summary::-webkit-details-marker {
+.main > summary {
   display: none;
-}
-
-details {
-  padding-inline-end: var(--space);
-  overflow: hidden auto;
-  scrollbar-width: none;
 }
 
 details::-webkit-scrollbar {
@@ -119,12 +119,11 @@ details[open] {
   summary,
   label,
   button,
-  legend,
-  .fieldsets {
+  details {
     font-size: 0.9rem;
   }
 
-  details {
+  details.main {
     position: absolute;
     margin-inline-start: var(--space);
     margin-block-start: calc(var(--menu-height) + 4 * var(--space));
@@ -132,18 +131,17 @@ details[open] {
     z-index: 2;
   }
 
-  details[open] {
+  details[open].main {
     width: 100vw;
     max-height: calc(var(--100vh) - var(--menu-height) - 9 * var(--space));
   }
 
-  details[open] > .sidebar {
+  details[open].main > .sidebar {
     backdrop-filter: saturate(180%) blur(20px);
     background-color: var(--sidebar-background-color);
-    width: var(--sidebar-width);
   }
 
-  summary {
+  details.main > summary {
     display: flex;
     align-items: center;
     place-content: center;
@@ -155,7 +153,7 @@ details[open] {
   }
 
   /* Make the summary occupy the whole space so clicking anywhere closes. */
-  details[open] > summary {
+  details.main[open] > summary {
     position: fixed;
     top: 0;
     left: 0;
@@ -185,6 +183,7 @@ canvas.debug:hover {
   transform: scale(2);
   transform-origin: top right;
   z-index: 2;
+  cursor: zoom-in;
 }
 
 .spinner {
@@ -192,8 +191,8 @@ canvas.debug:hover {
   height: 100%;
 }
 
-legend svg {
-  fill: var(--accent-color);
+summary svg {
+  fill: var(--alternative-accent-color);
 }
 
 .checkerboard {
@@ -240,19 +239,13 @@ output svg {
   background-color: transparent;
 }
 
-legend {
-  color: var(--accent-color);
-  display: flex;
-  align-content: center;
-}
-
 label {
   font-variant-numeric: tabular-nums;
 }
 
 button {
   height: 3ex;
-  display: flex;
+  display: inline-block;
   align-items: center;
   place-content: center;
   background-color: transparent;
@@ -273,7 +266,7 @@ button.menu {
 summary:hover,
 label:hover,
 button:hover {
-  color: var(--accent-color);
+  color: var(--main-accent-color);
 }
 
 .preprocess {
@@ -284,8 +277,8 @@ button:hover {
 
 .preprocess-input {
   display: flex;
+  flex-direction: column;
   margin: var(--space);
-  align-items: flex-end;
 }
 
 .other-input {
@@ -299,6 +292,7 @@ button:hover {
   flex-direction: column;
   padding: var(--space);
   gap: var(--space);
+  width: var(--sidebar-width);
 }
 
 .menu {
@@ -351,13 +345,13 @@ button:hover {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --accent-color: hotpink;
+    --main-accent-color: hotpink;
     --sidebar-background-color: rgba(0, 0, 0, 0.8);
     --canvas-text: #fff;
-    --canvas: #000;
+    --canvas: #131313;
 
-    background-color: #131313;
-    color: #fff;
+    background-color: var(--canvas);
+    color: var(--canvas-text);
   }
 
   .dropenter::before {

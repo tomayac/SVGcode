@@ -1,5 +1,5 @@
 import {
-  fieldsetsContainer,
+  detailsContainer,
   posterizeCheckbox,
   posterizeLabel,
   colorRadio,
@@ -48,6 +48,7 @@ const DEGREES = 'deg';
 const STEPS = 'steps';
 const PIXELS = 'pixels';
 const NONE = '';
+const SEGMENTS = 'segments';
 
 const FILTERS = {
   brightness: 'brightness',
@@ -91,9 +92,9 @@ const filters = {
 };
 
 const posterizeComponents = {
-  [COLORS.red]: { unit: STEPS, initial: 10, min: 1, max: 20 },
-  [COLORS.green]: { unit: STEPS, initial: 10, min: 1, max: 20 },
-  [COLORS.blue]: { unit: STEPS, initial: 10, min: 1, max: 20 },
+  [COLORS.red]: { unit: STEPS, initial: 5, min: 1, max: 20 },
+  [COLORS.green]: { unit: STEPS, initial: 5, min: 1, max: 20 },
+  [COLORS.blue]: { unit: STEPS, initial: 5, min: 1, max: 20 },
   [COLORS.alpha]: { unit: STEPS, initial: 1, min: 1, max: 10 },
 };
 
@@ -102,15 +103,15 @@ const scale = {
 };
 
 const potraceOptions = {
-  [POTRACE.minPathLenght]: { unit: STEPS, initial: 0, min: 0, max: 30 },
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 0, max: 50 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
   [POTRACE.opticurve]: { unit: STEPS, initial: 1, min: 0, max: 1 },
   [POTRACE.opttolerance]: { unit: NONE, initial: 0.2, min: 0, max: 1 },
+  [POTRACE.minPathLenght]: { unit: SEGMENTS, initial: 0, min: 0, max: 30 },
 };
 
-const fieldsetsArray = [
+const detailsArray = [
   { name: 'svgOptions', icon: tuneIcon },
   { name: 'colorChannels', icon: paletteIcon },
   { name: 'imageSize', icon: scaleIcon },
@@ -126,7 +127,7 @@ const entriesArray = [
 
 const filterInputs = {};
 const filterSpans = {};
-const fieldsets = {};
+const allDetails = {};
 
 const updateLabel = (unit, value) => {
   const translatedUnit = i18n.t(unit);
@@ -146,18 +147,18 @@ const createIcon = (src) => {
   return icon;
 };
 
-const createFieldset = (name, iconURL) => {
-  const fieldset = document.createElement('fieldset');
-  fieldsets[name] = fieldset;
-  const legend = document.createElement('legend');
+const createDetails = (name, iconURL) => {
+  const details = document.createElement('details');
+  allDetails[name] = details;
+  const legend = document.createElement('summary');
   const icon = createIcon(iconURL);
   legend.append(icon);
   legend.append(document.createTextNode(i18n.t(name)));
-  fieldset.append(legend);
-  return fieldset;
+  details.append(legend);
+  return details;
 };
 
-const createControls = (filter, props, fieldset) => {
+const createControls = (filter, props, details) => {
   const { unit, min, max, initial } = props;
   const div = document.createElement('div');
   div.classList.add('preprocess-input');
@@ -223,10 +224,12 @@ const createControls = (filter, props, fieldset) => {
   });
 
   label.append(span);
-  label.append(input);
   div.append(label);
-  div.append(button);
-  fieldset.append(div);
+  const wrapper = document.createElement('div');
+  div.append(wrapper);
+  wrapper.append(input);
+  wrapper.append(button);
+  details.append(div);
 };
 
 posterizeCheckbox.addEventListener('change', async () => {
@@ -269,22 +272,25 @@ const initUI = async () => {
   mediaQueryList.addEventListener('change', onMaxWidthMatch);
 
   entriesArray.forEach((entries, i) => {
-    const { name, icon } = fieldsetsArray[i];
-    const fieldset = createFieldset(name, icon);
+    const { name, icon } = detailsArray[i];
+    const details = createDetails(name, icon);
+    if (i < 2) {
+      details.open = true;
+    }
     if (name === 'colorChannels') {
-      fieldsets['colorChannels'].append(posterizeCheckbox.parentNode);
+      allDetails['colorChannels'].append(posterizeCheckbox.parentNode);
     } else if (name === 'svgOptions') {
-      fieldsets['svgOptions'].append(colorRadio.parentNode);
-      fieldsets['svgOptions'].append(monochromeRadio.parentNode);
+      allDetails['svgOptions'].append(colorRadio.parentNode);
+      allDetails['svgOptions'].append(monochromeRadio.parentNode);
     } else if (name === 'imageSize') {
-      fieldsets['imageSize'].append(considerDPRCheckbox.parentNode);
+      allDetails['imageSize'].append(considerDPRCheckbox.parentNode);
     }
     for (const [filter, props] of entries) {
-      createControls(filter, props, fieldset);
+      createControls(filter, props, details);
     }
-    fieldsetsContainer.append(fieldset);
+    detailsContainer.append(details);
   });
-  fieldsetsContainer.append(resetAllButton.parentNode);
+  detailsContainer.append(resetAllButton.parentNode);
 
   inputImage.addEventListener('load', () => {
     inputImage.width = inputImage.naturalWidth;

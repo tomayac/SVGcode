@@ -1,5 +1,5 @@
 const canvasMain = document.querySelector('canvas');
-const fieldsetsContainer = document.querySelector('.fieldsets');
+const detailsContainer = document.querySelector('.details');
 const posterizeCheckbox = document.querySelector('.posterize');
 const posterizeLabel = document.querySelector('[for=posterize]');
 const colorRadio = document.querySelector('.color');
@@ -19,14 +19,14 @@ const debugCheckbox = document.querySelector('.debug');
 const progress = document.querySelector('progress');
 const toast = document.querySelector('.toast');
 const dropContainer = document.documentElement;
-const details = document.querySelector('details');
+const details = document.querySelector('details.main');
 const summary = document.querySelector('summary');
 
 const dpr = window.devicePixelRatio;
 
 export {
   canvasMain,
-  fieldsetsContainer,
+  detailsContainer,
   posterizeCheckbox,
   posterizeLabel,
   colorRadio,

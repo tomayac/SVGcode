@@ -38,6 +38,7 @@ const displayResult = (svg, className, initialViewBox) => {
 
 const startProcessing = async (initialViewBox = {}) => {
   svgOutput.innerHTML = '';
+  svgOutput.classList.remove(COLOR, MONOCHROME);
   if (intervalID.current) {
     clearInterval(intervalID.current);
     intervalID.current = null;
