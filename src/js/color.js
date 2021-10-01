@@ -1,6 +1,6 @@
 import { filterInputs, POTRACE } from './ui.js';
 import { initialViewBox } from './panzoom';
-import { progress, svgOutput } from './domrefs.js';
+import { progress, svgOutput, optimizeCurvesCheckbox } from './domrefs.js';
 import ColorWorker from './colorworker?worker';
 
 const colorWorker = new ColorWorker();
@@ -68,8 +68,8 @@ const convertToColorSVG = async (imageData) => {
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
       alphamax: Number(filterInputs[POTRACE.alphamax].value),
       turnpolicy: Number(filterInputs[POTRACE.turnpolicy].value),
-      opticurve: Number(filterInputs[POTRACE.opticurve].value),
       opttolerance: Number(filterInputs[POTRACE.opttolerance].value),
+      opticurve: optimizeCurvesCheckbox.checked ? 1 : 0,
     };
     colorWorker.postMessage({ imageData, params }, [
       channel.port2,

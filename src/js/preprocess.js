@@ -22,13 +22,11 @@ const preProcessMainCanvas = () => {
   const factor = considerDPRCheckbox.checked ? dpr : 1;
   // Don't exceed the maximum canvas size.
   let shrinkFactor = 1;
-  console.log('before', width, height);
   while (!canvasSize.test({ width, height })) {
     width = Math.floor(width / 2);
     height = Math.floor(height / 2);
     shrinkFactor /= 2;
   }
-  console.log('after', width, height);
   canvasMain.width = width;
   canvasMain.height = height;
   ctxMain.clearRect(0, 0, width, height);

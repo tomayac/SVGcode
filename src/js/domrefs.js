@@ -8,6 +8,8 @@ const monochromeRadio = document.querySelector('.monochrome');
 const monochromeLabel = document.querySelector('[for=monochrome]');
 const considerDPRCheckbox = document.querySelector('.consider-dpr');
 const considerDPRLabel = document.querySelector('[for="consider-dpr"]');
+const optimizeCurvesCheckbox = document.querySelector('.optimize-curves');
+const optimizeCurvesLabel = document.querySelector('[for="optimize-curves"]');
 const inputImage = document.querySelector('img');
 const resetAllButton = document.querySelector('.reset-all');
 const fileOpenButton = document.querySelector('.open');
@@ -35,6 +37,8 @@ export {
   monochromeLabel,
   considerDPRCheckbox,
   considerDPRLabel,
+  optimizeCurvesCheckbox,
+  optimizeCurvesLabel,
   inputImage,
   resetAllButton,
   fileOpenButton,

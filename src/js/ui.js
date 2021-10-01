@@ -8,6 +8,8 @@ import {
   monochromeLabel,
   considerDPRCheckbox,
   considerDPRLabel,
+  optimizeCurvesCheckbox,
+  optimizeCurvesLabel,
   inputImage,
   resetAllButton,
   fileOpenButton,
@@ -66,17 +68,11 @@ const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 const SCALE = { scale: 'scale' };
 
 const POTRACE = {
-  // 0 to Infinity, default 0
   minPathLenght: 'minPathSegments',
-  // 0 to Infinity, default 2
   turdsize: 'turdsize',
-  // 0.0 to 1.3334, default 1.0
   alphamax: 'alphamax',
-  // 0 to 6, default 4
   turnpolicy: 'turnpolicy',
-  // true or false, default true
   opticurve: 'opticurve',
-  // 0 to Infinity, default 0.2
   opttolerance: 'opttolerance',
 };
 
@@ -106,7 +102,6 @@ const potraceOptions = {
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 0, max: 50 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
-  [POTRACE.opticurve]: { unit: STEPS, initial: 1, min: 0, max: 1 },
   [POTRACE.opttolerance]: { unit: NONE, initial: 0.2, min: 0, max: 1 },
   [POTRACE.minPathLenght]: { unit: SEGMENTS, initial: 0, min: 0, max: 30 },
 };
@@ -256,6 +251,12 @@ considerDPRCheckbox.addEventListener('change', async () => {
   await startProcessing(initialViewBox);
 });
 
+optimizeCurvesCheckbox.addEventListener('change', async () => {
+  filterInputs.opttolerance.disabled = !optimizeCurvesCheckbox.checked;
+  storeInitialViewBox();
+  await startProcessing(initialViewBox);
+});
+
 const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
@@ -286,6 +287,9 @@ const initUI = async () => {
       allDetails['imageSize'].append(considerDPRCheckbox.parentNode);
     }
     for (const [filter, props] of entries) {
+      if (filter === 'opttolerance') {
+        allDetails['svgOptions'].append(optimizeCurvesCheckbox.parentNode);
+      }
       createControls(filter, props, details);
     }
     detailsContainer.append(details);
@@ -311,6 +315,7 @@ const changeLanguage = () => {
   colorLabel.textContent = i18n.t('colorSVG');
   monochromeLabel.textContent = i18n.t('monochromeSVG');
   considerDPRLabel.textContent = i18n.t('considerDPR');
+  optimizeCurvesLabel.textContent = i18n.t('opticurve');
   fileOpenButton.innerHTML = '';
   fileOpenButton.append(createIcon(openIcon));
   fileOpenButton.append(document.createTextNode(i18n.t('openImage')));

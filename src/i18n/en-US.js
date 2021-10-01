@@ -18,6 +18,8 @@ const translations = {
   alphamax: 'Corner Threshold',
   minPathSegments: 'Min. Path Length',
   turnpolicy: 'Turn Policy',
+  opticurve: 'Optimize Curves',
+  opttolerance: 'Optimization Tolerance',
 
   '%': '%',
   deg: '°',
