@@ -93,6 +93,7 @@ summary {
   color: var(--alternative-accent-color);
   display: flex;
   align-content: center;
+  margin-block: calc(2 * var(--space));
 }
 
 summary::-webkit-details-marker {
