@@ -1,5 +1,5 @@
 import { filterInputs, POTRACE } from './ui.js';
-import { initialViewBox } from './panzoom';
+import { initialViewBox } from './panzoom.js';
 import { progress, svgOutput, optimizeCurvesCheckbox } from './domrefs.js';
 import ColorWorker from './colorworker?worker';
 

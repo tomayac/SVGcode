@@ -1,4 +1,4 @@
-import { dpr } from './domrefs';
+import { dpr } from './domrefs.js';
 
 const preProcessMainCanvas = (
   ctxOffscreen,

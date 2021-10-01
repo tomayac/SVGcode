@@ -1,5 +1,5 @@
 import { filterInputs, POTRACE } from './ui.js';
-import { optimizeCurvesCheckbox } from './domrefs';
+import { optimizeCurvesCheckbox } from './domrefs.js';
 import MonochromeSVGWorker from './monochromeworker.js?worker';
 
 const monochromeSVGWorker = new MonochromeSVGWorker();

@@ -1,4 +1,4 @@
-import { optimize } from 'svgo/dist/svgo.browser.js';
+import { optimize } from 'svgo/dist/svgo.browser';
 
 self.addEventListener('message', async (e) => {
   let { svg, originalViewBox } = e.data;

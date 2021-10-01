@@ -1,5 +1,5 @@
 import OptimizeSVGWorker from './svgoworker.js?worker';
-import { svgOutput } from './domrefs';
+import { svgOutput } from './domrefs.js';
 
 const optimizeSVGWorker = new OptimizeSVGWorker();
 

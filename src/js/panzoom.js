@@ -1,6 +1,6 @@
-import { svgOutput } from './domrefs';
-import { showToast } from './ui';
-import { i18n } from './i18n';
+import { svgOutput } from './domrefs.js';
+import { showToast } from './ui.js';
+import { i18n } from './i18n.js';
 
 let x = 0;
 let y = 0;
