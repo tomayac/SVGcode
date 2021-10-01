@@ -229,6 +229,10 @@ output svg {
   height: 100%;
 }
 
+output svg:not(.interactive) path:hover {
+  opacity: 0.5;
+}
+
 .icon {
   margin-inline-end: var(--space);
 }

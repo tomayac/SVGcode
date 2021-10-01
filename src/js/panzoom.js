@@ -17,6 +17,7 @@ const onPointerMove = (e) => {
   if (!svg) {
     return;
   }
+  svg.classList.add('interactive');
   for (let i = 0; i < pointerEventCache.length; i++) {
     if (e.pointerId === pointerEventCache[i].pointerId) {
       pointerEventCache[i] = e;
@@ -74,6 +75,11 @@ const onPointerUp = (e) => {
   }
   storeInitialViewBox();
   svgOutput.style.cursor = 'grab';
+  const svg = svgOutput.querySelector('svg');
+  if (!svg) {
+    return;
+  }
+  svg.classList.remove('interactive');
 };
 
 svgOutput.addEventListener('pointerup', (e) => {
@@ -106,7 +112,6 @@ const zoomOutput = (zoomScale) => {
   if (!svg) {
     return;
   }
-  // zoomScale = Math.min(Math.max(0.1, Math.abs(zoomScale)), 10);
   showToast(`${i18n.t('zoom')}: ${(1 / zoomScale).toFixed(1)}×`, 2000);
   if (initialViewBox.width === undefined) {
     storeInitialViewBox();
@@ -126,10 +131,22 @@ const zoomOutput = (zoomScale) => {
   svg.setAttribute('viewBox', `${newX} ${newY} ${newWidth} ${newHeight}`);
 };
 
+let wheelTimeout = null;
 svgOutput.addEventListener('wheel', (e) => {
   e.preventDefault();
+  const svg = svgOutput.querySelector('svg');
+  if (!svg) {
+    return;
+  }
+  svg.classList.add('interactive');
   zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.005), 10));
   zoomOutput(zoomScale);
+  if (wheelTimeout) {
+    clearTimeout(wheelTimeout);
+  }
+  wheelTimeout = setTimeout(() => {
+    svg.classList.remove('interactive');
+  }, 1000);
 });
 
 const pointerEventCache = [];
