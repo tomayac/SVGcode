@@ -1,20 +1,44 @@
 import { inputImage, copyButton, pasteButton, svgOutput } from './domrefs.js';
 import { optimizeSVG } from './svgo.js';
+import { showToast } from './ui.js';
 
 pasteButton.addEventListener('click', async () => {
-  const clipboardItems = await navigator.clipboard.read();
-  for (const clipboardItem of clipboardItems) {
-    for (const type of clipboardItem.types) {
-      if (type.startsWith('image/')) {
-        const image = await clipboardItem.getType(type);
-        if (!image) {
+  try {
+    const clipboardItems = await navigator.clipboard.read();
+    console.log(clipboardItems);
+    for (const clipboardItem of clipboardItems) {
+      for (const type of clipboardItem.types) {
+        if (type.startsWith('image/')) {
+          const image = await clipboardItem.getType(type);
+          if (!image) {
+            return;
+          }
+          const blobURL = URL.createObjectURL(image);
+          inputImage.src = blobURL;
           return;
         }
-        const blobURL = URL.createObjectURL(image);
-        inputImage.src = blobURL;
-        return;
       }
     }
+  } catch (err) {
+    console.error(err.name, err.message);
+    showToast(err.message);
+  }
+});
+
+document.addEventListener('paste', (e) => {
+  try {
+    if (!e.clipboardData.files.length) {
+      return;
+    }
+    const file = e.clipboardData.files[0];
+    if (file.type.startsWith('image/')) {
+      const blobURL = URL.createObjectURL(file);
+      inputImage.src = blobURL;
+      return;
+    }
+  } catch (err) {
+    console.error(err.name, err.message);
+    showToast(err.message);
   }
 });
 

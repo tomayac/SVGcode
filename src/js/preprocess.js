@@ -1,4 +1,4 @@
-import { filterInputs, filters, COLORS, SCALE } from './ui.js';
+import { filterInputs, filters, showToast, COLORS, SCALE } from './ui.js';
 import {
   inputImage,
   canvasMain,
@@ -29,9 +29,16 @@ if (supportsOffscreenCanvas) {
         };
 
         const { width, height } = getScaledDimensions();
+        let inputImageBitmap;
+        try {
+          inputImageBitmap = await createImageBitmap(inputImage);
+        } catch (err) {
+          console.error(err.name, err.message);
+          showToast(err.message);
+        }
         preProcessWorker.postMessage(
           {
-            inputImageBitmap: await createImageBitmap(inputImage),
+            inputImageBitmap,
             posterize: posterizeCheckbox.checked,
             rgba: {
               r: getRange(filterInputs[COLORS.red]),

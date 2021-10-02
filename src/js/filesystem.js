@@ -6,6 +6,7 @@ import {
   svgOutput,
   dropContainer,
 } from './domrefs.js';
+import { showToast } from './ui.js';
 import { optimizeSVG } from './svgo.js';
 
 fileOpenButton.addEventListener('click', async () => {
@@ -25,6 +26,7 @@ fileOpenButton.addEventListener('click', async () => {
     inputImage.src = blobURL;
   } catch (err) {
     console.error(err.name, err.message);
+    showToast(err.message);
   }
 });
 
@@ -94,5 +96,6 @@ saveSVGButton.addEventListener('click', async () => {
     await fileSave(blob, { fileName: '', description: 'SVG file' }, handle);
   } catch (err) {
     console.error(err.name, err.message);
+    showToast(err.message);
   }
 });
