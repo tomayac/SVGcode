@@ -33,10 +33,11 @@ if (supportsOffscreenCanvas) {
           {
             inputImageBitmap: await createImageBitmap(inputImage),
             posterize: posterizeCheckbox.checked,
-            rgb: {
+            rgba: {
               r: getRange(filterInputs[COLORS.red]),
               g: getRange(filterInputs[COLORS.green]),
               b: getRange(filterInputs[COLORS.blue]),
+              a: getRange(filterInputs[COLORS.alpha]),
             },
             width,
             height,

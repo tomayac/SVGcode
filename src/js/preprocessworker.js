@@ -1,3 +1,5 @@
+const DISCRETE = 'discrete';
+
 let offscreen;
 let ctxOffscreen;
 
@@ -24,13 +26,13 @@ self.addEventListener('message', (e) => {
     ctxOffscreen = offscreen.getContext('2d');
     return;
   }
-  const { inputImageBitmap, posterize, rgb, width, height, dpr } = e.data;
+  const { inputImageBitmap, posterize, rgba, width, height, dpr } = e.data;
   ctxOffscreen.scale(dpr, dpr);
   offscreen.width = width;
   offscreen.height = height;
   const imageData = preProcessMainCanvas(
     inputImageBitmap,
-    getFilter(posterize, rgb),
+    getFilter(posterize, rgba),
     width,
     height,
     dpr,
@@ -38,39 +40,29 @@ self.addEventListener('message', (e) => {
   e.ports[0].postMessage({ result: imageData });
 });
 
-const getFilter = (posterize, rgb) => {
+const getFilter = (posterize, rgba) => {
   let filter;
   if (posterize) {
     filter = new CanvasFilter({
       componentTransfer: {
         funcR: {
-          type: 'table',
-          tableValues: rgb.r.map((component) => Number(component)),
+          type: DISCRETE,
+          tableValues: rgba.r.map((component) => Number(component)),
         },
         funcG: {
-          type: 'table',
-          tableValues: rgb.g.map((component) => Number(component)),
+          type: DISCRETE,
+          tableValues: rgba.g.map((component) => Number(component)),
         },
         funcB: {
-          type: 'table',
-          tableValues: rgb.b.map((component) => Number(component)),
+          type: DISCRETE,
+          tableValues: rgba.b.map((component) => Number(component)),
+        },
+        funcA: {
+          type: DISCRETE,
+          tableValues: rgba.a.map((component) => Number(component)),
         },
       },
     });
   }
-  console.log({
-    funcR: {
-      type: 'table',
-      tableValues: rgb.r.map((component) => Number(component)),
-    },
-    funcG: {
-      type: 'table',
-      tableValues: rgb.g.map((component) => Number(component)),
-    },
-    funcB: {
-      type: 'table',
-      tableValues: rgb.b.map((component) => Number(component)),
-    },
-  });
   return filter;
 };
