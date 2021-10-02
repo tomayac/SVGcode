@@ -88,9 +88,9 @@ const filters = {
 };
 
 const posterizeComponents = {
-  [COLORS.red]: { unit: STEPS, initial: 5, min: 1, max: 20 },
-  [COLORS.green]: { unit: STEPS, initial: 5, min: 1, max: 20 },
-  [COLORS.blue]: { unit: STEPS, initial: 5, min: 1, max: 20 },
+  [COLORS.red]: { unit: STEPS, initial: 1, min: 1, max: 20 },
+  [COLORS.green]: { unit: STEPS, initial: 1, min: 1, max: 20 },
+  [COLORS.blue]: { unit: STEPS, initial: 1, min: 1, max: 20 },
   [COLORS.alpha]: { unit: STEPS, initial: 1, min: 1, max: 10 },
 };
 

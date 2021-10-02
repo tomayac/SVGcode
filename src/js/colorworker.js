@@ -66,7 +66,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
           return resolve('');
         }
         console.log(
-          `Potraced ${((processed / total) * 100).toFixed()}% %c■■`,
+          `Potraced ${String(((processed / total) * 100).toFixed())}% %c■■`,
           `color: rgba(${color})`,
         );
         progressPort.postMessage({ processed, total, svg });

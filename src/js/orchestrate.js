@@ -1,5 +1,7 @@
 import {
-  preProcessMainCanvas /* , preProcessInputImage*/,
+  preProcessMainCanvas,
+  preProcessInputImage,
+  supportsOffscreenCanvas,
 } from './preprocess.js';
 import { colorRadio, svgOutput } from './domrefs.js';
 import { convertToMonochromeSVG } from './monochrome.js';
@@ -53,9 +55,9 @@ const startProcessing = async (initialViewBox = {}) => {
     svgOutput.append(spinner);
   }
   spinner.style.display = 'block';
-  const imageData = preProcessMainCanvas();
-  // ToDo: Run on main thread until https://crbug.com/1195763 gets resolved.
-  // const imageData = await preProcessInputImage();
+  const imageData = supportsOffscreenCanvas
+    ? await preProcessInputImage()
+    : preProcessMainCanvas();
   if (colorRadio.checked) {
     const svg = await convertToColorSVG(imageData);
     displayResult(svg, COLOR, initialViewBox);
