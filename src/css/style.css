@@ -43,6 +43,10 @@ main {
   height: 100%;
 }
 
+main.window-controls-overlay {
+  margin-block-start: env(titlebar-height);
+}
+
 input[type='range'] {
   display: inline-block;
   width: var(--input-width);
@@ -308,6 +312,15 @@ button:hover {
   overflow: auto hidden;
   gap: var(--space);
   scrollbar-width: none;
+}
+
+.menu.window-controls-overlay {
+  position: absolute;
+  left: env(titlebar-area-x);
+  top: env(titlebar-area-y);
+  width: env(titlebar-area-width);
+  height: env(titlebar-area-height);
+  -webkit-app-region: drag;
 }
 
 .menu::-webkit-scrollbar {

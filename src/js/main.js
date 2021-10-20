@@ -6,6 +6,10 @@ if ('launchQueue' in window) {
   import('./filehandling.js');
 }
 
+if ('windowControlsOverlay' in navigator) {
+  import('./windowcontrols.js');
+}
+
 (async () => {
   initUI();
 
