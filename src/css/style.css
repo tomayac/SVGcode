@@ -44,7 +44,7 @@ main {
 }
 
 main.window-controls-overlay {
-  margin-block-start: env(titlebar-height);
+  margin-block-start: env(titlebar-area-height);
 }
 
 input[type='range'] {
@@ -316,11 +316,17 @@ button:hover {
 
 .menu.window-controls-overlay {
   position: absolute;
+  padding-block-start: calc(2 * var(--space));
   left: env(titlebar-area-x);
   top: env(titlebar-area-y);
   width: env(titlebar-area-width);
   height: env(titlebar-area-height);
   -webkit-app-region: drag;
+}
+
+.window-controls-overlay button,
+.window-controls-overlay label {
+  -webkit-app-region: no-drag;
 }
 
 .menu::-webkit-scrollbar {
