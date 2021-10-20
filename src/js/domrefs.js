@@ -1,5 +1,6 @@
 const canvasMain = document.querySelector('canvas');
 const menu = document.querySelector('.menu');
+const main = document.querySelector('main');
 const detailsContainer = document.querySelector('.details');
 const posterizeCheckbox = document.querySelector('.posterize');
 const posterizeLabel = document.querySelector('[for=posterize]');
@@ -29,6 +30,7 @@ const dpr = window.devicePixelRatio;
 
 export {
   canvasMain,
+  main,
   menu,
   detailsContainer,
   posterizeCheckbox,
