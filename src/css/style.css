@@ -233,8 +233,12 @@ output svg {
   height: 100%;
 }
 
-output svg:not(.interactive) path:hover {
+output svg:hover:not(.interactive) path:not(:hover) {
   opacity: 0.5;
+}
+
+output svg:hover:not(.interactive) path:hover {
+  opacity: 1;
 }
 
 .icon {
@@ -327,6 +331,7 @@ button:hover {
 .window-controls-overlay button,
 .window-controls-overlay label {
   -webkit-app-region: no-drag;
+  font-size: 0.9rem;
 }
 
 .menu::-webkit-scrollbar {
