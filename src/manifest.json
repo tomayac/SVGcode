@@ -12,7 +12,8 @@
     {
       "src": "./favicon.svg",
       "type": "image/svg+xml",
-      "sizes": "340x340"
+      "sizes": "340x340",
+      "purpose": "any"
     },
     {
       "src": "./favicon.png",
