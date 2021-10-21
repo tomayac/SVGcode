@@ -2,13 +2,20 @@ import { filterInputs, POTRACE } from './ui.js';
 import { optimizeCurvesCheckbox } from './domrefs.js';
 import MonochromeSVGWorker from './monochromeworker.js?worker';
 
-const monochromeSVGWorker = new MonochromeSVGWorker();
+let monochromeSVGWorker = null;
 
 const convertToMonochromeSVG = async (imageData) => {
+  if (monochromeSVGWorker) {
+    monochromeSVGWorker.terminate();
+  }
+  monochromeSVGWorker = new MonochromeSVGWorker();
+
   return new Promise(async (resolve) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
       channel.port1.close();
+      monochromeSVGWorker.terminate();
+      monochromeSVGWorker = null;
       resolve(data.result);
     };
 

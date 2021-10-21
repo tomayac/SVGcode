@@ -10,16 +10,16 @@
   "background_color": "#131313",
   "icons": [
     {
-      "src": "./favicon.svg",
-      "type": "image/svg+xml",
-      "sizes": "340x340",
-      "purpose": "any"
-    },
-    {
       "src": "./favicon.png",
       "type": "image/png",
       "sizes": "768x768",
       "purpose": "maskable"
+    },
+    {
+      "src": "./favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any"
     }
   ],
   "file_handlers": [
