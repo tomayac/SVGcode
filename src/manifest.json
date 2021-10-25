@@ -12,13 +12,13 @@
     {
       "src": "./favicon.png",
       "type": "image/png",
-      "sizes": "768x768",
+      "sizes": "1024x1024",
       "purpose": "maskable"
     },
     {
       "src": "./favicon.svg",
       "type": "image/svg+xml",
-      "sizes": "512x512",
+      "sizes": "150x150",
       "purpose": "any"
     }
   ],
