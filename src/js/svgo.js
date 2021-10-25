@@ -1,7 +1,7 @@
 import OptimizeSVGWorker from './svgoworker.js?worker';
 import { svgOutput } from './domrefs.js';
 
-const optimizeSVGWorker = null;
+let optimizeSVGWorker = null;
 
 const optimizeSVG = async (svg) => {
   if (optimizeSVGWorker) {
