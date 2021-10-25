@@ -49,6 +49,9 @@ const translations = {
 
   tweak: 'Tweak',
 
+  optimizingSVG: 'Optimizing SVG',
+  copiedSVG: 'Copied SVG',
+
   readyToWorkOffline: 'Ready to Work Offline.',
   svgSize: 'SVG Size',
   bytes: 'Bytes',

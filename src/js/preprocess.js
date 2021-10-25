@@ -16,18 +16,19 @@ const supportsOffscreenCanvas =
 if (supportsOffscreenCanvas) {
   import('./preprocessworker.js?worker').then((module) => {
     const PreProcessWorker = module.default;
-    const preProcessWorker = new PreProcessWorker();
-    const offscreen = canvasMain.transferControlToOffscreen();
-    preProcessWorker.postMessage({ offscreen }, [offscreen]);
+    let preProcessWorker = null;
+    const ctxCanvasMain = canvasMain.getContext('2d');
 
     preProcessInputImage = async () => {
-      return new Promise(async (resolve) => {
-        const channel = new MessageChannel();
-        channel.port1.onmessage = ({ data }) => {
-          channel.port1.close();
-          resolve(data.result);
-        };
+      if (preProcessWorker) {
+        preProcessWorker.terminate();
+      }
+      preProcessWorker = new PreProcessWorker();
+      // A canvas can only be detached once, so clone each time.
+      const offscreen = canvasMain.cloneNode().transferControlToOffscreen();
+      preProcessWorker.postMessage({ offscreen }, [offscreen]);
 
+      return new Promise(async (resolve) => {
         const { width, height } = getScaledDimensions();
         let inputImageBitmap;
         try {
@@ -36,6 +37,18 @@ if (supportsOffscreenCanvas) {
           console.error(err.name, err.message);
           showToast(err.message);
         }
+
+        const channel = new MessageChannel();
+        channel.port1.onmessage = ({ data }) => {
+          channel.port1.close();
+          preProcessWorker.terminate();
+          preProcessWorker = null;
+          canvasMain.width = width;
+          canvasMain.height = height;
+          ctxCanvasMain.putImageData(data.result, 0, 0);
+          resolve(data.result);
+        };
+
         preProcessWorker.postMessage(
           {
             inputImageBitmap,

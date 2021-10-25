@@ -1,6 +1,7 @@
 import { inputImage, copyButton, pasteButton, svgOutput } from './domrefs.js';
 import { optimizeSVG } from './svgo.js';
 import { showToast } from './ui.js';
+import { i18n } from './i18n.js';
 
 pasteButton.addEventListener('click', async () => {
   try {
@@ -44,6 +45,7 @@ document.addEventListener('paste', (e) => {
 
 copyButton.addEventListener('click', async () => {
   let svg = svgOutput.innerHTML;
+  showToast(i18n.t('optimizingSVG'));
   try {
     // Safari treats user activation differently:
     // https://bugs.webkit.org/show_bug.cgi?id=222262.
@@ -71,4 +73,5 @@ copyButton.addEventListener('click', async () => {
       }),
     ]);
   }
+  showToast(i18n.t('copiedSVG'));
 });
