@@ -44,23 +44,22 @@ const getFilter = (posterize, rgba) => {
   let filter;
   if (posterize) {
     filter = new CanvasFilter({
-      componentTransfer: {
-        funcR: {
-          type: DISCRETE,
-          tableValues: rgba.r.map((component) => Number(component)),
-        },
-        funcG: {
-          type: DISCRETE,
-          tableValues: rgba.g.map((component) => Number(component)),
-        },
-        funcB: {
-          type: DISCRETE,
-          tableValues: rgba.b.map((component) => Number(component)),
-        },
-        funcA: {
-          type: DISCRETE,
-          tableValues: rgba.a.map((component) => Number(component)),
-        },
+      filter: 'componentTransfer',
+      funcR: {
+        type: DISCRETE,
+        tableValues: rgba.r,
+      },
+      funcG: {
+        type: DISCRETE,
+        tableValues: rgba.g,
+      },
+      funcB: {
+        type: DISCRETE,
+        tableValues: rgba.b,
+      },
+      funcA: {
+        type: DISCRETE,
+        tableValues: rgba.a,
       },
     });
   }

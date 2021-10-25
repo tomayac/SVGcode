@@ -100,7 +100,7 @@ const getRange = (input) => {
   const value = Number(input.value);
   const array = [];
   for (let i = 0; i <= value; i++) {
-    array[i] = ((1 / value) * i).toFixed(1);
+    array[i] = Number(((1 / value) * i).toFixed(1));
   }
   return array;
 };
