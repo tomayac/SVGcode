@@ -78,7 +78,8 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
 
   const total = promises.length;
   const promiseChunks = [];
-  const chunkSize = 2 * navigator.hardwareConcurrency || 16;
+  // @ToDo: What is the problem.
+  const chunkSize = 1; // 2 * navigator.hardwareConcurrency || 16;
   while (promises.length > 0) {
     promiseChunks.push(promises.splice(0, chunkSize));
   }
