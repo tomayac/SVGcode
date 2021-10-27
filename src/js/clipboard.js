@@ -6,7 +6,6 @@ import { i18n } from './i18n.js';
 pasteButton.addEventListener('click', async () => {
   try {
     const clipboardItems = await navigator.clipboard.read();
-    console.log(clipboardItems);
     for (const clipboardItem of clipboardItems) {
       for (const type of clipboardItem.types) {
         if (type.startsWith('image/')) {

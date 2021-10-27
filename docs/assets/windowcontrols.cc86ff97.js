@@ -1,0 +1,1 @@
+import{d as o,m as a,a as e}from"./index.6aafb544.js";import"./vendor.22599d5c.js";const s="window-controls-overlay";navigator.windowControlsOverlay.addEventListener("geometrychange",o(async()=>{navigator.windowControlsOverlay.visible?(a.classList.add(s),e.classList.add(s)):(a.classList.remove(s),e.classList.remove(s))},250));

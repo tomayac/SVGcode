@@ -63,7 +63,8 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
             console.log(`Potraced 100% %c■■`, `color: rgba(${color})`);
           }
           progressPort.postMessage({ processed, total });
-          return resolve('');
+          resolve('');
+          return;
         }
         console.log(
           `Potraced ${String(((processed / total) * 100).toFixed())}% %c■■`,
@@ -74,6 +75,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
       });
     });
   }
+
   const total = promises.length;
   const promiseChunks = [];
   const chunkSize = 2 * navigator.hardwareConcurrency || 16;
@@ -84,6 +86,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
   for (const chunk of promiseChunks) {
     svgs.push(await Promise.all(chunk.map((f) => f())));
   }
+
   for (const svg of svgs.flat()) {
     if (!prefix) {
       prefix = svg.replace(/(.*?<svg[^>]+>)(.*?)(<\/svg>)/, '$1');

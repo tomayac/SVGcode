@@ -3,14 +3,24 @@ import { initialViewBox } from './panzoom.js';
 import { progress, svgOutput, optimizeCurvesCheckbox } from './domrefs.js';
 import ColorWorker from './colorworker?worker';
 
-const colorWorker = new ColorWorker();
+let colorWorker = null;
 const intervalID = {};
 
 const convertToColorSVG = async (imageData) => {
+  if (colorWorker) {
+    console.log('Killing colorWorker, throw away work pending');
+    colorWorker.terminate();
+  }
+  colorWorker = new ColorWorker();
+
   return new Promise(async (resolve) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
+      console.log('Received result from Worker', data);
       channel.port1.close();
+      console.log('Killing colorWorker, work done.');
+      colorWorker.terminate();
+      colorWorker = null;
       resolve(data.result);
     };
 
@@ -35,6 +45,7 @@ const convertToColorSVG = async (imageData) => {
 
     const progressChannel = new MessageChannel();
     progressChannel.port1.onmessage = ({ data }) => {
+      console.log('Received progress from Worker', data);
       const percentage = Math.floor((data.processed / data.total) * 100);
       progress.value = percentage;
       if (data.svg) {
