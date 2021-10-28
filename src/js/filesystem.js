@@ -8,6 +8,7 @@ import {
 } from './domrefs.js';
 import { showToast } from './ui.js';
 import { optimizeSVG } from './svgo.js';
+import { i18n } from './i18n.js';
 import { set } from 'idb-keyval';
 
 const FILE_HANDLE = 'fileHandle';
@@ -98,7 +99,9 @@ saveSVGButton.addEventListener('click', async () => {
         ],
       });
     }
+    showToast(i18n.t('optimizingSVG'));
     svg = await optimizeSVG(svg);
+    showToast(i18n.t('savedSVG'));
     const blob = new Blob([svg], { type: 'image/svg+xml' });
     await fileSave(blob, { fileName: '', description: 'SVG file' }, handle);
   } catch (err) {
