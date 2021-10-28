@@ -35,6 +35,8 @@ import { startProcessing } from './orchestrate.js';
 import { i18n } from './i18n.js';
 import { FILE_HANDLE } from './filesystem.js';
 import { get, del } from 'idb-keyval';
+import './clipboard.js';
+import './filesystem.js';
 
 import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg?raw';
 import scaleIcon from 'material-design-icons/image/svg/production/ic_straighten_48px.svg?raw';
