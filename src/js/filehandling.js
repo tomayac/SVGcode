@@ -1,4 +1,6 @@
 import { inputImage } from './domrefs.js';
+import { set } from 'idb-keyval';
+import { FILE_HANDLE } from './filesystem.js';
 
 window.launchQueue.setConsumer(async (launchParams) => {
   if (!launchParams.files.length) {
@@ -16,6 +18,7 @@ window.launchQueue.setConsumer(async (launchParams) => {
         { once: true },
       );
       inputImage.src = blobURL;
+      await set(FILE_HANDLE, handle);
       return;
     }
   }

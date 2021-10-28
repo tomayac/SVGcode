@@ -1,0 +1,2 @@
+// @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
+var o=async(t=[{}])=>(Array.isArray(t)||(t=[t]),new Promise((l,c)=>{const e=document.createElement("input");e.type="file";const p=[...t.map(i=>i.mimeTypes||[]).join(),t.map(i=>i.extensions||[]).join()].join();e.multiple=t[0].multiple||!1,e.accept=p||"";const a=i=>{typeof n=="function"&&n(),l(i)},n=t[0].legacySetup&&t[0].legacySetup(a,()=>n(c),e);e.addEventListener("change",()=>{a(e.multiple?Array.from(e.files):e.files[0])}),e.click()}));export{o as default};

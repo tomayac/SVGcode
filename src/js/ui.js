@@ -19,6 +19,7 @@ import {
   dropContainer,
   debugCheckbox,
   canvasMain,
+  svgOutput,
   toast,
   progress,
   details,
@@ -32,8 +33,8 @@ import {
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import { i18n } from './i18n.js';
-import './filesystem.js';
-import './clipboard.js';
+import { FILE_HANDLE } from './filesystem.js';
+import { get, del } from 'idb-keyval';
 
 import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg?raw';
 import scaleIcon from 'material-design-icons/image/svg/production/ic_straighten_48px.svg?raw';
@@ -296,16 +297,37 @@ const initUI = async () => {
   });
   detailsContainer.append(resetAllButton.parentNode);
 
-  inputImage.addEventListener('load', () => {
+  inputImage.addEventListener('load', async () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
-    setTimeout(async () => {
-      resetZoomAndPan();
-      await startProcessing();
-    }, 200);
+    if (inputImage.src !== new URL('/favicon.png', location.href).toString()) {
+      setTimeout(async () => {
+        resetZoomAndPan();
+        await startProcessing();
+      }, 200);
+    } else {
+      svgOutput.innerHTML = await fetch('/potraced.svg').then((response) =>
+        response.text(),
+      );
+    }
   });
+
   if (inputImage.complete) {
     inputImage.dispatchEvent(new Event('load'));
+  }
+
+  // Start where the user left off.
+  const handle = await get('fileHandle');
+  if (handle) {
+    try {
+      const file = await handle.getFile();
+      blobURL = URL.createObjectURL(file);
+      inputImage.src = blobURL;
+    } catch (err) {
+      console.error(err.name, err.message);
+      showToast(err.message);
+      await del(FILE_HANDLE);
+    }
   }
 };
 

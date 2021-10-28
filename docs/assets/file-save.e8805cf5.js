@@ -1,2 +1,0 @@
-// @license © 2020 Google LLC. Licensed under the Apache License, Version 2.0.
-var r=async(c,e={})=>{Array.isArray(e)&&(e=e[0]);const n=document.createElement("a");let t;n.download=e.fileName||"Untitled",n.href=URL.createObjectURL(c);const a=()=>t(reject);return e.setupLegacyCleanupAndRejection&&(t=e.setupLegacyCleanupAndRejection(a)),n.addEventListener("click",()=>{typeof t=="function"&&t(),setTimeout(()=>URL.revokeObjectURL(n.href),3e4)}),n.click(),null};export{r as default};

@@ -8,6 +8,9 @@ import {
 } from './domrefs.js';
 import { showToast } from './ui.js';
 import { optimizeSVG } from './svgo.js';
+import { set } from 'idb-keyval';
+
+const FILE_HANDLE = 'fileHandle';
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -24,6 +27,9 @@ fileOpenButton.addEventListener('click', async () => {
       { once: true },
     );
     inputImage.src = blobURL;
+    if (supported) {
+      await set(FILE_HANDLE, file.handle);
+    }
   } catch (err) {
     console.error(err.name, err.message);
     showToast(err.message);
@@ -62,13 +68,14 @@ document.addEventListener('drop', async (event) => {
       { once: true },
     );
     if (supported) {
-      const entry = await item.getAsFileSystemHandle();
-      if (entry.kind === 'directory') {
+      const handle = await item.getAsFileSystemHandle();
+      if (handle.kind === 'directory') {
         return;
       } else {
-        const file = await entry.getFile();
+        const file = await handle.getFile();
         blobURL = URL.createObjectURL(file);
         inputImage.src = blobURL;
+        await set(FILE_HANDLE, handle);
       }
     } else {
       const file = item.getAsFile();
@@ -99,3 +106,5 @@ saveSVGButton.addEventListener('click', async () => {
     showToast(err.message);
   }
 });
+
+export { FILE_HANDLE };

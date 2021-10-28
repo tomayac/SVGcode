@@ -15,9 +15,10 @@
     "deploy": "npm run lint && npm run fix && npm run build && git commit -a && git push"
   },
   "dependencies": {
-    "browser-fs-access": "^0.20.5",
+    "browser-fs-access": "^0.21.0",
     "canvas-size": "^1.2.5",
     "esm-potrace-wasm": "^0.1.1",
+    "idb-keyval": "^6.0.3",
     "svgo": "^2.7.0"
   },
   "devDependencies": {
@@ -30,10 +31,10 @@
     "material-design-icons": "^3.0.1",
     "prettier": "^2.4.1",
     "shx": "^0.3.3",
-    "stylelint": "^14.0.0",
+    "stylelint": "^14.0.1",
     "stylelint-config-standard": "^23.0.0",
     "stylelint-order": "^5.0.0",
-    "vite": "^2.6.10",
+    "vite": "^2.6.13",
     "vite-plugin-pwa": "^0.11.3"
   },
   "eslintConfig": {

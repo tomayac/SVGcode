@@ -1,1 +1,0 @@
-import{i as n}from"./index.8ee5153f.js";import"./vendor.22599d5c.js";window.launchQueue.setConsumer(async e=>{if(!!e.files.length)for(const o of e.files){const t=await o.getFile();if(t.type.startsWith("image/")){const i=URL.createObjectURL(t);n.addEventListener("load",()=>{URL.revokeObjectURL(i)},{once:!0}),n.src=i;return}}});
