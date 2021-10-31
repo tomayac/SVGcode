@@ -18,6 +18,7 @@ const fileOpenButton = document.querySelector('.open');
 const saveSVGButton = document.querySelector('.save');
 const copyButton = document.querySelector('.copy');
 const pasteButton = document.querySelector('.paste');
+const installButton = document.querySelector('.install');
 const svgOutput = document.querySelector('output');
 const debugCheckbox = document.querySelector('.debug');
 const progress = document.querySelector('progress');
@@ -49,6 +50,7 @@ export {
   saveSVGButton,
   copyButton,
   pasteButton,
+  installButton,
   svgOutput,
   dropContainer,
   debugCheckbox,

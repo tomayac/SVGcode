@@ -16,6 +16,7 @@ import {
   saveSVGButton,
   pasteButton,
   copyButton,
+  installButton,
   dropContainer,
   debugCheckbox,
   canvasMain,
@@ -47,6 +48,7 @@ import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.
 import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg?raw';
 import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg?raw';
 import optionsIcon from 'material-design-icons/image/svg/production/ic_tune_48px.svg?raw';
+import installIcon from '/install.svg?raw';
 
 const PERCENT = '%';
 const DEGREES = 'deg';
@@ -352,6 +354,9 @@ const changeLanguage = () => {
   pasteButton.innerHTML = '';
   pasteButton.append(createIcon(pasteIcon));
   pasteButton.append(document.createTextNode(i18n.t('pasteImage')));
+  installButton.innerHTML = '';
+  installButton.append(createIcon(installIcon));
+  installButton.append(document.createTextNode(i18n.t('install')));
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
   summary.innerHTML = '';
   summary.append(createIcon(optionsIcon));

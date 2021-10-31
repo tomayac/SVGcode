@@ -35,6 +35,7 @@ const translations = {
   saveSVG: 'Save SVG',
   pasteImage: 'Paste Image',
   copySVG: 'Copy SVG',
+  install: 'Install',
 
   posterizeInputImage: 'Posterize Input Image',
   colorSVG: 'Color SVG',
