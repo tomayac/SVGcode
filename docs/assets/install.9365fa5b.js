@@ -1,1 +1,0 @@
-import{b as t}from"./index.668eb348.js";import"./vendor.957f1d51.js";t.style.display="none";let e=null;window.addEventListener("beforeinstallprompt",n=>{e=n,t.style.display=""});t.addEventListener("click",async()=>{if(!e)return;e.prompt(),(await promptEvent.userChoice).outcome==="accepted"&&(e=null,t.style.display="none")});window.addEventListener("appinstalled",n=>{e=null});
