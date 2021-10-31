@@ -13,8 +13,7 @@ installButton.addEventListener('click', async () => {
     return;
   }
   installEvent.prompt();
-  const result = await promptEvent.userChoice;
-  console.log(result);
+  const result = await installEvent.userChoice;
   if (result.outcome === 'accepted') {
     installEvent = null;
     installButton.style.display = 'none';
