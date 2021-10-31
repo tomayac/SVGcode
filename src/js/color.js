@@ -8,7 +8,6 @@ const intervalID = {};
 
 const convertToColorSVG = async (imageData) => {
   if (colorWorker) {
-    console.log('Killing colorWorker, throw away work pending');
     colorWorker.terminate();
   }
   colorWorker = new ColorWorker();
@@ -16,9 +15,7 @@ const convertToColorSVG = async (imageData) => {
   return new Promise(async (resolve) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
-      console.log('Received result from Worker', data);
       channel.port1.close();
-      console.log('Killing colorWorker, work done.');
       colorWorker.terminate();
       colorWorker = null;
       resolve(data.result);
@@ -45,7 +42,6 @@ const convertToColorSVG = async (imageData) => {
 
     const progressChannel = new MessageChannel();
     progressChannel.port1.onmessage = ({ data }) => {
-      console.log('Received progress from Worker', data);
       const percentage = Math.floor((data.processed / data.total) * 100);
       progress.value = percentage;
       if (data.svg) {
@@ -76,6 +72,7 @@ const convertToColorSVG = async (imageData) => {
 
     const params = {
       minPathSegments: Number(filterInputs[POTRACE.minPathLenght].value),
+      strokeWidth: Number(filterInputs[POTRACE.strokeWidth].value),
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
       alphamax: Number(filterInputs[POTRACE.alphamax].value),
       turnpolicy: Number(filterInputs[POTRACE.turnpolicy].value),

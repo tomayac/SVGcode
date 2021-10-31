@@ -44,7 +44,10 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
       return new Promise(async (resolve) => {
         let svg = await potrace(newImageData, params);
         newImageData = null;
-        svg = svg.replace('fill="#000000"', `fill="rgba(${color})"`);
+        svg = svg.replace(
+          'fill="#000000" stroke="none"',
+          `fill="rgba(${color})" stroke="rgba(${color})" stroke-width="${params.strokeWidth}px"`,
+        );
         const pathRegEx = /<path\s*d="([^"]+)"\/>/g;
         let matches;
         const shortPaths = [];
@@ -78,7 +81,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
 
   const total = promises.length;
   const promiseChunks = [];
-  // @ToDo: What is the problem.
+  // @ToDo: What is the problem?
   const chunkSize = 1; // 2 * navigator.hardwareConcurrency || 16;
   while (promises.length > 0) {
     promiseChunks.push(promises.splice(0, chunkSize));

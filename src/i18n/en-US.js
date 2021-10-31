@@ -17,6 +17,7 @@ const translations = {
   turdsize: 'Suppress speckles',
   alphamax: 'Corner Threshold',
   minPathSegments: 'Min. Path Length',
+  strokeWidth: 'Stroke Width',
   turnpolicy: 'Turn Policy',
   opticurve: 'Optimize Curves',
   opttolerance: 'Optimization Tolerance',

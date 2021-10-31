@@ -74,6 +74,7 @@ const SCALE = { scale: 'scale' };
 
 const POTRACE = {
   minPathLenght: 'minPathSegments',
+  strokeWidth: 'strokeWidth',
   turdsize: 'turdsize',
   alphamax: 'alphamax',
   turnpolicy: 'turnpolicy',
@@ -109,6 +110,7 @@ const potraceOptions = {
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
   [POTRACE.opttolerance]: { unit: NONE, initial: 0.2, min: 0, max: 1 },
   [POTRACE.minPathLenght]: { unit: SEGMENTS, initial: 0, min: 0, max: 30 },
+  [POTRACE.strokeWidth]: { unit: PIXELS, initial: 0, min: 0, max: 100 },
 };
 
 const detailsArray = [
