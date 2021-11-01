@@ -324,8 +324,7 @@ const initUI = async () => {
 
   // Start where the user left off.
   const handle = await get(FILE_HANDLE);
-  console.log(FILE_HANDLE, handle);
-  if (handle) {
+  if (handle && (await checkPermissions(handle))) {
     try {
       const file = await handle.getFile();
       console.log(file);
@@ -337,6 +336,17 @@ const initUI = async () => {
       await del(FILE_HANDLE);
     }
   }
+};
+
+const checkPermissions = async (handle) => {
+  const options = { mode: 'read' };
+  if ((await handle.queryPermission(options)) === 'granted') {
+    return true;
+  }
+  if ((await handle.requestPermission(options)) === 'granted') {
+    return true;
+  }
+  return false;
 };
 
 const changeLanguage = () => {
