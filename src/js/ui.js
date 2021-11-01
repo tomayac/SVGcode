@@ -22,7 +22,6 @@ import {
   canvasMain,
   svgOutput,
   toast,
-  progress,
   details,
   summary,
 } from './domrefs.js';
@@ -306,6 +305,7 @@ const initUI = async () => {
   inputImage.addEventListener('load', async () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
+    console.log('inputImage.width', inputImage.width);
     if (inputImage.src !== new URL('/favicon.png', location.href).toString()) {
       setTimeout(async () => {
         resetZoomAndPan();
@@ -322,18 +322,17 @@ const initUI = async () => {
     inputImage.dispatchEvent(new Event('load'));
   }
 
-  // Start where the user left off.
-  const handle = await get(FILE_HANDLE);
-  if (handle && (await checkPermissions(handle))) {
-    try {
+  try {
+    // Start where the user left off.
+    const handle = await get(FILE_HANDLE);
+    if (handle && (await checkPermissions(handle))) {
       const file = await handle.getFile();
       const blobURL = URL.createObjectURL(file);
       inputImage.src = blobURL;
-    } catch (err) {
-      console.error(err.name, err.message);
-      showToast(err.message);
-      await del(FILE_HANDLE);
     }
+  } catch (err) {
+    console.error(err.name, err.message);
+    await del(FILE_HANDLE);
   }
 };
 
@@ -393,7 +392,6 @@ resetAllButton.addEventListener('click', async () => {
 
 debugCheckbox.addEventListener('click', () => {
   canvasMain.classList.toggle('debug');
-  progress.classList.toggle('debug');
 });
 
 let toastTimeout = null;

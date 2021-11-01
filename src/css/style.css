@@ -58,7 +58,6 @@ canvas {
 }
 
 progress {
-  visibility: hidden;
   min-width: 10rem;
 }
 

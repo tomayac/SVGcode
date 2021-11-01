@@ -5,6 +5,7 @@ import {
   posterizeCheckbox,
   dpr,
   considerDPRCheckbox,
+  svgOutput,
 } from './domrefs.js';
 import canvasSize from 'canvas-size';
 
@@ -33,11 +34,23 @@ if (supportsOffscreenCanvas) {
         let inputImageBitmap;
         try {
           inputImageBitmap = await createImageBitmap(inputImage);
-        } catch (err) {
-          console.error(err.name, err.message);
-          showToast(err.message);
+        } catch {
+          try {
+            // For SVGs without an intrinsic size.
+            inputImageBitmap = await createImageBitmap(
+              inputImage,
+              0,
+              0,
+              width,
+              height,
+            );
+          } catch (err) {
+            console.error(err.name, err.message);
+            svgOutput.innerHTML = '';
+            showToast(err.message);
+            return;
+          }
         }
-
         const channel = new MessageChannel();
         channel.port1.onmessage = ({ data }) => {
           channel.port1.close();

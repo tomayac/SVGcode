@@ -22,7 +22,6 @@ const convertToColorSVG = async (imageData) => {
     };
 
     progress.value = 0;
-    progress.style.visibility = 'visible';
     let prefix = '';
     let suffix = '';
     let paths = '';
@@ -66,7 +65,6 @@ const convertToColorSVG = async (imageData) => {
         intervalID.current = null;
         progressChannel.port1.close();
         progress.value = 0;
-        progress.style.visibility = 'hidden';
       }
     };
 
