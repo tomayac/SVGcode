@@ -312,9 +312,11 @@ const initUI = async () => {
         await startProcessing();
       }, 200);
     } else {
-      svgOutput.innerHTML = await fetch('/potraced.svg').then((response) =>
+      const svg = await fetch('/potraced.svg').then((response) =>
         response.text(),
       );
+      svgOutput.innerHTML = svg;
+      svgOutput.dataset.originalViewBox = /viewBox="([^"]+)"/.exec(svg)[1];
     }
   });
 
@@ -401,10 +403,13 @@ const showToast = (message, duration = 5000) => {
   if (toastTimeout) {
     clearTimeout(toastTimeout);
   }
-  toastTimeout = setTimeout(() => {
-    toast.hidden = true;
-    toast.textContent = '';
-  }, duration);
+  if (duration !== Infinity) {
+    toastTimeout = setTimeout(() => {
+      toast.hidden = true;
+      toast.textContent = '';
+    }, duration);
+    return;
+  }
 };
 
 document.documentElement.style.setProperty(

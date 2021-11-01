@@ -99,7 +99,7 @@ saveSVGButton.addEventListener('click', async () => {
         ],
       });
     }
-    showToast(i18n.t('optimizingSVG'));
+    showToast(i18n.t('optimizingSVG'), Infinity);
     svg = await optimizeSVG(svg);
     showToast(i18n.t('savedSVG'));
     const blob = new Blob([svg], { type: 'image/svg+xml' });
