@@ -235,6 +235,9 @@ output svg {
   height: 100%;
 }
 
+/*
+@ToDo: The performance goes down when the stroke-width is > 0.
+
 output svg:hover:not(.interactive) path:not(:hover) {
   opacity: 50%;
 }
@@ -242,6 +245,7 @@ output svg:hover:not(.interactive) path:not(:hover) {
 output svg:hover:not(.interactive) path:hover {
   opacity: 100%;
 }
+*/
 
 .icon {
   margin-inline-end: var(--space);
