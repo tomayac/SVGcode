@@ -59,6 +59,7 @@ if (supportsOffscreenCanvas) {
               b: getRange(filterInputs[COLORS.blue]),
               a: getRange(filterInputs[COLORS.alpha]),
             },
+            cssFilters: getCSSFilters(),
             width,
             height,
             dpr,
@@ -145,18 +146,24 @@ const getPosterizeFilter = () => {
     .trim();
 };
 
-const getFilterString = () => {
-  let string = `${
-    posterizeCheckbox.checked ? `url('${getPosterizeFilter()}#posterize') ` : ''
-  }`;
+const getCSSFilters = () => {
+  let filterString = '';
   for (const [filter, props] of Object.entries(filters)) {
     const input = filterInputs[filter];
     if (props.initial === Number(input.value)) {
       continue;
     }
-    string += `${filter}(${input.value}${input.dataset.unit}) `;
+    filterString += `${filter}(${input.value}${input.dataset.unit}) `;
   }
-  return string.trim() || 'none';
+  return filterString;
+};
+
+const getFilterString = () => {
+  let filterString = `${
+    posterizeCheckbox.checked ? `url('${getPosterizeFilter()}#posterize') ` : ''
+  }`;
+  filterString += getCSSFilters();
+  return filterString.trim() || 'none';
 };
 
 export { preProcessMainCanvas, preProcessInputImage, supportsOffscreenCanvas };
