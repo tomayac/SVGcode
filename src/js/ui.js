@@ -327,7 +327,6 @@ const initUI = async () => {
   if (handle && (await checkPermissions(handle))) {
     try {
       const file = await handle.getFile();
-      console.log(file);
       blobURL = URL.createObjectURL(file);
       inputImage.src = blobURL;
     } catch (err) {
