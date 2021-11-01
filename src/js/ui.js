@@ -323,10 +323,12 @@ const initUI = async () => {
   }
 
   // Start where the user left off.
-  const handle = await get('fileHandle');
+  const handle = await get(FILE_HANDLE);
+  console.log(FILE_HANDLE, handle);
   if (handle) {
     try {
       const file = await handle.getFile();
+      console.log(file);
       blobURL = URL.createObjectURL(file);
       inputImage.src = blobURL;
     } catch (err) {
