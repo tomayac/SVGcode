@@ -21,6 +21,7 @@ const translations = {
   turnpolicy: 'Turn Policy',
   opticurve: 'Optimize Curves',
   opttolerance: 'Optimization Tolerance',
+  showAdvancedControls: 'Show Expert Options',
 
   '%': '%',
   deg: '°',

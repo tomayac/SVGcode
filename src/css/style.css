@@ -121,6 +121,19 @@ details[open] {
   flex-shrink: 0;
 }
 
+summary::after {
+  margin-inline-start: var(--space);
+  font-size: 1.25rem;
+}
+
+details:not([open], .main) > summary::after {
+  content: '▶';
+}
+
+details[open]:not(.main) > summary::after {
+  content: '▼';
+}
+
 @media (max-width: 414px) {
   summary,
   label,
@@ -303,6 +316,11 @@ button:hover {
   display: flex;
   margin: var(--space);
   height: 3ex;
+}
+
+.other-input.advanced,
+.preprocess-input.advanced {
+  display: none;
 }
 
 .sidebar {

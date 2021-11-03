@@ -10,6 +10,8 @@ import {
   considerDPRLabel,
   optimizeCurvesCheckbox,
   optimizeCurvesLabel,
+  showAdvancedControlsCheckbox,
+  showAdvancedControlsLabel,
   inputImage,
   resetAllButton,
   fileOpenButton,
@@ -34,7 +36,7 @@ import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import { i18n } from './i18n.js';
 import { FILE_HANDLE } from './filesystem.js';
-import { get, del } from 'idb-keyval';
+import { get, set, del } from 'idb-keyval';
 import './clipboard.js';
 import './filesystem.js';
 
@@ -159,11 +161,21 @@ const createDetails = (name, iconURL) => {
   return details;
 };
 
+const advancedControls = [
+  'alphamax',
+  'turnpolicy',
+  'optimize-curves',
+  'opttolerance',
+  'minPathSegments',
+];
+
 const createControls = (filter, props, details) => {
   const { unit, min, max, initial } = props;
   const div = document.createElement('div');
   div.classList.add('preprocess-input');
-
+  if (advancedControls.includes(filter)) {
+    div.classList.add('advanced');
+  }
   const label = document.createElement('label');
   label.textContent = i18n.t(filter) || filter;
   label.for = filter;
@@ -297,15 +309,22 @@ const initUI = async () => {
         allDetails['svgOptions'].append(optimizeCurvesCheckbox.parentNode);
       }
       createControls(filter, props, details);
+      if (name === 'svgOptions') {
+        allDetails['svgOptions'].append(
+          showAdvancedControlsCheckbox.parentNode,
+        );
+      }
     }
     detailsContainer.append(details);
   });
   detailsContainer.append(resetAllButton.parentNode);
 
+  showAdvancedControlsCheckbox.checked = await get('showAdvancedControls');
+  showAdvancedControls();
+
   inputImage.addEventListener('load', async () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
-    console.log('inputImage.width', inputImage.width);
     if (inputImage.src !== new URL('/favicon.png', location.href).toString()) {
       setTimeout(async () => {
         resetZoomAndPan();
@@ -356,6 +375,7 @@ const changeLanguage = () => {
   monochromeLabel.textContent = i18n.t('monochromeSVG');
   considerDPRLabel.textContent = i18n.t('considerDPR');
   optimizeCurvesLabel.textContent = i18n.t('opticurve');
+  showAdvancedControlsLabel.textContent = i18n.t('showAdvancedControls');
   fileOpenButton.innerHTML = '';
   fileOpenButton.append(createIcon(openIcon));
   fileOpenButton.append(document.createTextNode(i18n.t('openImage')));
@@ -411,6 +431,16 @@ const showToast = (message, duration = 5000) => {
     return;
   }
 };
+
+const showAdvancedControls = () => {
+  set('showAdvancedControls', showAdvancedControlsCheckbox.checked);
+  document.querySelectorAll('.advanced').forEach((el) => {
+    showAdvancedControlsCheckbox.checked
+      ? (el.style.display = 'block')
+      : (el.style.display = 'none');
+  });
+};
+showAdvancedControlsCheckbox.addEventListener('change', showAdvancedControls);
 
 document.documentElement.style.setProperty(
   '--100vh',
