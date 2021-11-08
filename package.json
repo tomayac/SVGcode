@@ -15,15 +15,15 @@
     "deploy": "npm run lint && npm run fix && npm run build && git commit -a && git push"
   },
   "dependencies": {
-    "browser-fs-access": "^0.21.0",
+    "browser-fs-access": "^0.21.1",
     "canvas-size": "^1.2.5",
     "esm-potrace-wasm": "^0.1.1",
     "idb-keyval": "^6.0.3",
-    "svgo": "^2.7.0"
+    "svgo": "^2.8.0"
   },
   "devDependencies": {
     "@rollup/plugin-dynamic-import-vars": "^1.4.1",
-    "eslint": "^8.1.0",
+    "eslint": "^8.2.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
     "find-unused-exports": "^2.0.0",

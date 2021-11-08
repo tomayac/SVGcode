@@ -70,19 +70,18 @@ document.addEventListener('drop', async (event) => {
     );
     if (supported) {
       const handle = await item.getAsFileSystemHandle();
-      if (handle.kind === 'directory') {
+      if (handle.kind !== 'file') {
         return;
-      } else {
-        const file = await handle.getFile();
-        blobURL = URL.createObjectURL(file);
-        inputImage.src = blobURL;
-        await set(FILE_HANDLE, handle);
       }
-    } else {
-      const file = item.getAsFile();
+      const file = await handle.getFile();
       blobURL = URL.createObjectURL(file);
       inputImage.src = blobURL;
+      await set(FILE_HANDLE, handle);
+      return;
     }
+    const file = item.getAsFile();
+    blobURL = URL.createObjectURL(file);
+    inputImage.src = blobURL;
   }
 });
 
