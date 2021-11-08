@@ -1,8 +1,8 @@
 {
   "name": "SVGcode",
   "short_name": "SVGcode",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "https://svgco.de/",
+  "scope": "https://svgco.de/",
   "display": "standalone",
   "display_override": ["window-controls-overlay"],
   "orientation": "portrait",
@@ -10,13 +10,13 @@
   "background_color": "#131313",
   "icons": [
     {
-      "src": "./favicon.png",
+      "src": "https://svgco.de/favicon.png",
       "type": "image/png",
       "sizes": "1024x1024",
       "purpose": "maskable"
     },
     {
-      "src": "./favicon.svg",
+      "src": "https://svgco.de/favicon.svg",
       "type": "image/svg+xml",
       "sizes": "150x150",
       "purpose": "any"
@@ -24,7 +24,7 @@
   ],
   "file_handlers": [
     {
-      "action": "./",
+      "action": "https://svgco.de/",
       "accept": {
         "image/*": [
           ".jpg",
