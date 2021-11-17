@@ -4,6 +4,7 @@ installButton.style.display = 'none';
 let installEvent = null;
 
 window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
   installEvent = event;
   installButton.style.display = '';
 });
