@@ -15,6 +15,9 @@
     "deploy": "npm run lint && npm run fix && npm run build && git commit -a && git push",
     "oculus": "cd src && ovr-platform-util create-pwa -o output.apk --android-sdk ~/bin/android-10 --manifest-content-file manifest.json --package-name de.svgco"
   },
+  "engines": {
+    "node": ">=16"
+  },
   "dependencies": {
     "browser-fs-access": "^0.21.1",
     "canvas-size": "^1.2.5",
