@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "start": "npm run dev",
-    "dev": "vite",
-    "build": "vite build && shx echo \"svgco.de\" > docs/CNAME && git add docs/",
-    "serve": "vite preview",
+    "dev": "npx vite",
+    "build": "npx vite build && shx echo \"svgco.de\" > docs/CNAME && git add docs/",
+    "serve": "npx vite preview",
     "https-preview": "serve docs",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
     "lint:esm": "npx find-unused-exports",
