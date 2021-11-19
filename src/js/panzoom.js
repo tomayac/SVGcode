@@ -132,22 +132,25 @@ const zoomOutput = (zoomScale) => {
 };
 
 let wheelTimeout = null;
-svgOutput.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  const svg = svgOutput.querySelector('svg');
-  if (!svg) {
-    return;
-  }
-  svg.classList.add('interactive');
-  zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.005), 10));
-  zoomOutput(zoomScale);
-  if (wheelTimeout) {
-    clearTimeout(wheelTimeout);
-  }
-  wheelTimeout = setTimeout(() => {
-    svg.classList.remove('interactive');
-  }, 1000);
-});
+svgOutput.addEventListener(
+  'wheel',
+  (e) => {
+    const svg = svgOutput.querySelector('svg');
+    if (!svg) {
+      return;
+    }
+    svg.classList.add('interactive');
+    zoomScale = Math.max(0.1, Math.min(zoomScale * (1 + e.deltaY * 0.005), 10));
+    zoomOutput(zoomScale);
+    if (wheelTimeout) {
+      clearTimeout(wheelTimeout);
+    }
+    wheelTimeout = setTimeout(() => {
+      svg.classList.remove('interactive');
+    }, 1000);
+  },
+  { passive: true },
+);
 
 const pointerEventCache = [];
 let previousDifference = -1;
