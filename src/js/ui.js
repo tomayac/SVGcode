@@ -344,7 +344,6 @@ const initUI = async () => {
     inputImage.dispatchEvent(new Event('load'));
   }
 
-  debugCheckbox.hidden = false;
   progress.hidden = false;
 
   try {
