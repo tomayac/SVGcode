@@ -23,7 +23,9 @@ or watch the [video](https://youtu.be/kcvfyQh6J-0?).
 1. Open the application in your browser:
    [`http://localhost:3000`](http://localhost:3000)
 1. Check out the [available Issues](https://github.com/tomayac/SVGcode/issues)
-   or create a [new Issue] describing your plans.
+   or create a
+   [new Issue](https://github.com/tomayac/SVGcode/issues/new/choose) describing
+   your plans.
 1. Start hacking. Vite automatically reloads the app upon changes.
 1. Lint your modifications: `npm run lint`
 1. Make sure your changes respect the code style: `npm run fix`
