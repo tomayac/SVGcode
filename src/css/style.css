@@ -180,7 +180,7 @@ details[open]:not(.main) > summary::after {
     height: var(--100vh);
     cursor: auto;
     z-index: -1;
-    opacity: 0%;
+    opacity: 0;
   }
 }
 
