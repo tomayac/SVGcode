@@ -1,12 +1,11 @@
 import { installButton } from './domrefs';
 
-installButton.style.display = 'none';
 let installEvent = null;
 
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   installEvent = event;
-  installButton.style.display = '';
+  installButton.style.visibility = 'visible';
 });
 
 installButton.addEventListener('click', async () => {
@@ -17,7 +16,7 @@ installButton.addEventListener('click', async () => {
   const result = await installEvent.userChoice;
   if (result.outcome === 'accepted') {
     installEvent = null;
-    installButton.style.display = 'none';
+    installButton.style.visibility = 'hidden';
   }
 });
 

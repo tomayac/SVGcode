@@ -294,6 +294,10 @@ button.menu {
   margin-inline-end: calc(4 * var(--space));
 }
 
+button.install {
+  visibility: hidden;
+}
+
 summary:hover,
 label:hover,
 button:hover {

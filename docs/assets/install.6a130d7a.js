@@ -1,0 +1,1 @@
+import{b as i}from"./index.28cfc441.js";import"./vendor.741bd9a9.js";let e=null;window.addEventListener("beforeinstallprompt",t=>{t.preventDefault(),e=t,i.style.visibility="visible"});i.addEventListener("click",async()=>{if(!e)return;e.prompt(),(await e.userChoice).outcome==="accepted"&&(e=null,i.style.visibility="hidden")});window.addEventListener("appinstalled",t=>{e=null});

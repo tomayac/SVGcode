@@ -24,6 +24,7 @@ import {
   canvasMain,
   svgOutput,
   toast,
+  progress,
   details,
   summary,
 } from './domrefs.js';
@@ -342,6 +343,9 @@ const initUI = async () => {
   if (inputImage.complete) {
     inputImage.dispatchEvent(new Event('load'));
   }
+
+  debugCheckbox.hidden = false;
+  progress.hidden = false;
 
   try {
     // Start where the user left off.
