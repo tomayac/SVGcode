@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.svgco.twa",
+      "sha256_cert_fingerprints": [
+        "71:40:9F:D0:17:82:14:A5:97:F2:87:22:20:F3:CA:52:9B:BB:36:5F:82:EF:01:C9:1D:FE:16:AE:3B:32:7B:69"
+      ]
+    }
+  }
+]
