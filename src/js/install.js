@@ -15,11 +15,13 @@ installButton.addEventListener('click', async () => {
   installEvent.prompt();
   const result = await installEvent.userChoice;
   if (result.outcome === 'accepted') {
-    installEvent = null;
     installButton.style.visibility = 'hidden';
+    installEvent = null;
   }
 });
 
 window.addEventListener('appinstalled', (event) => {
+  // Duplicate because users can install through the prompt or the button.
+  installButton.style.visibility = 'hidden';
   installEvent = null;
 });
