@@ -25,7 +25,7 @@ const translations = {
 
   '%': '%',
   deg: '°',
-  steps: 'Scrhtitte',
+  steps: 'Schritte',
   pixels: 'Pixel',
   segments: 'Segmente',
 
@@ -58,7 +58,7 @@ const translations = {
 
   readyToWorkOffline: 'Bereit für Offline-Nutzung.',
   svgSize: 'SVG Größe',
-  bytes: 'Bytes',
+  bytes: 'Byte',
   zoom: 'Zoom',
 };
 
