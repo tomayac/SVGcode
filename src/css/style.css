@@ -332,7 +332,7 @@ button:hover {
   flex-direction: column;
   padding: var(--space);
   gap: var(--space);
-  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
 }
 
 .menu {
