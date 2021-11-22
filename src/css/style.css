@@ -335,6 +335,30 @@ button:hover {
   min-width: var(--sidebar-width);
 }
 
+.link-list {
+  list-style: none;
+  margin-block-start: var(--space);
+  padding-inline-start: var(--space);
+  line-height: 2;
+}
+
+.link-list a {
+  color: var(--canvas-text);
+  text-decoration: none;
+}
+
+.link-list a:hover {
+  color: var(--main-accent-color);
+}
+
+.link-list img {
+  width: 2.5ex;
+  height: 2.5ex;
+  filter: contrast(0.5) grayscale(1) invert(1);
+  background-color: transparent;
+  vertical-align: middle;
+}
+
 .menu {
   width: 100%;
   height: var(--menu-height);
