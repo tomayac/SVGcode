@@ -4,7 +4,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "npx vite",
-    "build": "npx vite build && shx echo \"svgco.de\" > docs/CNAME && git add docs/",
+    "build": "npx vite build && shx echo \"svgco.de\" > docs/CNAME && touch docs/.nojekyll && git add docs/",
     "serve": "npx vite preview",
     "https-preview": "serve docs",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
