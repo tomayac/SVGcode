@@ -7,20 +7,20 @@ const translations = {
   brightness: 'Helligkeit',
   contrast: 'Kontrast',
   grayscale: 'Graustufen',
-  'hue-rotate': 'Hue ändern',
+  'hue-rotate': 'Farbtonrotation',
   invert: 'Invertieren',
   opacity: 'Transparenz',
   saturate: 'Sättigung',
   sepia: 'Sepia',
 
-  scale: 'Skala',
+  scale: 'Skalierung',
   turdsize: 'Flecken unterdrücken',
-  alphamax: 'Eckschwelle',
+  alphamax: 'Eckenschwellwert',
   minPathSegments: 'Min. Pfadlänge',
   strokeWidth: 'Strichbreite',
-  turnpolicy: 'Turn Policy',
+  turnpolicy: 'Wendestrategie',
   opticurve: 'Kurven optimieren',
-  opttolerance: 'Optimierungs Toleranz',
+  opttolerance: 'Optimierungstoleranz',
   showAdvancedControls: 'Expertenoptionen anzeigen',
 
   '%': '%',
@@ -44,20 +44,20 @@ const translations = {
   monochromeSVG: 'Monochromes SVG',
 
   colorChannels: 'Farbkanäle',
-  imageSize: 'Eingabegröße',
-  imagePreprocessing: 'Eingabe verarbeiten',
-  svgOptions: 'SVG Optionen',
+  imageSize: 'Bildgröße',
+  imagePreprocessing: 'Bildvorverarbeitung',
+  svgOptions: 'SVG-Optionen',
 
-  considerDPR: 'Device Pixel Ratio beachten',
+  considerDPR: 'Pixelverhältnis des Geräts beachten',
 
   tweak: 'Anpassen',
 
-  optimizingSVG: 'SVG optmieren',
+  optimizingSVG: 'Optmiere SVG',
   copiedSVG: 'SVG kopiert',
   savedSVG: 'SVG gespeichert',
 
   readyToWorkOffline: 'Bereit für Offline-Nutzung.',
-  svgSize: 'SVG Größe',
+  svgSize: 'SVG-Größe',
   bytes: 'Byte',
   zoom: 'Zoom',
 };
