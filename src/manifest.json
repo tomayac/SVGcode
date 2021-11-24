@@ -13,6 +13,7 @@
   ],
   "scope": "https://svgco.de/",
   "display": "standalone",
+  "dir": "auto",
   "display_override": ["window-controls-overlay"],
   "orientation": "portrait",
   "theme_color": "#131313",
@@ -47,5 +48,15 @@
         ]
       }
     }
-  ]
+  ],
+  "iarc_rating_id": "39d78758-59f2-429e-92ab-ad11d61feafe",
+  "categories": ["photo", "productivity", "utilities", "devtools"],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=de.svgco.twa",
+      "id": "de.svgco.twa"
+    }
+  ],
+  "prefer_related_applications": false
 }
