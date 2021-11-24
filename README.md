@@ -43,7 +43,7 @@ the amazing [svgo](https://github.com/svg/svgo) library.
 
 ## License
 
-GNU General Public License v3.0
+GNU General Public License v2.0
 
 (This is due to Potrace choosing
 [GNU General Public License v2.0](http://potrace.sourceforge.net/#license).)
