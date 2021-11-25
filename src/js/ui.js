@@ -299,7 +299,7 @@ const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
 
-  const mediaQueryList = window.matchMedia('(max-width: 400px)');
+  const mediaQueryList = window.matchMedia('(max-width: 414px)');
   const onMaxWidthMatch = () => {
     if (mediaQueryList.matches) {
       details.open = false;
