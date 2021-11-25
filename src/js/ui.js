@@ -46,6 +46,7 @@ import {
   progress,
   details,
   summary,
+  closeOptionsButton,
 } from './domrefs.js';
 import {
   resetZoomAndPan,
@@ -417,6 +418,7 @@ const changeLanguage = () => {
   summary.innerHTML = '';
   summary.append(createIcon(optionsIcon));
   summary.append(document.createTextNode(i18n.t('tweak')));
+  closeOptionsButton.title = i18n.t('closeOptions');
 };
 
 resetAllButton.addEventListener('click', async () => {
@@ -478,5 +480,9 @@ window.addEventListener(
     );
   }, 250),
 );
+
+closeOptionsButton.addEventListener('click', () => {
+  details.open = false;
+});
 
 export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };

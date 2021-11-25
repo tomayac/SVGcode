@@ -70,6 +70,7 @@ const translations = {
   considerDPR: 'Λάβετε υπόψη την αναλογία pixel της συσκευής',
 
   tweak: 'Προσαρμογή',
+  closeOptions: 'Κλείσιμο',
 
   optimizingSVG: 'Βελτιστοποίηση SVG',
   copiedSVG: 'SVG Αντιγράφηκε',

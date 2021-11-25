@@ -70,6 +70,7 @@ const translations = {
   considerDPR: 'Consider Device Pixel Ratio',
 
   tweak: 'Tweak',
+  closeOptions: 'Close',
 
   optimizingSVG: 'Optimizing SVG',
   copiedSVG: 'Copied SVG',

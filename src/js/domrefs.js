@@ -49,6 +49,7 @@ const toast = document.querySelector('.toast');
 const dropContainer = document.documentElement;
 const details = document.querySelector('details.main');
 const summary = document.querySelector('summary');
+const closeOptionsButton = document.querySelector('.close-options-button');
 
 const dpr = window.devicePixelRatio;
 
@@ -83,5 +84,6 @@ export {
   progress,
   details,
   summary,
+  closeOptionsButton,
   dpr,
 };
