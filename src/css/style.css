@@ -175,6 +175,7 @@ details[open]:not(.main) > summary::after {
   }
 
   details[open].main > .sidebar {
+    max-width: calc(100% - var(--space) * 4);
     backdrop-filter: saturate(180%) blur(20px);
     background-color: var(--sidebar-background-color);
   }
