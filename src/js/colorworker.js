@@ -66,7 +66,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
         const [r, g, b] = color.split(',');
         svg = svg.replace(
           'fill="#000000" stroke="none"',
-          //`fill="rgba(${color})" stroke="rgba(${color})" stroke-width="${params.strokeWidth}px"`,
+          // `fill="rgba(${color})" stroke="rgba(${color})" stroke-width="${params.strokeWidth}px"`,
           // @ToDo: Make it configurable to not lose the alpha channel here:
           // https://github.com/tomayac/SVGcode/issues/30. The alpha value needs
           // to be normalized from 0–255 to 0–1, too, if it comes back.

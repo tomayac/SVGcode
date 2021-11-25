@@ -35,7 +35,7 @@
     "find-unused-exports": "^2.0.0",
     "https-localhost": "^4.7.0",
     "material-design-icons": "^3.0.1",
-    "prettier": "^2.4.1",
+    "prettier": "^2.5.0",
     "shx": "^0.3.3",
     "stylelint": "^14.1.0",
     "stylelint-config-standard": "^24.0.0",
