@@ -79,17 +79,34 @@ copyButton.addEventListener('click', async () => {
         }),
       }),
     ]);
-  } catch {
-    // Chromium
+  } catch (err) {
+    console.warn(err.name, err.message);
     svg = await optimizeSVG(svg);
     const textBlob = new Blob([svg], { type: 'text/plain' });
     const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
-    navigator.clipboard.write([
-      new ClipboardItem({
-        [svgBlob.type]: svgBlob,
-        [textBlob.type]: textBlob,
-      }),
-    ]);
+    try {
+      // Chromium (text and SVG)
+      navigator.clipboard.write([
+        new ClipboardItem({
+          [svgBlob.type]: svgBlob,
+          [textBlob.type]: textBlob,
+        }),
+      ]);
+    } catch (err) {
+      console.warn(err.name, err.message);
+      try {
+        // Chromium (text only)
+        navigator.clipboard.write([
+          new ClipboardItem({
+            [textBlob.type]: textBlob,
+          }),
+        ]);
+      } catch (err) {
+        console.error(err.name, err.message);
+        showToast(err.message);
+        return;
+      }
+    }
   }
   showToast(i18n.t('copiedSVG'));
 });
