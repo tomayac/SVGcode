@@ -153,6 +153,17 @@ details[open]:not(.main) > summary::after {
   content: '▼';
 }
 
+details.main .close-options-button {
+  display: none;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin: 0;
+  font-size: 1rem;
+}
+
 @media (max-width: 414px) {
   summary,
   label,
@@ -175,6 +186,7 @@ details[open]:not(.main) > summary::after {
   }
 
   details[open].main > .sidebar {
+    max-width: calc(100% - var(--space) * 4);
     backdrop-filter: saturate(180%) blur(20px);
     background-color: var(--sidebar-background-color);
   }
@@ -200,6 +212,10 @@ details[open]:not(.main) > summary::after {
     cursor: auto;
     z-index: -1;
     opacity: 0;
+  }
+
+  details.main[open] .close-options-button {
+    display: inline-block;
   }
 }
 
