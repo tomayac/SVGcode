@@ -67,7 +67,7 @@ copyButton.addEventListener('click', async () => {
   try {
     // Safari treats user activation differently:
     // https://bugs.webkit.org/show_bug.cgi?id=222262.
-    navigator.clipboard.write([
+    await navigator.clipboard.write([
       new ClipboardItem({
         'text/plain': new Promise(async (resolve) => {
           svg = await optimizeSVG(svg);
@@ -86,7 +86,7 @@ copyButton.addEventListener('click', async () => {
     const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
     try {
       // Chromium (text and SVG)
-      navigator.clipboard.write([
+      await navigator.clipboard.write([
         new ClipboardItem({
           [svgBlob.type]: svgBlob,
           [textBlob.type]: textBlob,
@@ -96,7 +96,7 @@ copyButton.addEventListener('click', async () => {
       console.warn(err.name, err.message);
       try {
         // Chromium (text only)
-        navigator.clipboard.write([
+        await navigator.clipboard.write([
           new ClipboardItem({
             [textBlob.type]: textBlob,
           }),
