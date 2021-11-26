@@ -377,6 +377,14 @@ button:hover {
   line-height: 2;
 }
 
+.link-list > li {
+  display: inline-block;
+}
+
+.link-list > li:not(:last-of-type)::after {
+  content: '•';
+}
+
 .link-list a {
   color: var(--canvas-text);
   text-decoration: none;
@@ -432,10 +440,6 @@ button:hover {
   gap: var(--space);
   flex-grow: 1;
   overflow: hidden;
-}
-
-.reset-all {
-  width: 100%;
 }
 
 .dropenter::before {
