@@ -418,7 +418,7 @@ const changeLanguage = () => {
   summary.innerHTML = '';
   summary.append(createIcon(optionsIcon));
   summary.append(document.createTextNode(i18n.t('tweak')));
-  closeOptionsButton.title = i18n.t('closeOptions');
+  closeOptionsButton.ariaLabel = i18n.t('closeOptions');
 };
 
 resetAllButton.addEventListener('click', async () => {
