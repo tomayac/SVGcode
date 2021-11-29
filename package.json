@@ -21,7 +21,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "browser-fs-access": "^0.21.1",
+    "browser-fs-access": "^0.23.0",
     "canvas-size": "^1.2.5",
     "esm-potrace-wasm": "^0.1.3",
     "idb-keyval": "^6.0.3",
@@ -42,7 +42,7 @@
     "stylelint-order": "^5.0.0",
     "super-tiny-icons": "^0.4.0",
     "vite": "^2.6.14",
-    "vite-plugin-pwa": "^0.11.7"
+    "vite-plugin-pwa": "^0.11.8"
   },
   "eslintConfig": {
     "parserOptions": {
