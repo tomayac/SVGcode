@@ -199,7 +199,7 @@ const createControls = (filter, props, details) => {
   }
   const label = document.createElement('label');
   label.textContent = i18n.t(filter) || filter;
-  label.for = filter;
+  label.htmlFor = filter;
 
   const span = document.createElement('span');
   filterSpans[filter] = span;
