@@ -31,6 +31,7 @@ import { i18n } from './i18n.js';
 import { set } from 'idb-keyval';
 
 const FILE_HANDLE = 'fileHandle';
+let originalFileName = '';
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -38,6 +39,7 @@ fileOpenButton.addEventListener('click', async () => {
       mimeTypes: ['image/*'],
       description: 'Image files',
     });
+    originalFileName = file.name.replace(/\.[^/.]+$/, ''); // Remove filename extension
     const blobURL = URL.createObjectURL(file);
     inputImage.addEventListener(
       'load',
@@ -51,6 +53,7 @@ fileOpenButton.addEventListener('click', async () => {
       await set(FILE_HANDLE, file.handle);
     }
   } catch (err) {
+    originalFileName = '';
     console.error(err.name, err.message);
     showToast(err.message);
   }
@@ -112,6 +115,7 @@ saveSVGButton.addEventListener('click', async () => {
     // blob, which may take longer.
     if (supported) {
       handle = await showSaveFilePicker({
+        suggestedName: originalFileName,
         types: [
           { description: 'SVG file', accept: { 'image/svg+xml': ['.svg'] } },
         ],
@@ -121,7 +125,7 @@ saveSVGButton.addEventListener('click', async () => {
     svg = await optimizeSVG(svg);
     showToast(i18n.t('savedSVG'));
     const blob = new Blob([svg], { type: 'image/svg+xml' });
-    await fileSave(blob, { fileName: '', description: 'SVG file' }, handle);
+    await fileSave(blob, { fileName: originalFileName, description: 'SVG file' }, handle);
   } catch (err) {
     console.error(err.name, err.message);
     showToast(err.message);
