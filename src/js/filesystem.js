@@ -28,10 +28,13 @@ import {
 import { showToast } from './ui.js';
 import { optimizeSVG } from './svgo.js';
 import { i18n } from './i18n.js';
-import { set } from 'idb-keyval';
+import { set, get } from 'idb-keyval';
 
 const FILE_HANDLE = 'fileHandle';
-let originalFileName = '';
+
+const getFileHandle = async (dbKey = FILE_HANDLE) => {
+  return await get(dbKey);
+}
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -39,7 +42,6 @@ fileOpenButton.addEventListener('click', async () => {
       mimeTypes: ['image/*'],
       description: 'Image files',
     });
-    originalFileName = file.name.replace(/\.[^/.]+$/, ''); // Remove filename extension
     const blobURL = URL.createObjectURL(file);
     inputImage.addEventListener(
       'load',
@@ -53,7 +55,6 @@ fileOpenButton.addEventListener('click', async () => {
       await set(FILE_HANDLE, file.handle);
     }
   } catch (err) {
-    originalFileName = '';
     console.error(err.name, err.message);
     showToast(err.message);
   }
@@ -109,11 +110,14 @@ document.addEventListener('drop', async (event) => {
 
 saveSVGButton.addEventListener('click', async () => {
   try {
+    let originalFileName = '';
     let svg = svgOutput.innerHTML;
     let handle = null;
     // To not consume the user gesture obtain the handle before preparing the
     // blob, which may take longer.
     if (supported) {
+      const originalFileHandle = await getFileHandle() || {};
+      originalFileName = (originalFileHandle.name || '').replace(/\.[^/.]+$/, ''); // Remove filename extension
       handle = await showSaveFilePicker({
         suggestedName: originalFileName,
         types: [
@@ -132,4 +136,4 @@ saveSVGButton.addEventListener('click', async () => {
   }
 });
 
-export { FILE_HANDLE };
+export { FILE_HANDLE, getFileHandle };
