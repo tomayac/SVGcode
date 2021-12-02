@@ -28,9 +28,14 @@ import {
 import { showToast } from './ui.js';
 import { optimizeSVG } from './svgo.js';
 import { i18n } from './i18n.js';
-import { set } from 'idb-keyval';
+import { set, get } from 'idb-keyval';
 
 const FILE_HANDLE = 'fileHandle';
+
+const getSuggestedFileName = fileHandle => {
+  const fileName = fileHandle?.name || '';
+  return fileName.replace(/\.[^/.]+$/, ''); // Remove original filename's extension
+};
 
 fileOpenButton.addEventListener('click', async () => {
   try {
@@ -106,12 +111,15 @@ document.addEventListener('drop', async (event) => {
 
 saveSVGButton.addEventListener('click', async () => {
   try {
+    let suggestedFileName = '';
     let svg = svgOutput.innerHTML;
     let handle = null;
     // To not consume the user gesture obtain the handle before preparing the
     // blob, which may take longer.
     if (supported) {
+      suggestedFileName = getSuggestedFileName((await get(FILE_HANDLE)));
       handle = await showSaveFilePicker({
+        suggestedName: suggestedFileName,
         types: [
           { description: 'SVG file', accept: { 'image/svg+xml': ['.svg'] } },
         ],
@@ -121,11 +129,11 @@ saveSVGButton.addEventListener('click', async () => {
     svg = await optimizeSVG(svg);
     showToast(i18n.t('savedSVG'));
     const blob = new Blob([svg], { type: 'image/svg+xml' });
-    await fileSave(blob, { fileName: '', description: 'SVG file' }, handle);
+    await fileSave(blob, { fileName: suggestedFileName, description: 'SVG file' }, handle);
   } catch (err) {
     console.error(err.name, err.message);
     showToast(err.message);
   }
 });
 
-export { FILE_HANDLE };
+export { FILE_HANDLE, getSuggestedFileName };
