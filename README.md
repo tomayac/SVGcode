@@ -4,9 +4,9 @@ SVGcode is a Progressive Web App that lets you convert raster images like JPG,
 PNG, GIF, WebP, AVIF, etc. to vector graphics in SVG format. It uses the File
 System Access API, the Async Clipboard API, the File Handling API, and Window
 Controls Overlay customization. The app is available at
-<a href="https://svgco.de/">SVGco.de</a>. See what I did there?
-For more background, read the accompanying [article](https://web.dev/svgcode/)
-or watch the [video](https://youtu.be/kcvfyQh6J-0?).
+<a href="https://svgco.de/">SVGco.de</a>. See what I did there? For more
+background, read the accompanying [article](https://web.dev/svgcode/) or watch
+the [video](https://youtu.be/kcvfyQh6J-0?).
 
 <a href="https://svgco.de/">
   <img src="https://github.com/tomayac/SVGcode/raw/main/public/screenshots/desktop.png" alt="SVGcode application screenshot" width="707" height="497" />
@@ -14,9 +14,11 @@ or watch the [video](https://youtu.be/kcvfyQh6J-0?).
 
 ## Access from the Web or install from a store
 
-Apart from using the Web app at [svgco.de](https://svgco.de/), you can also install SVGcode from the
-[Play Store](https://play.google.com/store/apps/details?id=de.svgco.twa) on Android (or Chrome OS)
-and the [Microsoft Store](https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab)
+Apart from using the Web app at [svgco.de](https://svgco.de/), you can also
+install SVGcode from the
+[Play Store](https://play.google.com/store/apps/details?id=de.svgco.twa) on
+Android (or Chrome OS) and the
+[Microsoft Store](https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab)
 on Windows.
 
 ## Developing and/or contributing
