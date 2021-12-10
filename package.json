@@ -23,7 +23,7 @@
   "dependencies": {
     "browser-fs-access": "^0.23.0",
     "canvas-size": "^1.2.5",
-    "esm-potrace-wasm": "^0.1.3",
+    "esm-potrace-wasm": "^0.2.1",
     "idb-keyval": "^6.0.3",
     "svgo": "^2.8.0"
   },
@@ -42,7 +42,7 @@
     "stylelint-order": "^5.0.0",
     "super-tiny-icons": "^0.4.0",
     "vite": "^2.7.1",
-    "vite-plugin-pwa": "^0.11.10"
+    "vite-plugin-pwa": "^0.11.11"
   },
   "eslintConfig": {
     "parserOptions": {

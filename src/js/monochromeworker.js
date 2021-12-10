@@ -17,9 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import potrace from 'esm-potrace-wasm';
+import { potrace, init } from 'esm-potrace-wasm';
 
 const convertToMonochromeSVG = async (imageData, params) => {
+  await init();
   const svg = await potrace(imageData, params);
   return svg;
 };

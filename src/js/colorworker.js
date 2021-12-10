@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import potrace from 'esm-potrace-wasm';
+import { potrace, init } from 'esm-potrace-wasm';
 
 const extractColors = (imageData) => {
   const colors = {};
@@ -40,6 +40,7 @@ const extractColors = (imageData) => {
 };
 
 const convertToColorSVG = async (imageData, params, progressPort) => {
+  await init();
   const colors = extractColors(imageData);
 
   let prefix = '';
@@ -106,8 +107,7 @@ const convertToColorSVG = async (imageData, params, progressPort) => {
 
   const total = promises.length;
   const promiseChunks = [];
-  // @ToDo: What is the problem?
-  const chunkSize = 1; // 2 * navigator.hardwareConcurrency || 16;
+  const chunkSize = 2 * navigator.hardwareConcurrency || 16;
   while (promises.length > 0) {
     promiseChunks.push(promises.splice(0, chunkSize));
   }
