@@ -80,6 +80,9 @@ const translations = {
   svgSize: 'SVG Size',
   bytes: 'Bytes',
   zoom: 'Zoom',
+
+  license: 'License',
+  about: 'About',
 };
 
 // ignore unused exports default

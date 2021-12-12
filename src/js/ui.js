@@ -47,6 +47,8 @@ import {
   details,
   summary,
   closeOptionsButton,
+  licenseLink,
+  aboutLink,
 } from './domrefs.js';
 import {
   resetZoomAndPan,
@@ -392,6 +394,8 @@ const checkPermissions = async (handle) => {
 };
 
 const changeLanguage = () => {
+  licenseLink.textContent = i18n.t('license');
+  aboutLink.textContent = i18n.t('about');
   resetAllButton.textContent = i18n.t('resetAll');
   posterizeLabel.textContent = i18n.t('posterizeInputImage');
   colorLabel.textContent = i18n.t('colorSVG');

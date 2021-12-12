@@ -80,6 +80,9 @@ const translations = {
   svgSize: 'Μέγεθος SVG',
   bytes: 'Bytes',
   zoom: 'Μεγέθυνση',
+
+  license: 'Αδεια',
+  about: 'Σχετικά με',
 };
 
 // ignore unused exports default

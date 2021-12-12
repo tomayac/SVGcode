@@ -50,6 +50,8 @@ const dropContainer = document.documentElement;
 const details = document.querySelector('details.main');
 const summary = document.querySelector('summary');
 const closeOptionsButton = document.querySelector('.close-options-button');
+const licenseLink = document.querySelector('.license');
+const aboutLink = document.querySelector('.about');
 
 const dpr = window.devicePixelRatio;
 
@@ -86,4 +88,6 @@ export {
   summary,
   closeOptionsButton,
   dpr,
+  licenseLink,
+  aboutLink,
 };
