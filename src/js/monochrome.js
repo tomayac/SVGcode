@@ -33,8 +33,10 @@ const convertToMonochromeSVG = async (imageData) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
       channel.port1.close();
-      monochromeSVGWorker.terminate();
-      monochromeSVGWorker = null;
+      if (monochromeSVGWorker) {
+        monochromeSVGWorker.terminate();
+        monochromeSVGWorker = null;
+      }
       resolve(data.result);
     };
 

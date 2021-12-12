@@ -35,8 +35,10 @@ const convertToColorSVG = async (imageData) => {
     const channel = new MessageChannel();
     channel.port1.onmessage = ({ data }) => {
       channel.port1.close();
-      colorWorker.terminate();
-      colorWorker = null;
+      if (colorWorker) {
+        colorWorker.terminate();
+        colorWorker = null;
+      }
       resolve(data.result);
     };
 

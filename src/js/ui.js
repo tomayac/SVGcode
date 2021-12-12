@@ -74,6 +74,9 @@ import pasteIcon from 'material-design-icons/content/svg/production/ic_content_p
 import optionsIcon from 'material-design-icons/image/svg/production/ic_tune_48px.svg?raw';
 import installIcon from '/install.svg?raw';
 
+const MONOCHROME_SETTINGS = 'monochromeSettings';
+const COLOR_SETTINGS = 'colorSettings';
+
 const PERCENT = '%';
 const DEGREES = 'deg';
 const STEPS = 'steps';
@@ -192,7 +195,7 @@ const advancedControls = [
   'minPathSegments',
 ];
 
-const createControls = (filter, props, details) => {
+const createControls = async (filter, props, details) => {
   const { unit, min, max, initial } = props;
   const div = document.createElement('div');
   div.classList.add('preprocess-input');
@@ -203,9 +206,11 @@ const createControls = (filter, props, details) => {
   label.textContent = i18n.t(filter) || filter;
   label.htmlFor = filter;
 
+  const settings = await getSettings();
+
   const span = document.createElement('span');
   filterSpans[filter] = span;
-  span.textContent = updateLabel(unit, initial);
+  span.textContent = updateLabel(unit, settings[filter] || initial);
 
   const input = document.createElement('input');
   filterInputs[filter] = input;
@@ -220,7 +225,8 @@ const createControls = (filter, props, details) => {
   }
   input.min = min;
   input.max = max;
-  input.value = initial;
+  input.value = settings[filter] || initial;
+
   input.addEventListener('input', () => {
     span.textContent = updateLabel(unit, input.value);
   });
@@ -229,6 +235,7 @@ const createControls = (filter, props, details) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
+        await storeSettings(input);
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -237,6 +244,7 @@ const createControls = (filter, props, details) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
+        await storeSettings(input);
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -245,6 +253,7 @@ const createControls = (filter, props, details) => {
       'change',
       debounce(async () => {
         storeInitialViewBox();
+        await storeSettings(input);
         await startProcessing(initialViewBox);
       }, 250),
     );
@@ -274,27 +283,47 @@ posterizeCheckbox.addEventListener('change', async () => {
     filterInputs[color].disabled = disabled;
   });
   storeInitialViewBox();
+  await storeSettings(posterizeCheckbox);
   await startProcessing(initialViewBox);
 });
 
+const restoreState = async () => {
+  const settings = await getSettings();
+  entriesArray.forEach((entries) => {
+    for (const [filter, props] of entries) {
+      const value = settings[filterInputs[filter].id] || props.initial;
+      filterInputs[filter].value = value;
+      filterSpans[filter].textContent = updateLabel(props.unit, value);
+    }
+  });
+};
+
 colorRadio.addEventListener('change', async () => {
   storeInitialViewBox();
+  await set(colorRadio.id, colorRadio.checked);
+  await set(monochromeRadio.id, monochromeRadio.checked);
+  await restoreState();
   await startProcessing(initialViewBox);
 });
 
 monochromeRadio.addEventListener('change', async () => {
   storeInitialViewBox();
+  await set(colorRadio.id, colorRadio.checked);
+  await set(monochromeRadio.id, monochromeRadio.checked);
+  await restoreState();
   await startProcessing(initialViewBox);
 });
 
 considerDPRCheckbox.addEventListener('change', async () => {
   storeInitialViewBox();
+  await storeSettings(considerDPRCheckbox);
   await startProcessing(initialViewBox);
 });
 
 optimizeCurvesCheckbox.addEventListener('change', async () => {
   filterInputs.opttolerance.disabled = !optimizeCurvesCheckbox.checked;
   storeInitialViewBox();
+  await storeSettings(optimizeCurvesCheckbox);
   await startProcessing(initialViewBox);
 });
 
@@ -313,9 +342,10 @@ const initUI = async () => {
   onMaxWidthMatch();
   mediaQueryList.addEventListener('change', onMaxWidthMatch);
 
-  entriesArray.forEach((entries, i) => {
+  entriesArray.forEach(async (entries, i) => {
     const { name, icon } = detailsArray[i];
     const details = createDetails(name, icon);
+    detailsContainer.append(details);
     if (i < 2) {
       details.open = true;
     }
@@ -331,19 +361,25 @@ const initUI = async () => {
       if (filter === 'opttolerance') {
         allDetails['svgOptions'].append(optimizeCurvesCheckbox.parentNode);
       }
-      createControls(filter, props, details);
+      await createControls(filter, props, details);
       if (name === 'svgOptions') {
         allDetails['svgOptions'].append(
           showAdvancedControlsCheckbox.parentNode,
         );
       }
     }
-    detailsContainer.append(details);
   });
   detailsContainer.append(resetAllButton.parentNode);
 
-  showAdvancedControlsCheckbox.checked = await get('showAdvancedControls');
-  showAdvancedControls();
+  posterizeCheckbox.checked = (await getSettings())[posterizeCheckbox.id];
+  considerDPRCheckbox.checked = (await getSettings())[considerDPRCheckbox.id];
+  optimizeCurvesCheckbox.checked = (await getSettings())[
+    optimizeCurvesCheckbox.id
+  ];
+  showAdvancedControlsCheckbox.checked = (await getSettings())[
+    showAdvancedControlsCheckbox.id
+  ];
+  await showAdvancedControls();
 
   inputImage.addEventListener('load', async () => {
     inputImage.width = inputImage.naturalWidth;
@@ -436,6 +472,7 @@ resetAllButton.addEventListener('click', async () => {
       reset(filter, props.unit, props.initial);
     }
   });
+  await resetSettings();
   resetZoomAndPan();
   await startProcessing();
 });
@@ -460,8 +497,8 @@ const showToast = (message, duration = 5000) => {
   }
 };
 
-const showAdvancedControls = () => {
-  set('showAdvancedControls', showAdvancedControlsCheckbox.checked);
+const showAdvancedControls = async () => {
+  await storeSettings(showAdvancedControlsCheckbox);
   document.querySelectorAll('.advanced').forEach((el) => {
     showAdvancedControlsCheckbox.checked
       ? (el.style.display = 'block')
@@ -488,5 +525,28 @@ window.addEventListener(
 closeOptionsButton.addEventListener('click', () => {
   details.open = false;
 });
+
+const resetSettings = async () => {
+  await set(colorRadio.checked ? COLOR_SETTINGS : MONOCHROME_SETTINGS, {});
+};
+
+const getSettings = async () => {
+  const settings = colorRadio.checked
+    ? await get(COLOR_SETTINGS)
+    : await get(MONOCHROME_SETTINGS);
+  if (settings) {
+    return settings;
+  }
+  return {};
+};
+
+const storeSettings = async (input) => {
+  const settings = await getSettings();
+  settings[input.id] = input.type === 'range' ? input.value : input.checked;
+  await set(
+    colorRadio.checked ? COLOR_SETTINGS : MONOCHROME_SETTINGS,
+    settings,
+  );
+};
 
 export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };
