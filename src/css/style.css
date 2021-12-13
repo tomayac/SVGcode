@@ -155,12 +155,12 @@ details[open]:not(.main) > summary::after {
 
 details.main .close-options-button {
   display: none;
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  position: fixed;
+  right: 1.25rem;
+  margin: 0.5rem 0 0 0;
   width: 2.2rem;
   height: 2.2rem;
-  margin: 0;
+  z-index: 1;
   font-size: 1rem;
 }
 
@@ -320,6 +320,10 @@ button {
   margin-inline-end: var(--space);
   cursor: pointer;
   padding: 1px 6px;
+}
+
+button.with-bg {
+  background-color: #fff;
 }
 
 button.menu {
@@ -488,6 +492,10 @@ button:hover {
 
   button {
     color: #fff;
+  }
+
+  button.with-bg {
+    background-color: #000;
   }
 
   .spinner {
