@@ -21,6 +21,10 @@ Android (or Chrome OS) and the
 [Microsoft Store](https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab)
 on Windows.
 
+<a href="https://svgco.de/"><img height="50px" src="https://raw.githubusercontent.com/tomayac/SVGcode/main/public/badges/web-browser.svg"></a>
+<a href="https://play.google.com/store/apps/details?id=de.svgco.twa"><img height="50px" src="https://raw.githubusercontent.com/tomayac/SVGcode/main/public/badges/play-store.svg"></a>
+<a href="https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab"><img height="50px" src="https://raw.githubusercontent.com/tomayac/SVGcode/main/public/badges/microsoft-store.svg"></a>
+
 ## Developing and/or contributing
 
 1. Fork this repository.
