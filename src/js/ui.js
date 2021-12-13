@@ -374,8 +374,9 @@ const initUI = async () => {
   onMaxWidthMatch();
   mediaQueryList.addEventListener('change', onMaxWidthMatch);
 
-  colorRadio.checked = await get(colorRadio.id);
-  monochromeRadio.checked = await get(monochromeRadio.id);
+  colorRadio.checked = (await get(colorRadio.id)) ?? colorRadio.defaultChecked;
+  monochromeRadio.checked =
+    (await get(monochromeRadio.id)) ?? monochromeRadio.defaultChecked;
   if (colorRadio.checked) {
     svgOutput.classList.add(COLOR);
   }
