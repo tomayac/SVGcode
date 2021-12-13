@@ -17,36 +17,41 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import { initUI, showToast } from './ui.js';
-import { registerSW } from 'virtual:pwa-register';
-import { i18n } from './i18n.js';
-import { installButton } from './domrefs.js';
-import './collect.js';
-
-if ('launchQueue' in window) {
-  import('./filehandling.js');
-}
-
-if ('windowControlsOverlay' in navigator) {
-  import('./windowcontrols.js');
-}
-
-if ('onbeforeinstallprompt' in window && 'onappinstalled' in window) {
-  import('./install.js');
-} else {
-  installButton.style.display = 'none';
-}
-
-(async () => {
-  initUI();
-
-  const updateSW = registerSW({
-    onOfflineReady() {
-      showToast(i18n.t('readyToWorkOffline'));
-    },
-    onNeedRefresh() {
-      location.reload();
-    },
-  });
-  updateSW();
-})();
+(async (r, l, s, d, h, e, u, n, i, c) => {
+  const o = {
+    z: `${r()}`.substr(2),
+    cid: `${l.getItem(i) || ((c = `${r()}`.substr(2)), l.setItem(i, c), c)}`,
+    ua: n.userAgent,
+    dr: d.referrer || '',
+    sr: `${s.width}x${s.height}`,
+    vp: `${h.clientWidth}x${h.clientHeight}`,
+    sd: `${s.pixelDepth}-bits`,
+    ul: n.language,
+    dl: e(u.href),
+    dp: e(u.pathname),
+    dt: d.title,
+  };
+  const f = new FormData();
+  for (const [k, v] of Object.entries(o)) {
+    f.append(k, v);
+  }
+  try {
+    await fetch('https://svgcode.glitch.me/', {
+      method: 'post',
+      body: f,
+    });
+  } catch {
+    // Nothing
+  }
+})(
+  Math.random,
+  localStorage,
+  screen,
+  document,
+  document.documentElement,
+  encodeURIComponent,
+  location,
+  navigator,
+  'cid',
+  0,
+);

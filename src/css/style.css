@@ -158,7 +158,7 @@ details.main .close-options-button {
   display: none;
   position: fixed;
   right: 1.25rem;
-  margin: 0.5rem 0 0 0;
+  margin: 0.5rem 0 0;
   width: 2.2rem;
   height: 2.2rem;
   z-index: 1;
