@@ -55,3 +55,8 @@ GNU General Public License v2.0
 
 (This is due to Potrace choosing
 [GNU General Public License v2.0](http://potrace.sourceforge.net/#license).)
+
+## Bragging zone
+
+<a href="https://www.producthunt.com/posts/svgcode-2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-svgcode-2" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=322238&theme=dark" alt="SVGcode - A PWA to convert raster images to SVG vector graphics | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
