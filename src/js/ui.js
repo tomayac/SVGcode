@@ -77,6 +77,9 @@ import installIcon from '/install.svg?raw';
 const MONOCHROME_SETTINGS = 'monochromeSettings';
 const COLOR_SETTINGS = 'colorSettings';
 
+const COLOR = 'color';
+const MONOCHROME = 'monochrome';
+
 const PERCENT = '%';
 const DEGREES = 'deg';
 const STEPS = 'steps';
@@ -277,11 +280,15 @@ const createControls = async (filter, props, details) => {
   details.append(div);
 };
 
-posterizeCheckbox.addEventListener('change', async () => {
+const posterizeCheckboxOnChange = () => {
   const disabled = !posterizeCheckbox.checked;
   Object.keys(COLORS).forEach((color) => {
     filterInputs[color].disabled = disabled;
   });
+};
+
+posterizeCheckbox.addEventListener('change', async () => {
+  posterizeCheckboxOnChange();
   storeInitialViewBox();
   await storeSettings(posterizeCheckbox);
   await startProcessing(initialViewBox);
@@ -289,6 +296,24 @@ posterizeCheckbox.addEventListener('change', async () => {
 
 const restoreState = async () => {
   const settings = await getSettings();
+
+  posterizeCheckbox.checked =
+    settings[posterizeCheckbox.id] ?? posterizeCheckbox.defaultChecked;
+  posterizeCheckboxOnChange();
+
+  considerDPRCheckbox.checked =
+    settings[considerDPRCheckbox.id] ?? considerDPRCheckbox.defaultChecked;
+
+  optimizeCurvesCheckbox.checked =
+    settings[optimizeCurvesCheckbox.id] ??
+    optimizeCurvesCheckbox.defaultChecked;
+  optimizeCurvesCheckboxOnChange();
+
+  showAdvancedControlsCheckbox.checked =
+    settings[showAdvancedControlsCheckbox.id] ??
+    showAdvancedControlsCheckbox.defaultChecked;
+  showAdvancedControlsCheckboxOnChange();
+
   entriesArray.forEach((entries) => {
     for (const [filter, props] of entries) {
       const value = settings[filterInputs[filter].id] || props.initial;
@@ -320,8 +345,12 @@ considerDPRCheckbox.addEventListener('change', async () => {
   await startProcessing(initialViewBox);
 });
 
-optimizeCurvesCheckbox.addEventListener('change', async () => {
+const optimizeCurvesCheckboxOnChange = () => {
   filterInputs.opttolerance.disabled = !optimizeCurvesCheckbox.checked;
+};
+
+optimizeCurvesCheckbox.addEventListener('change', async () => {
+  optimizeCurvesCheckboxOnChange();
   storeInitialViewBox();
   await storeSettings(optimizeCurvesCheckbox);
   await startProcessing(initialViewBox);
@@ -331,7 +360,10 @@ const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
 
-  const mediaQueryList = window.matchMedia('(max-width: 414px)');
+  const mobileBreakpoint = getComputedStyle(
+    document.documentElement,
+  ).getPropertyValue('--mobile-breakpoint');
+  const mediaQueryList = window.matchMedia(`(max-width: ${mobileBreakpoint})`);
   const onMaxWidthMatch = () => {
     if (mediaQueryList.matches) {
       details.open = false;
@@ -342,6 +374,16 @@ const initUI = async () => {
   onMaxWidthMatch();
   mediaQueryList.addEventListener('change', onMaxWidthMatch);
 
+  colorRadio.checked = await get(colorRadio.id);
+  monochromeRadio.checked = await get(monochromeRadio.id);
+  if (colorRadio.checked) {
+    svgOutput.classList.add(COLOR);
+  }
+  if (monochromeRadio.checked) {
+    svgOutput.classList.add(MONOCHROME);
+  }
+
+  const createControlsPromises = [];
   entriesArray.forEach(async (entries, i) => {
     const { name, icon } = detailsArray[i];
     const details = createDetails(name, icon);
@@ -358,41 +400,40 @@ const initUI = async () => {
       allDetails['imageSize'].append(considerDPRCheckbox.parentNode);
     }
     for (const [filter, props] of entries) {
-      if (filter === 'opttolerance') {
-        allDetails['svgOptions'].append(optimizeCurvesCheckbox.parentNode);
-      }
-      await createControls(filter, props, details);
-      if (name === 'svgOptions') {
-        allDetails['svgOptions'].append(
-          showAdvancedControlsCheckbox.parentNode,
-        );
-      }
+      createControlsPromises.push(createControls(filter, props, details));
     }
+    Promise.all(createControlsPromises).then(async () => {
+      for (const [filter] of entries) {
+        if (filter === 'opttolerance') {
+          allDetails['svgOptions'].append(optimizeCurvesCheckbox.parentNode);
+        }
+        if (name === 'svgOptions') {
+          allDetails['svgOptions'].append(
+            showAdvancedControlsCheckbox.parentNode,
+          );
+        }
+      }
+      await restoreState();
+    });
   });
   detailsContainer.append(resetAllButton.parentNode);
-
-  posterizeCheckbox.checked = (await getSettings())[posterizeCheckbox.id];
-  considerDPRCheckbox.checked = (await getSettings())[considerDPRCheckbox.id];
-  optimizeCurvesCheckbox.checked = (await getSettings())[
-    optimizeCurvesCheckbox.id
-  ];
-  showAdvancedControlsCheckbox.checked = (await getSettings())[
-    showAdvancedControlsCheckbox.id
-  ];
-  await showAdvancedControls();
 
   inputImage.addEventListener('load', async () => {
     inputImage.width = inputImage.naturalWidth;
     inputImage.height = inputImage.naturalHeight;
-    if (inputImage.src !== new URL('/favicon.png', location.href).toString()) {
+    const settings = await getSettings();
+    if (
+      inputImage.src !== new URL('/favicon.png', location.href).toString() ||
+      Object.keys(settings).length > 1
+    ) {
       setTimeout(async () => {
         resetZoomAndPan();
         await startProcessing();
-      }, 200);
+      }, 100);
     } else {
-      const svg = await fetch('/potraced.svg').then((response) =>
-        response.text(),
-      );
+      const svg = await fetch(
+        `/potraced-${colorRadio.checked ? 'color' : 'monochrome'}.svg`,
+      ).then((response) => response.text());
       svgOutput.innerHTML = svg;
       svgOutput.dataset.originalViewBox = /viewBox="([^"]+)"/.exec(svg)[1];
     }
@@ -472,6 +513,11 @@ resetAllButton.addEventListener('click', async () => {
       reset(filter, props.unit, props.initial);
     }
   });
+
+  optimizeCurvesCheckbox.checked = optimizeCurvesCheckbox.defaultChecked;
+  posterizeCheckbox.checked = posterizeCheckbox.defaultChecked;
+  considerDPRCheckbox.checked = considerDPRCheckbox.defaultChecked;
+
   await resetSettings();
   resetZoomAndPan();
   await startProcessing();
@@ -497,7 +543,7 @@ const showToast = (message, duration = 5000) => {
   }
 };
 
-const showAdvancedControls = async () => {
+const showAdvancedControlsCheckboxOnChange = async () => {
   await storeSettings(showAdvancedControlsCheckbox);
   document.querySelectorAll('.advanced').forEach((el) => {
     showAdvancedControlsCheckbox.checked
@@ -505,7 +551,10 @@ const showAdvancedControls = async () => {
       : (el.style.display = 'none');
   });
 };
-showAdvancedControlsCheckbox.addEventListener('change', showAdvancedControls);
+showAdvancedControlsCheckbox.addEventListener(
+  'change',
+  showAdvancedControlsCheckboxOnChange,
+);
 
 document.documentElement.style.setProperty(
   '--100vh',
@@ -549,4 +598,14 @@ const storeSettings = async (input) => {
   );
 };
 
-export { initUI, filters, filterInputs, showToast, COLORS, SCALE, POTRACE };
+export {
+  initUI,
+  filters,
+  filterInputs,
+  showToast,
+  COLORS,
+  SCALE,
+  POTRACE,
+  MONOCHROME,
+  COLOR,
+};

@@ -19,6 +19,7 @@
 
 :root {
   --space: 0.25rem;
+  --mobile-breakpoint: 414px;
   /* stylelint-disable custom-property-pattern */
   --100vh: 100vh;
   --menu-height: 5ex;
@@ -392,14 +393,6 @@ button:hover {
 
 .link-list a:hover {
   color: var(--main-accent-color);
-}
-
-.link-list img {
-  width: 2.5ex;
-  height: 2.5ex;
-  filter: contrast(0.5) grayscale(1) invert(1);
-  background-color: transparent;
-  vertical-align: middle;
 }
 
 .menu {

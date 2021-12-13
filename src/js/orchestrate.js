@@ -25,13 +25,10 @@ import {
 import { colorRadio, svgOutput } from './domrefs.js';
 import { convertToMonochromeSVG } from './monochrome.js';
 import { convertToColorSVG, intervalID } from './color.js';
-import { showToast } from './ui.js';
+import { showToast, MONOCHROME, COLOR } from './ui.js';
 import { i18n } from './i18n.js';
 
 import spinnerSVG from '/spinner.svg?raw';
-
-const COLOR = 'color';
-const MONOCHROME = 'monochrome';
 
 const displayResult = (svg, className, initialViewBox) => {
   if (!svg) {
