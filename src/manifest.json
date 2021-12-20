@@ -18,6 +18,16 @@
   "orientation": "portrait",
   "theme_color": "#131313",
   "background_color": "#131313",
+  "user_preferences": {
+    "color_scheme_dark": {
+      "theme_color": "#131313",
+      "background_color": "#131313"
+    },
+    "color_scheme_light": {
+      "theme_color": "#fffe",
+      "background_color": "#fffe"
+    }
+  },
   "icons": [
     {
       "src": "https://svgco.de/favicon.png",
@@ -56,6 +66,11 @@
       "platform": "play",
       "url": "https://play.google.com/store/apps/details?id=de.svgco.twa",
       "id": "de.svgco.twa"
+    },
+    {
+      "platform": "windows",
+      "url": "https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj",
+      "id": "9PLHXDGSW1RJ"
     }
   ],
   "prefer_related_applications": false
