@@ -52,15 +52,19 @@ const startProcessing = async () => {
     clearInterval(intervalID.current);
     intervalID.current = null;
   }
+  const transform = svgOutput.getAttribute('transform');
   svgOutput.innerHTML = spinnerSVG;
+  svgOutput.setAttribute('transform', '');
   const imageData = supportsOffscreenCanvas
     ? await preProcessInputImage()
     : preProcessMainCanvas();
   if (colorRadio.checked) {
     const svg = await convertToColorSVG(imageData);
+    svgOutput.setAttribute('transform', transform);
     displayResult(svg, COLOR);
   } else {
     const svg = await convertToMonochromeSVG(imageData);
+    svgOutput.setAttribute('transform', transform);
     displayResult(svg, MONOCHROME);
   }
 };
