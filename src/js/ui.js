@@ -50,11 +50,7 @@ import {
   licenseLink,
   aboutLink,
 } from './domrefs.js';
-import {
-  resetZoomAndPan,
-  initialViewBox,
-  storeInitialViewBox,
-} from './panzoom.js';
+import { resetPanAndZoom } from './panzoom.js';
 import { debounce } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import { i18n } from './i18n.js';
@@ -62,6 +58,7 @@ import { FILE_HANDLE } from './filesystem.js';
 import { get, set, del } from 'idb-keyval';
 import './clipboard.js';
 import './filesystem.js';
+import 'pinch-zoom-element';
 
 import paletteIcon from 'material-design-icons/image/svg/production/ic_brush_48px.svg?raw';
 import scaleIcon from 'material-design-icons/image/svg/production/ic_straighten_48px.svg?raw';
@@ -237,27 +234,24 @@ const createControls = async (filter, props, details) => {
     input.addEventListener(
       'change',
       debounce(async () => {
-        storeInitialViewBox();
         await storeSettings(input);
-        await startProcessing(initialViewBox);
+        await startProcessing();
       }, 250),
     );
   } else if (Object.keys(POTRACE).includes(filter)) {
     input.addEventListener(
       'change',
       debounce(async () => {
-        storeInitialViewBox();
         await storeSettings(input);
-        await startProcessing(initialViewBox);
+        await startProcessing();
       }, 250),
     );
   } else {
     input.addEventListener(
       'change',
       debounce(async () => {
-        storeInitialViewBox();
         await storeSettings(input);
-        await startProcessing(initialViewBox);
+        await startProcessing();
       }, 250),
     );
   }
@@ -289,9 +283,8 @@ const posterizeCheckboxOnChange = () => {
 
 posterizeCheckbox.addEventListener('change', async () => {
   posterizeCheckboxOnChange();
-  storeInitialViewBox();
   await storeSettings(posterizeCheckbox);
-  await startProcessing(initialViewBox);
+  await startProcessing();
 });
 
 const restoreState = async () => {
@@ -324,25 +317,22 @@ const restoreState = async () => {
 };
 
 colorRadio.addEventListener('change', async () => {
-  storeInitialViewBox();
   await set(colorRadio.id, colorRadio.checked);
   await set(monochromeRadio.id, monochromeRadio.checked);
   await restoreState();
-  await startProcessing(initialViewBox);
+  await startProcessing();
 });
 
 monochromeRadio.addEventListener('change', async () => {
-  storeInitialViewBox();
   await set(colorRadio.id, colorRadio.checked);
   await set(monochromeRadio.id, monochromeRadio.checked);
   await restoreState();
-  await startProcessing(initialViewBox);
+  await startProcessing();
 });
 
 considerDPRCheckbox.addEventListener('change', async () => {
-  storeInitialViewBox();
   await storeSettings(considerDPRCheckbox);
-  await startProcessing(initialViewBox);
+  await startProcessing();
 });
 
 const optimizeCurvesCheckboxOnChange = () => {
@@ -351,9 +341,8 @@ const optimizeCurvesCheckboxOnChange = () => {
 
 optimizeCurvesCheckbox.addEventListener('change', async () => {
   optimizeCurvesCheckboxOnChange();
-  storeInitialViewBox();
   await storeSettings(optimizeCurvesCheckbox);
-  await startProcessing(initialViewBox);
+  await startProcessing();
 });
 
 const initUI = async () => {
@@ -428,7 +417,7 @@ const initUI = async () => {
       Object.keys(settings).length > 1
     ) {
       setTimeout(async () => {
-        resetZoomAndPan();
+        resetPanAndZoom();
         await startProcessing();
       }, 100);
     } else {
@@ -436,7 +425,6 @@ const initUI = async () => {
         `/potraced-${colorRadio.checked ? 'color' : 'monochrome'}.svg`,
       ).then((response) => response.text());
       svgOutput.innerHTML = svg;
-      svgOutput.dataset.originalViewBox = /viewBox="([^"]+)"/.exec(svg)[1];
     }
   });
 
@@ -520,7 +508,7 @@ resetAllButton.addEventListener('click', async () => {
   considerDPRCheckbox.checked = considerDPRCheckbox.defaultChecked;
 
   await resetSettings();
-  resetZoomAndPan();
+  resetPanAndZoom();
   await startProcessing();
 });
 

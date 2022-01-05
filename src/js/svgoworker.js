@@ -20,8 +20,7 @@
 import { optimize } from 'svgo/dist/svgo.browser';
 
 self.addEventListener('message', async (e) => {
-  let { svg, originalViewBox } = e.data;
-  svg = svg.replace(/viewBox="[^"]+"/, `viewBox="${originalViewBox}"`);
+  const { svg } = e.data;
   const optimized = optimize(svg, {
     multipass: true,
     plugins: [

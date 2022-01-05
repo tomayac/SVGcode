@@ -241,11 +241,6 @@ canvas.debug:hover {
   cursor: zoom-in;
 }
 
-.spinner {
-  width: 100%;
-  height: 100%;
-}
-
 summary svg {
   fill: var(--alternative-accent-color);
 }
@@ -264,23 +259,19 @@ summary svg {
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
 }
 
-output {
-  border: 1px #eee solid;
-  width: 100%;
-  flex-grow: 1;
-  display: block;
-  overflow: hidden;
-  cursor: grab;
-  touch-action: none;
-}
+pinch-zoom {
+  --x: 0 !important;
+  --y: 0 !important;
+  --scale: 1 !important;
 
-output img {
-  cursor: wait;
-}
-
-output svg {
   width: 100%;
   height: 100%;
+}
+
+pinch-zoom svg {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
 }
 
 /*
@@ -489,10 +480,6 @@ button:hover {
 
   button.with-bg {
     background-color: #000;
-  }
-
-  .spinner {
-    filter: invert(1);
   }
 
   .checkerboard {

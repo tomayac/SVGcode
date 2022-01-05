@@ -18,7 +18,6 @@
  */
 
 import OptimizeSVGWorker from './svgoworker.js?worker';
-import { svgOutput } from './domrefs.js';
 
 let optimizeSVGWorker = null;
 
@@ -39,10 +38,7 @@ const optimizeSVG = async (svg) => {
       resolve(data.result);
     };
 
-    optimizeSVGWorker.postMessage(
-      { svg, originalViewBox: svgOutput.dataset.originalViewBox },
-      [channel.port2],
-    );
+    optimizeSVGWorker.postMessage({ svg }, [channel.port2]);
   });
 };
 

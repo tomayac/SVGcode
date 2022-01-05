@@ -30,7 +30,7 @@ import { i18n } from './i18n.js';
 
 import spinnerSVG from '/spinner.svg?raw';
 
-const displayResult = (svg, className, initialViewBox) => {
+const displayResult = (svg, className) => {
   if (!svg) {
     return;
   }
@@ -38,15 +38,6 @@ const displayResult = (svg, className, initialViewBox) => {
   svg = svg
     .replace(/\s+width="\d+(?:\.\d+)?"/, '')
     .replace(/\s+height="\d+(?:\.\d+)"/, '');
-  // Store the original `viewBox`.
-  svgOutput.dataset.originalViewBox = /viewBox="([^"]+)"/.exec(svg)[1];
-  // Restore the previous pan and zoom settings.
-  if (initialViewBox.width) {
-    svg = svg.replace(
-      /viewBox="([^"]+)"/,
-      `viewBox="${initialViewBox.x} ${initialViewBox.y} ${initialViewBox.width} ${initialViewBox.height}"`,
-    );
-  }
   svgOutput.classList.remove(COLOR);
   svgOutput.classList.remove(MONOCHROME);
   svgOutput.classList.add(className);
@@ -54,34 +45,24 @@ const displayResult = (svg, className, initialViewBox) => {
   showToast(`${i18n.t('svgSize')}: ${svg.length} ${i18n.t('bytes')}`, 3000);
 };
 
-const startProcessing = async (initialViewBox = {}) => {
+const startProcessing = async () => {
   svgOutput.innerHTML = '';
   svgOutput.classList.remove(COLOR, MONOCHROME);
   if (intervalID.current) {
     clearInterval(intervalID.current);
     intervalID.current = null;
   }
-  let spinner = svgOutput.querySelector('img');
-  if (!spinner) {
-    spinner = document.createElement('img');
-    spinner.classList.add('spinner');
-    spinner.src = URL.createObjectURL(
-      new Blob([spinnerSVG], { type: 'image/svg+xml' }),
-    );
-    svgOutput.append(spinner);
-  }
-  spinner.style.display = 'block';
+  svgOutput.innerHTML = spinnerSVG;
   const imageData = supportsOffscreenCanvas
     ? await preProcessInputImage()
     : preProcessMainCanvas();
   if (colorRadio.checked) {
     const svg = await convertToColorSVG(imageData);
-    displayResult(svg, COLOR, initialViewBox);
+    displayResult(svg, COLOR);
   } else {
     const svg = await convertToMonochromeSVG(imageData);
-    displayResult(svg, MONOCHROME, initialViewBox);
+    displayResult(svg, MONOCHROME);
   }
-  spinner.style.display = 'none';
 };
 
 export { startProcessing };

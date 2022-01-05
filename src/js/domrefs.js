@@ -42,7 +42,7 @@ const saveSVGButton = document.querySelector('.save');
 const copyButton = document.querySelector('.copy');
 const pasteButton = document.querySelector('.paste');
 const installButton = document.querySelector('.install');
-const svgOutput = document.querySelector('output');
+const svgOutput = document.querySelector('.svg-output');
 const debugCheckbox = document.querySelector('.debug');
 const progress = document.querySelector('progress');
 const toast = document.querySelector('.toast');
@@ -52,6 +52,7 @@ const summary = document.querySelector('summary');
 const closeOptionsButton = document.querySelector('.close-options-button');
 const licenseLink = document.querySelector('.license');
 const aboutLink = document.querySelector('.about');
+const pinchZoom = document.querySelector('pinch-zoom');
 
 const dpr = window.devicePixelRatio;
 
@@ -90,4 +91,5 @@ export {
   dpr,
   licenseLink,
   aboutLink,
+  pinchZoom,
 };

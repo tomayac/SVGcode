@@ -80,7 +80,7 @@ copyButton.addEventListener('click', async () => {
       }),
     ]);
   } catch (err) {
-    console.warn(err.name, err.message);
+    console.log(err.name, err.message);
     svg = await optimizeSVG(svg);
     const textBlob = new Blob([svg], { type: 'text/plain' });
     const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
