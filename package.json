@@ -19,7 +19,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "browser-fs-access": "^0.23.0",
+    "browser-fs-access": "^0.24.0",
     "canvas-size": "^1.2.5",
     "esm-potrace-wasm": "^0.2.1",
     "idb-keyval": "^6.0.3",
