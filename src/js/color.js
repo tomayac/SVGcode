@@ -19,6 +19,7 @@
 
 import { filterInputs, POTRACE } from './ui.js';
 import { progress, svgOutput, optimizeCurvesCheckbox } from './domrefs.js';
+import ColorWorker from './colorworker?worker';
 
 let colorWorker = null;
 const intervalID = {};
@@ -27,9 +28,7 @@ const convertToColorSVG = async (imageData) => {
   if (colorWorker) {
     colorWorker.terminate();
   }
-  colorWorker = new Worker(new URL('./colorworker.js', import.meta.url), {
-    type: 'module',
-  });
+  colorWorker = new ColorWorker();
 
   return new Promise(async (resolve) => {
     const channel = new MessageChannel();

@@ -17,15 +17,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import OptimizeSVGWorker from './svgoworker.js?worker';
+
 let optimizeSVGWorker = null;
 
 const optimizeSVG = async (svg) => {
   if (optimizeSVGWorker) {
     optimizeSVGWorker.terminate();
   }
-  optimizeSVGWorker = new Worker(new URL('./svgoworker.js', import.meta.url), {
-    type: 'module',
-  });
+  optimizeSVGWorker = new OptimizeSVGWorker();
 
   return new Promise((resolve) => {
     const channel = new MessageChannel();
