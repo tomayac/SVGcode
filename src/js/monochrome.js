@@ -19,7 +19,6 @@
 
 import { filterInputs, POTRACE } from './ui.js';
 import { optimizeCurvesCheckbox } from './domrefs.js';
-import MonochromeSVGWorker from './monochromeworker.js?worker';
 
 let monochromeSVGWorker = null;
 
@@ -27,7 +26,10 @@ const convertToMonochromeSVG = async (imageData) => {
   if (monochromeSVGWorker) {
     monochromeSVGWorker.terminate();
   }
-  monochromeSVGWorker = new MonochromeSVGWorker();
+  monochromeSVGWorker = new Worker(
+    new URL('./monochromeworker.js', import.meta.url),
+    { type: 'module' },
+  );
 
   return new Promise(async (resolve) => {
     const channel = new MessageChannel();

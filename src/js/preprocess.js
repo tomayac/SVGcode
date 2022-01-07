@@ -34,75 +34,75 @@ const supportsOffscreenCanvas =
   'OffscreenCanvas' in window && 'CanvasFilter' in window;
 
 if (supportsOffscreenCanvas) {
-  import('./preprocessworker.js?worker').then((module) => {
-    const PreProcessWorker = module.default;
-    let preProcessWorker = null;
-    const ctxCanvasMain = canvasMain.getContext('2d');
+  let preProcessWorker = null;
+  const ctxCanvasMain = canvasMain.getContext('2d');
 
-    preProcessInputImage = async () => {
-      if (preProcessWorker) {
-        preProcessWorker.terminate();
-      }
-      preProcessWorker = new PreProcessWorker();
-      // A canvas can only be detached once, so clone each time.
-      const offscreen = canvasMain.cloneNode().transferControlToOffscreen();
-      preProcessWorker.postMessage({ offscreen }, [offscreen]);
+  preProcessInputImage = async () => {
+    if (preProcessWorker) {
+      preProcessWorker.terminate();
+    }
+    preProcessWorker = new Worker(
+      new URL('./preprocessworker.js', import.meta.url),
+      { type: 'module' },
+    );
+    // A canvas can only be detached once, so clone each time.
+    const offscreen = canvasMain.cloneNode().transferControlToOffscreen();
+    preProcessWorker.postMessage({ offscreen }, [offscreen]);
 
-      return new Promise(async (resolve) => {
-        const { width, height } = getScaledDimensions();
-        let inputImageBitmap;
+    return new Promise(async (resolve) => {
+      const { width, height } = getScaledDimensions();
+      let inputImageBitmap;
+      try {
+        inputImageBitmap = await createImageBitmap(inputImage);
+      } catch {
         try {
-          inputImageBitmap = await createImageBitmap(inputImage);
-        } catch {
-          try {
-            // For SVGs without an intrinsic size.
-            inputImageBitmap = await createImageBitmap(
-              inputImage,
-              0,
-              0,
-              width,
-              height,
-            );
-          } catch (err) {
-            console.error(err.name, err.message);
-            svgOutput.innerHTML = '';
-            showToast(err.message);
-            return;
-          }
-        }
-        const channel = new MessageChannel();
-        channel.port1.onmessage = ({ data }) => {
-          channel.port1.close();
-          if (preProcessWorker) {
-            preProcessWorker.terminate();
-            preProcessWorker = null;
-          }
-          canvasMain.width = width;
-          canvasMain.height = height;
-          ctxCanvasMain.putImageData(data.result, 0, 0);
-          resolve(data.result);
-        };
-
-        preProcessWorker.postMessage(
-          {
-            inputImageBitmap,
-            posterize: posterizeCheckbox.checked,
-            rgba: {
-              r: getRange(filterInputs[COLORS.red]),
-              g: getRange(filterInputs[COLORS.green]),
-              b: getRange(filterInputs[COLORS.blue]),
-              a: getRange(filterInputs[COLORS.alpha]),
-            },
-            cssFilters: getCSSFilters(),
+          // For SVGs without an intrinsic size.
+          inputImageBitmap = await createImageBitmap(
+            inputImage,
+            0,
+            0,
             width,
             height,
-            dpr,
+          );
+        } catch (err) {
+          console.error(err.name, err.message);
+          svgOutput.innerHTML = '';
+          showToast(err.message);
+          return;
+        }
+      }
+      const channel = new MessageChannel();
+      channel.port1.onmessage = ({ data }) => {
+        channel.port1.close();
+        if (preProcessWorker) {
+          preProcessWorker.terminate();
+          preProcessWorker = null;
+        }
+        canvasMain.width = width;
+        canvasMain.height = height;
+        ctxCanvasMain.putImageData(data.result, 0, 0);
+        resolve(data.result);
+      };
+
+      preProcessWorker.postMessage(
+        {
+          inputImageBitmap,
+          posterize: posterizeCheckbox.checked,
+          rgba: {
+            r: getRange(filterInputs[COLORS.red]),
+            g: getRange(filterInputs[COLORS.green]),
+            b: getRange(filterInputs[COLORS.blue]),
+            a: getRange(filterInputs[COLORS.alpha]),
           },
-          [channel.port2],
-        );
-      });
-    };
-  });
+          cssFilters: getCSSFilters(),
+          width,
+          height,
+          dpr,
+        },
+        [channel.port2],
+      );
+    });
+  };
 } else {
   const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
   ctxMain.scale(dpr, dpr);
