@@ -17,6 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/**
+ * @type {import('vite').UserConfig}
+ */
+
 import { VitePWA as vitePWA } from 'vite-plugin-pwa';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import webmanifest from './src/manifest.json';
@@ -36,5 +40,8 @@ export default {
   build: {
     outDir: 'docs',
     target: 'esnext',
+  },
+  preview: {
+    port: 4000,
   },
 };
