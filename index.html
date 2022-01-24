@@ -246,11 +246,14 @@
           draggable="false"
         />
         <canvas></canvas>
-        <pinch-zoom class="checkerboard">
+        <div class="pinch-zoom-wrapper">
+          <pinch-zoom class="checkerboard">
+            <div></div>
+          </pinch-zoom>
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg">
             <g class="svg-output"></g>
           </svg>
-        </pinch-zoom>
+        </div>
         <div class="toast" hidden></div>
       </div>
     </main>

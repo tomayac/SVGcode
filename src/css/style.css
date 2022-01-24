@@ -18,16 +18,16 @@
  */
 
 :root {
-  --space: 0.25rem;
-  --mobile-breakpoint: 414px;
   /* stylelint-disable custom-property-pattern */
   --100vh: 100vh;
+  --space: 0.25rem;
+  --mobile-breakpoint: 414px;
   --menu-height: 5ex;
   --sidebar-width: 15rem;
-  --main-accent-color: #e60073;
-  --alternative-accent-color: #337eff;
   --input-image-height: 5rem;
   --input-width: 10rem;
+  --main-accent-color: #e60073;
+  --alternative-accent-color: #337eff;
   --sidebar-background-color: rgb(255 255 255 / 80%);
   --canvas-text: #000;
   --canvas: #fff;
@@ -197,7 +197,7 @@ details.main .close-options-button {
     align-items: center;
     place-content: center;
     background-color: transparent;
-    border: solid 1px currentColor;
+    border: solid 1px currentcolor;
     border-radius: var(--space);
     padding: var(--space);
     cursor: pointer;
@@ -259,29 +259,41 @@ summary svg {
     linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
 }
 
-pinch-zoom {
-  --x: 0 !important;
-  --y: 0 !important;
-  --scale: 1 !important;
-
+.pinch-zoom-wrapper {
   width: 100%;
   height: 100%;
 }
 
-pinch-zoom svg {
+pinch-zoom {
   width: 100%;
   height: 100%;
+  position: absolute;
   cursor: grab;
+}
+
+pinch-zoom > * {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+
+.pinch-zoom-wrapper > svg {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 /*
 @ToDo: The performance goes down when the stroke-width is > 0.
 
-output svg:hover:not(.interactive) path:not(:hover) {
+.pinch-zoom-wrapper > svg:hover:not(.interactive) path:not(:hover) {
   opacity: 50%;
 }
 
-output svg:hover:not(.interactive) path:hover {
+.pinch-zoom-wrapper > svg:hover:not(.interactive) path:hover {
   opacity: 100%;
 }
 */
@@ -293,7 +305,7 @@ output svg:hover:not(.interactive) path:hover {
 .icon svg {
   width: 2.5ex;
   height: 2.5ex;
-  fill: currentColor;
+  fill: currentcolor;
   background-color: transparent;
 }
 
@@ -307,7 +319,7 @@ button {
   align-items: center;
   place-content: center;
   background-color: transparent;
-  border: solid 1px currentColor;
+  border: solid 1px currentcolor;
   border-radius: var(--space);
   margin-inline-end: var(--space);
   cursor: pointer;
