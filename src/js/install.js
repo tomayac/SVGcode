@@ -24,7 +24,7 @@ let installEvent = null;
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   installEvent = event;
-  installButton.style.visibility = 'visible';
+  installButton.style.display = 'block';
 });
 
 installButton.addEventListener('click', async () => {
@@ -34,13 +34,13 @@ installButton.addEventListener('click', async () => {
   installEvent.prompt();
   const result = await installEvent.userChoice;
   if (result.outcome === 'accepted') {
-    installButton.style.visibility = 'hidden';
+    installButton.style.display = 'none';
     installEvent = null;
   }
 });
 
 window.addEventListener('appinstalled', (event) => {
   // Duplicate because users can install through the prompt or the button.
-  installButton.style.visibility = 'hidden';
+  installButton.style.display = 'none';
   installEvent = null;
 });

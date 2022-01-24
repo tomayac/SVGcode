@@ -338,7 +338,7 @@ button.menu {
 }
 
 button.install {
-  visibility: hidden;
+  display: none;
 }
 
 summary:hover,

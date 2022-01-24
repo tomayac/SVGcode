@@ -54,6 +54,7 @@ const startProcessing = async () => {
   }
   const transform = svgOutput.getAttribute('transform');
   svgOutput.innerHTML = spinnerSVG;
+  svgOutput.dataset.transform = transform;
   svgOutput.setAttribute('transform', '');
   const imageData = supportsOffscreenCanvas
     ? await preProcessInputImage()
