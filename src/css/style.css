@@ -70,6 +70,7 @@ main.window-controls-overlay {
 
 input {
   margin-inline-start: 0;
+  margin: 3px 3px;
 }
 
 input[type='range'] {
@@ -122,6 +123,7 @@ summary {
   color: var(--alternative-accent-color);
   display: flex;
   align-content: center;
+  height: 28px;
   margin-block: calc(2 * var(--space));
 }
 
@@ -147,7 +149,7 @@ details[open] {
 
 summary::after {
   margin-inline-start: var(--space);
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 details:not([open], .main) > summary::after {
@@ -304,6 +306,8 @@ pinch-zoom > * {
 
 .icon {
   margin-inline-end: var(--space);
+  display: flex;
+  align-items: center;
 }
 
 .icon svg {
@@ -319,7 +323,7 @@ label {
 
 button {
   height: 3ex;
-  display: inline-block;
+  display: inline-flex;
   align-items: center;
   place-content: center;
   background-color: transparent;
@@ -328,6 +332,7 @@ button {
   margin-inline-end: var(--space);
   cursor: pointer;
   padding: 1px 6px;
+  margin: unset;
 }
 
 button.with-bg {
@@ -365,6 +370,7 @@ button:hover {
 
 .other-input {
   display: flex;
+  align-items: center;
   margin: var(--space);
   height: 3ex;
 }
