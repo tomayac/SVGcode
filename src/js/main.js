@@ -37,8 +37,28 @@ if ('onbeforeinstallprompt' in window && 'onappinstalled' in window) {
   installButton.style.display = 'none';
 }
 
+// From https://stackoverflow.com/a/62963963/6255000.
+const supportsWorkerType = () => {
+  let supports = false;
+  const tester = {
+    get type() {
+      supports = true;
+    },
+  };
+  try {
+    new Worker('blob://', tester);
+  } finally {
+    return supports;
+  }
+};
+
 (async () => {
   initUI();
+  if (!supportsWorkerType()) {
+    await import(
+      '../.././node_modules/module-workers-polyfill/module-workers-polyfill.min.js'
+    );
+  }
 
   const updateSW = registerSW({
     onOfflineReady() {

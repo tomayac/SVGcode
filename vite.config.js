@@ -29,7 +29,11 @@ import webmanifest from './src/manifest.json';
 export default {
   plugins: [
     dynamicImportVars({
-      include: ['./src/i18n/*', './src/js/filehandling.js'],
+      include: [
+        './src/i18n/*',
+        './src/js/filehandling.js',
+        './node_modules/module-workers-polyfill/module-workers-polyfill.min.js',
+      ],
     }),
     vitePWA({
       registerType: 'autoUpdate',

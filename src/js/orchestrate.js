@@ -54,18 +54,24 @@ const startProcessing = async () => {
   }
   const transform = svgOutput.getAttribute('transform');
   svgOutput.innerHTML = spinnerSVG;
-  svgOutput.dataset.transform = transform;
-  svgOutput.setAttribute('transform', '');
+  if (transform) {
+    svgOutput.dataset.transform = transform;
+    svgOutput.setAttribute('transform', '');
+  }
   const imageData = supportsOffscreenCanvas
     ? await preProcessInputImage()
     : preProcessMainCanvas();
   if (colorRadio.checked) {
     const svg = await convertToColorSVG(imageData);
-    svgOutput.setAttribute('transform', transform);
+    if (transform) {
+      svgOutput.setAttribute('transform', transform);
+    }
     displayResult(svg, COLOR);
   } else {
     const svg = await convertToMonochromeSVG(imageData);
-    svgOutput.setAttribute('transform', transform);
+    if (transform) {
+      svgOutput.setAttribute('transform', transform);
+    }
     displayResult(svg, MONOCHROME);
   }
 };

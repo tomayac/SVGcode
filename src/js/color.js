@@ -54,7 +54,10 @@ const convertToColorSVG = async (imageData) => {
     intervalID.current = setInterval(() => {
       const svg = `${prefix}${paths}${suffix}`;
       if (svg.length !== lastLength) {
-        svgOutput.setAttribute('transform', svgOutput.dataset.transform);
+        const transform = svgOutput.dataset.transform;
+        if (transform) {
+          svgOutput.setAttribute('transform', transform);
+        }
         svgOutput.innerHTML = svg;
         lastLength = svg.length;
       }

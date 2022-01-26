@@ -65,20 +65,25 @@ copyButton.addEventListener('click', async () => {
   let svg = svgOutput.innerHTML;
   showToast(i18n.t('optimizingSVG'), Infinity);
   try {
-    // Safari treats user activation differently:
-    // https://bugs.webkit.org/show_bug.cgi?id=222262.
-    await navigator.clipboard.write([
-      new ClipboardItem({
-        'text/plain': new Promise(async (resolve) => {
-          svg = await optimizeSVG(svg);
-          resolve(new Blob([svg], { type: 'text/plain' }));
+    // Firefox only supports `navigator.clipboard.write()`.
+    if (!('ClipboardItem' in window)) {
+      await navigator.clipboard.writeText(await optimizeSVG(svg));
+    } else {
+      // Safari treats user activation differently:
+      // https://bugs.webkit.org/show_bug.cgi?id=222262.
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          'text/plain': new Promise(async (resolve) => {
+            svg = await optimizeSVG(svg);
+            resolve(new Blob([svg], { type: 'text/plain' }));
+          }),
+          'image/svg+xml': new Promise(async (resolve) => {
+            svg = await optimizeSVG(svg);
+            resolve(new Blob([svg], { type: 'image/svg+xml' }));
+          }),
         }),
-        'image/svg+xml': new Promise(async (resolve) => {
-          svg = await optimizeSVG(svg);
-          resolve(new Blob([svg], { type: 'image/svg+xml' }));
-        }),
-      }),
-    ]);
+      ]);
+    }
   } catch (err) {
     console.log(err.name, err.message);
     svg = await optimizeSVG(svg);
