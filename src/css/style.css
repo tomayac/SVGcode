@@ -68,10 +68,6 @@ main.window-controls-overlay {
   margin-block-start: env(titlebar-area-height);
 }
 
-input {
-  margin-inline-start: 0;
-}
-
 input[type='range'] {
   display: inline-block;
   width: var(--input-width);
@@ -147,7 +143,6 @@ details[open] {
 
 summary::after {
   margin-inline-start: var(--space);
-  font-size: 1.25rem;
 }
 
 details:not([open], .main) > summary::after {
@@ -304,6 +299,7 @@ pinch-zoom > * {
 
 .icon {
   margin-inline-end: var(--space);
+  display: flex;
 }
 
 .icon svg {
@@ -319,7 +315,7 @@ label {
 
 button {
   height: 3ex;
-  display: inline-block;
+  display: inline-flex;
   align-items: center;
   place-content: center;
   background-color: transparent;
