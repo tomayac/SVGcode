@@ -26,22 +26,20 @@ const preProcessMainCanvas = (
   inputImageBitmap,
   filter,
   cssFilters,
+  rotate,
   width,
   height,
 ) => {
   ctxOffscreen.clearRect(0, 0, width, height);
+  ctxOffscreen.setTransform(1, 0, 0, 1, width / 2, height / 2);
+  ctxOffscreen.rotate((rotate * Math.PI) / 180);
   ctxOffscreen.filter = cssFilters;
   ctxOffscreen.drawImage(
     inputImageBitmap,
-    0,
-    0,
-    inputImageBitmap.width,
-    inputImageBitmap.height,
-    0,
-    0,
-    width,
-    height,
+    -inputImageBitmap.width / 2,
+    -inputImageBitmap.height / 2,
   );
+  ctxOffscreen.setTransform(1, 0, 0, 1, 0, 0);
   ctxOffscreen.filter = filter;
   ctxOffscreen.drawImage(
     offscreen,
@@ -63,8 +61,16 @@ self.addEventListener('message', (e) => {
     ctxOffscreen = offscreen.getContext('2d');
     return;
   }
-  const { inputImageBitmap, posterize, rgba, cssFilters, width, height, dpr } =
-    e.data;
+  const {
+    inputImageBitmap,
+    posterize,
+    rgba,
+    cssFilters,
+    rotate,
+    width,
+    height,
+    dpr,
+  } = e.data;
   ctxOffscreen.scale(dpr, dpr);
   offscreen.width = width;
   offscreen.height = height;
@@ -72,6 +78,7 @@ self.addEventListener('message', (e) => {
     inputImageBitmap,
     getFilter(posterize, rgba, cssFilters),
     cssFilters,
+    rotate,
     width,
     height,
     dpr,

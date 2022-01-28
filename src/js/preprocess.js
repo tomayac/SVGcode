@@ -17,7 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import { filterInputs, filters, showToast, COLORS, SCALE } from './ui.js';
+import {
+  filterInputs,
+  filters,
+  showToast,
+  COLORS,
+  SCALE_ROTATION,
+} from './ui.js';
 import {
   inputImage,
   canvasMain,
@@ -94,6 +100,7 @@ if (supportsOffscreenCanvas) {
               a: getRange(filterInputs[COLORS.alpha]),
             },
             cssFilters: getCSSFilters(),
+            rotate: Number(filterInputs[SCALE_ROTATION.rotation].value),
             width,
             height,
             dpr,
@@ -121,23 +128,20 @@ if (supportsOffscreenCanvas) {
     canvasMain.height = height;
     ctxMain.clearRect(0, 0, width, height);
     ctxMain.filter = getFilterString();
+    ctxMain.setTransform(1, 0, 0, 1, width / 2, height / 2);
+    const rotate = Number(filterInputs[SCALE_ROTATION.rotation].value);
+    ctxMain.rotate((rotate * Math.PI) / 180);
     ctxMain.drawImage(
       inputImage,
-      0,
-      0,
-      factor * inputImage.naturalWidth * shrinkFactor,
-      factor * inputImage.naturalHeight * shrinkFactor,
-      0,
-      0,
-      width,
-      height,
+      (-factor * inputImage.naturalWidth * shrinkFactor) / 2,
+      (-factor * inputImage.naturalHeight * shrinkFactor) / 2,
     );
     return ctxMain.getImageData(0, 0, width, height);
   };
 }
 
 const getScaledDimensions = () => {
-  const scaleFactor = Number(filterInputs[SCALE.scale].value) / 100;
+  const scaleFactor = Number(filterInputs[SCALE_ROTATION.scale].value) / 100;
   return {
     width: Math.ceil(dpr * inputImage.naturalWidth * scaleFactor),
     height: Math.ceil(dpr * inputImage.naturalHeight * scaleFactor),

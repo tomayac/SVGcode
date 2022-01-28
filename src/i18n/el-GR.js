@@ -33,6 +33,7 @@ const translations = {
   sepia: 'Σέπια',
 
   scale: 'Κλίμακα',
+  rotation: 'Περιστροφή',
   turdsize: 'Καταστολή Κηλίδων',
   alphamax: 'Κατώφλι Γωνίας',
   minPathSegments: 'Ελάχ. Μήκος διαδρομής',
@@ -63,7 +64,7 @@ const translations = {
   monochromeSVG: 'Μονόχρωμο SVG',
 
   colorChannels: 'Κανάλια Χρώματος',
-  imageSize: 'Μέγεθος Εισόδου',
+  imageSizeAndRotation: 'Μέγεθος Εισόδου Και Περιστροφή',
   imagePreprocessing: 'Προεπεξεργασία Εισόδου',
   svgOptions: 'Επιλογές SVG',
 

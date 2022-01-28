@@ -97,7 +97,7 @@ const FILTERS = {
 
 const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 
-const SCALE = { scale: 'scale' };
+const SCALE_ROTATION = { scale: 'scale', rotation: 'rotation' };
 
 const POTRACE = {
   minPathLenght: 'minPathSegments',
@@ -127,8 +127,9 @@ const posterizeComponents = {
   [COLORS.alpha]: { unit: STEPS, initial: 1, min: 1, max: 10 },
 };
 
-const scale = {
-  [SCALE.scale]: { unit: PERCENT, initial: 100, min: 1, max: 200 },
+const scaleAndRotation = {
+  [SCALE_ROTATION.scale]: { unit: PERCENT, initial: 100, min: 1, max: 200 },
+  [SCALE_ROTATION.rotation]: { unit: DEGREES, initial: 0, min: 0, max: 360 },
 };
 
 const potraceOptions = {
@@ -143,14 +144,14 @@ const potraceOptions = {
 const detailsArray = [
   { name: 'svgOptions', icon: tuneIcon },
   { name: 'colorChannels', icon: paletteIcon },
-  { name: 'imageSize', icon: scaleIcon },
+  { name: 'imageSizeAndRotation', icon: scaleIcon },
   { name: 'imagePreprocessing', icon: filterIcon },
 ];
 
 const entriesArray = [
   Object.entries(potraceOptions),
   Object.entries(posterizeComponents),
-  Object.entries(scale),
+  Object.entries(scaleAndRotation),
   Object.entries(filters),
 ];
 
@@ -386,8 +387,8 @@ const initUI = async () => {
     } else if (name === 'svgOptions') {
       allDetails['svgOptions'].append(colorRadio.parentNode);
       allDetails['svgOptions'].append(monochromeRadio.parentNode);
-    } else if (name === 'imageSize') {
-      allDetails['imageSize'].append(considerDPRCheckbox.parentNode);
+    } else if (name === 'imageSizeAndRotation') {
+      allDetails['imageSizeAndRotation'].append(considerDPRCheckbox.parentNode);
     }
     for (const [filter, props] of entries) {
       createControlsPromises.push(createControls(filter, props, details));
@@ -593,7 +594,7 @@ export {
   filterInputs,
   showToast,
   COLORS,
-  SCALE,
+  SCALE_ROTATION,
   POTRACE,
   MONOCHROME,
   COLOR,

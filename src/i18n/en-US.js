@@ -33,6 +33,7 @@ const translations = {
   sepia: 'Sepia',
 
   scale: 'Scale',
+  rotation: 'Rotation',
   turdsize: 'Suppress speckles',
   alphamax: 'Corner Threshold',
   minPathSegments: 'Min. Path Length',
@@ -63,7 +64,7 @@ const translations = {
   monochromeSVG: 'Monochrome SVG',
 
   colorChannels: 'Color Channels',
-  imageSize: 'Input Size',
+  imageSizeAndRotation: 'Input Size and Rotation',
   imagePreprocessing: 'Input Preprocessing',
   svgOptions: 'SVG Options',
 
