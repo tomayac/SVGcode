@@ -90,13 +90,25 @@ copyButton.addEventListener('click', async () => {
     const textBlob = new Blob([svg], { type: 'text/plain' });
     const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
     try {
-      // Chromium (text and SVG)
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          [svgBlob.type]: svgBlob,
-          [textBlob.type]: textBlob,
-        }),
-      ]);
+      // Chromium <=88 (text only). Old Chrome crashes hard when trying to copy
+      // 'image/svg+xml' blob: https://github.com/tomayac/SVGcode/issues/51.
+      if (
+        Number(navigator.userAgent.replace(/.*Chrome\/(\d+).*/, '$1')) <= 88
+      ) {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            [textBlob.type]: textBlob,
+          }),
+        ]);
+      } else {
+        // Chromium (text and SVG)
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            [svgBlob.type]: svgBlob,
+            [textBlob.type]: textBlob,
+          }),
+        ]);
+      }
     } catch (err) {
       console.warn(err.name, err.message);
       try {
