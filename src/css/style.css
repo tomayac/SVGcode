@@ -200,7 +200,7 @@ details.main .close-options-button {
     display: flex;
     align-items: center;
     place-content: center;
-    background-color: transparent;
+    background-color: var(--canvas);
     border: solid 1px currentcolor;
     border-radius: var(--space);
     padding: var(--space);
