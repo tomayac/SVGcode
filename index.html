@@ -61,6 +61,16 @@
 
     <title>SVGcode—Convert raster images to SVG vector graphics</title>
     <link rel="stylesheet" href="/src/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="/src/css/dark.css"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link
+      rel="stylesheet"
+      href="/src/css/light.css"
+      media="(prefers-color-scheme: light)"
+    />
     <link rel="icon" type="image/svg" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link
@@ -226,6 +236,11 @@
               ></a>
             </li>
           </ul>
+          <dark-mode-toggle
+            permanent
+            dark="Light Theme"
+            light="Dark Theme"
+          ></dark-mode-toggle>
         </div>
       </details>
       <div class="main-area">

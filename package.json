@@ -22,6 +22,7 @@
   "dependencies": {
     "browser-fs-access": "^0.24.0",
     "canvas-size": "^1.2.5",
+    "dark-mode-toggle": "^0.10.0",
     "esm-potrace-wasm": "^0.2.1",
     "idb-keyval": "^6.1.0",
     "module-workers-polyfill": "^0.3.2",
@@ -33,7 +34,7 @@
     "eslint": "^8.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
-    "find-unused-exports": "^2.0.0",
+    "find-unused-exports": "^3.0.0",
     "https-localhost": "^4.7.0",
     "material-design-icons": "^3.0.1",
     "prettier": "^2.5.1",

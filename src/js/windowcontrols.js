@@ -23,8 +23,14 @@ import { main, menu } from './domrefs.js';
 const WINDOW_CONTROLS_OVERLAY = 'window-controls-overlay';
 
 const onGeometryChange = () => {
-  menu.classList.toggle(WINDOW_CONTROLS_OVERLAY, navigator.windowControlsOverlay.visible);
-  main.classList.toggle(WINDOW_CONTROLS_OVERLAY, navigator.windowControlsOverlay.visible);
+  menu.classList.toggle(
+    WINDOW_CONTROLS_OVERLAY,
+    navigator.windowControlsOverlay.visible,
+  );
+  main.classList.toggle(
+    WINDOW_CONTROLS_OVERLAY,
+    navigator.windowControlsOverlay.visible,
+  );
 };
 
 navigator.windowControlsOverlay.addEventListener(

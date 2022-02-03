@@ -26,11 +26,6 @@
   --sidebar-width: 15rem;
   --input-image-height: 5rem;
   --input-width: 10rem;
-  --main-accent-color: #e60073;
-  --alternative-accent-color: #337eff;
-  --sidebar-background-color: rgb(255 255 255 / 80%);
-  --canvas-text: #000;
-  --canvas: #fff;
 
   color-scheme: dark light;
   accent-color: var(--main-accent-color);
@@ -51,6 +46,7 @@ body {
   height: var(--100vh);
   max-height: var(--100vh);
   max-width: 100vw;
+  background-color: var(--canvas);
 }
 
 body {
@@ -244,18 +240,13 @@ summary svg {
   fill: var(--alternative-accent-color);
 }
 
+.svg-output {
+  color: var(--canvas-text);
+}
+
 .checkerboard {
   background-position: 0 0, calc(2 * var(--space)) calc(2 * var(--space));
   background-size: calc(4 * var(--space)) calc(4 * var(--space));
-  background-image: linear-gradient(
-      45deg,
-      #eee 25%,
-      transparent 25%,
-      transparent 75%,
-      #eee 75%,
-      #eee 100%
-    ),
-    linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
 }
 
 .pinch-zoom-wrapper {
@@ -311,23 +302,20 @@ pinch-zoom > * {
 
 label {
   font-variant-numeric: tabular-nums;
+  color: var(--canvas-text);
 }
 
 button {
   height: 3ex;
-  display: inline-flex;
   align-items: center;
   place-content: center;
   background-color: transparent;
+  color: var(--canvas-text);
   border: solid 1px currentcolor;
   border-radius: var(--space);
   margin-inline-end: var(--space);
   cursor: pointer;
   padding: 1px 6px;
-}
-
-button.with-bg {
-  background-color: #fff;
 }
 
 button.menu {
@@ -449,12 +437,12 @@ button:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #fffe;
   content: attr(data-drop-text);
   position: absolute;
 }
 
 .toast {
+  color: var(--canvas-text);
   background-color: var(--canvas);
   align-self: center;
   border: solid 1px var(--canvas-text);
@@ -463,53 +451,9 @@ button:hover {
   bottom: 5ex;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --main-accent-color: hotpink;
-    --sidebar-background-color: rgb(0 0 0 / 80%);
-    --canvas-text: #fff;
-    --canvas: #131313;
-
-    background-color: var(--canvas);
-    color: var(--canvas-text);
-  }
-
-  .dropenter::before {
-    background-color: #131313dd;
-  }
-
-  .monochrome svg {
-    filter: invert(100%);
-  }
-
-  output {
-    border: 1px #000 solid;
-  }
-
-  button {
-    color: #fff;
-  }
-
-  button.with-bg {
-    background-color: #000;
-  }
-
-  .checkerboard {
-    background-image: linear-gradient(
-        45deg,
-        #131313 25%,
-        transparent 25%,
-        transparent 75%,
-        #131313 75%,
-        #131313 100%
-      ),
-      linear-gradient(
-        45deg,
-        #131313 25%,
-        #000 25%,
-        #000 75%,
-        #131313 75%,
-        #131313 100%
-      );
-  }
+dark-mode-toggle {
+  --dark-mode-toggle-light-icon: url('/moon.svg');
+  --dark-mode-toggle-dark-icon: url('/sun.svg');
+  --dark-mode-toggle-color: var(--canvas-text);
+  --dark-mode-toggle-icon-filter: invert(100%);
 }

@@ -46,6 +46,7 @@ const convertToMonochromeSVG = async (imageData) => {
       turnpolicy: Number(filterInputs[POTRACE.turnpolicy].value),
       opttolerance: Number(filterInputs[POTRACE.opttolerance].value),
       opticurve: optimizeCurvesCheckbox.checked ? 1 : 0,
+      extractcolors: false,
     };
     monochromeSVGWorker.postMessage({ imageData, params }, [channel.port2]);
   });
