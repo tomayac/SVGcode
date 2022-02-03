@@ -44,6 +44,7 @@ export default {
   build: {
     outDir: 'docs',
     target: 'esnext',
+    cssCodeSplit: false,
   },
   preview: {
     port: 4000,

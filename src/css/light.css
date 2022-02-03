@@ -1,27 +1,36 @@
-:root {
-  --main-accent-color: #e60073;
-  --alternative-accent-color: #337eff;
-  --sidebar-background-color: rgb(255 255 255 / 50%);
-  --canvas-text: #000;
-  --canvas: #fff;
-}
+@media (prefers-color-scheme: light) {
+  :root {
+    --main-accent-color: #e60073;
+    --alternative-accent-color: #337eff;
+    --sidebar-background-color: rgb(255 255 255 / 50%);
+    --canvas-text: #000;
+    --canvas: #fff;
+  }
 
-.dropenter::before {
-  background-color: #fffe;
-}
+  .dropenter::before {
+    background-color: #fffe;
+  }
 
-button.with-bg {
-  background-color: #fff;
-}
+  button.with-bg {
+    background-color: #fff;
+  }
 
-.checkerboard {
-  background-image: linear-gradient(
-      45deg,
-      #eee 25%,
-      transparent 25%,
-      transparent 75%,
-      #eee 75%,
-      #eee 100%
-    ),
-    linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
+  .checkerboard {
+    background-image: linear-gradient(
+        45deg,
+        #eee 25%,
+        transparent 25%,
+        transparent 75%,
+        #eee 75%,
+        #eee 100%
+      ),
+      linear-gradient(
+        45deg,
+        #eee 25%,
+        white 25%,
+        white 75%,
+        #eee 75%,
+        #eee 100%
+      );
+  }
 }
