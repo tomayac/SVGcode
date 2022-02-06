@@ -82,7 +82,10 @@ class I18N {
       language,
       locale,
     };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.currentLanguageAndLocale));
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(this.currentLanguageAndLocale),
+    );
     await this.getTranslations();
   }
 

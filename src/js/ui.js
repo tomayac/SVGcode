@@ -507,7 +507,10 @@ const changeLanguage = () => {
     element.textContent = i18n.t(element.dataset.i18nKey);
   });
   document.querySelectorAll('[data-dynamic-i18n-key]').forEach((element) => {
-    element.textContent = updateLabel(element.dataset.dynamicI18nKey, element.dataset.dynamicValue);
+    element.textContent = updateLabel(
+      element.dataset.dynamicI18nKey,
+      element.dataset.dynamicValue,
+    );
   });
   languageSelect.innerHTML = '';
   i18n.supportedLocales.forEach((languageAndLocale) => {
@@ -515,7 +518,10 @@ const changeLanguage = () => {
     const option = document.createElement('option');
     option.value = languageAndLocale;
     option.textContent = i18n.t(`${language}${locale}`);
-    if (language === i18n.currentLanguageAndLocale.language && locale === i18n.currentLanguageAndLocale.locale) {
+    if (
+      language === i18n.currentLanguageAndLocale.language &&
+      locale === i18n.currentLanguageAndLocale.locale
+    ) {
       option.selected = true;
     }
     languageSelect.append(option);
