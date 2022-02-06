@@ -451,6 +451,11 @@ button:hover {
   bottom: 5ex;
 }
 
+.language {
+  max-width: fit-content;
+  font-size: inherit;
+}
+
 dark-mode-toggle {
   --dark-mode-toggle-light-icon: url('/moon.svg');
   --dark-mode-toggle-dark-icon: url('/sun.svg');
