@@ -30,7 +30,7 @@
   invert: '反转',
   opacity: '透明度',
   saturate: '饱和度',
-  sepia: '老化',
+  sepia: '褐度',
 
   scale: '缩放',
   rotation: '旋转',
@@ -53,9 +53,9 @@
   resetAll: '重置全部',
 
   dropFileHere: '拖拽文件到此处',
-  openImage: '打开图片',
+  openImage: '打开图像',
   saveSVG: '保存 SVG',
-  pasteImage: '粘贴图片',
+  pasteImage: '粘贴图像',
   copySVG: '复制 SVG',
   install: '安装',
 
@@ -64,8 +64,8 @@
   monochromeSVG: '单色 SVG',
 
   colorChannels: '色彩通道',
-  imageSizeAndRotation: '输入尺寸和旋转角度',
-  imagePreprocessing: '预处理',
+  imageSizeAndRotation: '图像尺寸及旋转角度',
+  imagePreprocessing: '图像处理',
   svgOptions: 'SVG 选项',
 
   considerDPR: '考虑设备像素比',
@@ -77,10 +77,10 @@
   copiedSVG: '复制 SVG',
   savedSVG: '保存 SVG',
 
-  readyToWorkOffline: '准备离线工作。',
+  readyToWorkOffline: '离线工作已就绪。',
   svgSize: 'SVG 大小',
   bytes: '字节',
-  zoom: 'Zoom',
+  zoom: '缩放',
 
   license: '许可',
   about: '关于',
