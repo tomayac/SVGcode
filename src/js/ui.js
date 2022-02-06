@@ -49,6 +49,7 @@ import {
   closeOptionsButton,
   licenseLink,
   aboutLink,
+  languageSelect,
 } from './domrefs.js';
 import { resetPanAndZoom } from './panzoom.js';
 import { debounce } from './util.js';
@@ -181,11 +182,14 @@ const createIcon = (src) => {
 const createDetails = (name, iconURL) => {
   const details = document.createElement('details');
   allDetails[name] = details;
-  const legend = document.createElement('summary');
+  const summary = document.createElement('summary');
   const icon = createIcon(iconURL);
-  legend.append(icon);
-  legend.append(document.createTextNode(i18n.t(name)));
-  details.append(legend);
+  summary.append(icon);
+  const label = document.createElement('span');
+  label.textContent = i18n.t(name);
+  label.dataset.i18nKey = name;
+  summary.append(label);
+  details.append(summary);
   return details;
 };
 
@@ -205,14 +209,19 @@ const createControls = async (filter, props, details) => {
     div.classList.add('advanced');
   }
   const label = document.createElement('label');
-  label.textContent = i18n.t(filter) || filter;
+  const nameSpan = document.createElement('span');
+  nameSpan.textContent = i18n.t(filter);
+  nameSpan.dataset.i18nKey = filter;
+  label.append(nameSpan);
   label.htmlFor = filter;
 
   const settings = await getSettings();
 
-  const span = document.createElement('span');
-  filterSpans[filter] = span;
-  span.textContent = updateLabel(unit, settings[filter] || initial);
+  const unitSpan = document.createElement('span');
+  filterSpans[filter] = unitSpan;
+  unitSpan.textContent = updateLabel(unit, settings[filter] || initial);
+  unitSpan.dataset.dynamicI18nKey = unit;
+  unitSpan.dataset.dynamicValue = settings[filter] || initial;
 
   const input = document.createElement('input');
   filterInputs[filter] = input;
@@ -230,7 +239,8 @@ const createControls = async (filter, props, details) => {
   input.value = settings[filter] || initial;
 
   input.addEventListener('input', () => {
-    span.textContent = updateLabel(unit, input.value);
+    unitSpan.textContent = updateLabel(unit, input.value);
+    unitSpan.dataset.dynamicValue = input.value;
   });
   if (Object.keys(COLORS).includes(filter)) {
     input.addEventListener(
@@ -261,13 +271,15 @@ const createControls = async (filter, props, details) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.textContent = i18n.t('reset');
+  button.dataset.i18nKey = 'reset';
   button.addEventListener('click', async () => {
     input.value = initial;
-    span.textContent = updateLabel(unit, initial);
+    unitSpan.textContent = updateLabel(unit, initial);
+    unitSpan.dataset.dynamicValue = initial;
     input.dispatchEvent(new Event('change'));
   });
 
-  label.append(span);
+  label.append(unitSpan);
   div.append(label);
   const wrapper = document.createElement('div');
   div.append(wrapper);
@@ -491,12 +503,40 @@ const changeLanguage = () => {
   summary.append(createIcon(optionsIcon));
   summary.append(document.createTextNode(i18n.t('tweak')));
   closeOptionsButton.ariaLabel = i18n.t('closeOptions');
+  document.querySelectorAll('[data-i18n-key]').forEach((element) => {
+    element.textContent = i18n.t(element.dataset.i18nKey);
+  });
+  document.querySelectorAll('[data-dynamic-i18n-key]').forEach((element) => {
+    element.textContent = updateLabel(element.dataset.dynamicI18nKey, element.dataset.dynamicValue);
+  });
+  languageSelect.innerHTML = '';
+  i18n.supportedLocales.forEach((languageAndLocale) => {
+    const [language, locale] = languageAndLocale.split('-');
+    const option = document.createElement('option');
+    option.value = languageAndLocale;
+    option.textContent = i18n.t(`${language}${locale}`);
+    if (language === i18n.currentLanguageAndLocale.language && locale === i18n.currentLanguageAndLocale.locale) {
+      option.selected = true;
+    }
+    languageSelect.append(option);
+  });
 };
+
+languageSelect.addEventListener('change', async () => {
+  const [language, locale] = languageSelect.value.split('-');
+  try {
+    await i18n.setLanguageAndLocale(language, locale);
+    changeLanguage();
+  } catch (err) {
+    console.error(err.name, err.message);
+  }
+});
 
 resetAllButton.addEventListener('click', async () => {
   const reset = (filter, unit, initial) => {
     filterInputs[filter].value = initial;
     filterSpans[filter].textContent = updateLabel(unit, initial);
+    filterSpans[filter].dataset.dynamicValue = initial;
   };
 
   entriesArray.forEach((entries) => {

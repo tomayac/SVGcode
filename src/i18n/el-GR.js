@@ -84,6 +84,10 @@ const translations = {
 
   license: 'Αδεια',
   about: 'Σχετικά με',
+
+  enUS: 'Αγγλικά (Ηνωμένες Πολιτείες)',
+  deDE: 'Γερμανός (Γερμανία)',
+  elGR: 'Ελληνικά (Ελλάδα)',
 };
 
 // ignore unused exports default

@@ -32,10 +32,12 @@ class I18N {
    * @memberof I18N
    */
   constructor() {
-    this.currentLanguageAndLocale = this.detectLanguageAndLocal();
+    this.currentLanguageAndLocale = this.detectLanguageAndLocale();
     this.defaultLanguage = SUPPORTED_LANGUAGES[0];
     this.defaultLocale = SUPPORTED_LOCALES[0];
     this.translations = null;
+    this.supportedLanguages = SUPPORTED_LANGUAGES;
+    this.supportedLocales = SUPPORTED_LOCALES;
   }
 
   /**
@@ -44,7 +46,7 @@ class I18N {
    * @returns
    * @memberof I18N
    */
-  detectLanguageAndLocal() {
+  detectLanguageAndLocale() {
     const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedLanguage) {
       return JSON.parse(storedLanguage);
@@ -64,6 +66,24 @@ class I18N {
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(result));
     return result;
+  }
+  /**
+   * @param  {} language
+   * @param  {} locale
+   */
+  async setLanguageAndLocale(language, locale) {
+    if (!SUPPORTED_LANGUAGES.includes(language)) {
+      throw new Error(`Language "${language}" is not supported.`);
+    }
+    if (!SUPPORTED_LOCALES.includes(`${language}-${locale}`)) {
+      throw new Error(`Locale "${language}-${locale}" is not supported.`);
+    }
+    this.currentLanguageAndLocale = {
+      language,
+      locale,
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.currentLanguageAndLocale));
+    await this.getTranslations();
   }
 
   /**
