@@ -34,7 +34,7 @@ const translations = {
 
   scale: 'Scale',
   rotation: 'Rotation',
-  turdsize: 'Suppress speckles',
+  turdsize: 'Suppress Speckles',
   alphamax: 'Corner Threshold',
   minPathSegments: 'Min. Path Length',
   strokeWidth: 'Stroke Width',
