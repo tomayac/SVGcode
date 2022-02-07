@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- const translations = {
+const translations = {
   red: '红',
   green: '绿',
   blue: '蓝',
@@ -84,6 +84,12 @@
 
   license: '许可',
   about: '关于',
+
+  enUS: '英语（美国）',
+  deDE: '德语（德国）',
+  elGR: '希腊语（希腊）',
+  koKR: '韩语（韩国）',
+  zhCN: '中文（中国）',
 };
 
 // ignore unused exports default

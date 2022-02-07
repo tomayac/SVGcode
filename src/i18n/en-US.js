@@ -89,6 +89,7 @@ const translations = {
   deDE: 'German (Germany)',
   elGR: 'Greek (Greece)',
   koKR: 'Korean (Korea)',
+  zhCN: 'Chinese (China)',
 };
 
 // ignore unused exports default
