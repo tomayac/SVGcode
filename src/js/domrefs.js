@@ -53,6 +53,7 @@ const closeOptionsButton = document.querySelector('.close-options-button');
 const licenseLink = document.querySelector('.license');
 const aboutLink = document.querySelector('.about');
 const pinchZoom = document.querySelector('pinch-zoom');
+const languageSelect = document.querySelector('.language');
 
 const dpr = window.devicePixelRatio;
 
@@ -92,4 +93,5 @@ export {
   licenseLink,
   aboutLink,
   pinchZoom,
+  languageSelect,
 };

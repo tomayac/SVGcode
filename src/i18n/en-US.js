@@ -84,6 +84,11 @@ const translations = {
 
   license: 'License',
   about: 'About',
+
+  enUS: 'English (United States)',
+  deDE: 'German (Germany)',
+  elGR: 'Greek (Greece)',
+  koKR: 'Korean (Korea)',
 };
 
 // ignore unused exports default

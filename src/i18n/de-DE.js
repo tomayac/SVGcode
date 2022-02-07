@@ -84,6 +84,11 @@ const translations = {
 
   license: 'Lizenz',
   about: 'Über',
+
+  enUS: 'Englisch (Vereinigte Staaten)',
+  deDE: 'Deutsch (Deutschland)',
+  elGR: 'Griechisch (Griechenland)',
+  krKR: 'Koreanisch (Korea)',
 };
 
 // ignore unused exports default
