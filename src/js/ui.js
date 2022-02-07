@@ -513,7 +513,7 @@ const changeLanguage = () => {
     );
   });
   languageSelect.innerHTML = '';
-  i18n.supportedLocales.forEach((languageAndLocale) => {
+  i18n.supportedLocales.sort().forEach((languageAndLocale) => {
     const [language, locale] = languageAndLocale.split('-');
     const option = document.createElement('option');
     option.value = languageAndLocale;

@@ -183,7 +183,10 @@ details.main .close-options-button {
 
   details[open].main > .sidebar {
     max-width: calc(100% - var(--space) * 4);
-    backdrop-filter: saturate(180%) blur(20px);
+    /* stylelint-disable */
+    -webkit-backdrop-filter: saturate(180%) blur(100px);
+    /* stylelint-enable */
+    backdrop-filter: saturate(180%) blur(100px);
     background-color: var(--sidebar-background-color);
   }
 

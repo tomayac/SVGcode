@@ -90,6 +90,7 @@ const translations = {
   elGR: 'Ελληνικά (Ελλάδα)',
   koKR: 'Κορεατικά (Κορέα)',
   zhCN: 'Κινέζικα (Κίνα)',
+  nlNL: 'Ολλανδικά (Ολλανδία)',
 };
 
 // ignore unused exports default

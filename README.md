@@ -44,6 +44,21 @@ on Windows.
 1. Open a Pull Request that fixes the Issue (see 7. above).
 1. Have fun, and thanks for your interest in SVGcode!
 
+## Contributing translations
+
+If SVGcode is not available in _your_ language, consider contributing a
+translation. Therefore, make a copy of one of the files in
+[`src/i18n/`](https://github.com/tomayac/SVGcode/blob/main/src/i18n/) (most
+users will probably be most familiar with
+[`en-US.js`](https://github.com/tomayac/SVGcode/blob/main/src/i18n/en-US.js))
+and translate the strings. Name the new file according to
+[`Tags for Identifying Languages`](https://tools.ietf.org/rfc/bcp/bcp47.txt)
+(`$language-$REGION` like `en-US`). Then add the language code to the
+`SUPPORTED_LANGUAGES` array in
+[`src/js/i18n.js`](https://github.com/tomayac/SVGcode/blob/main/src/js/i18n.js)
+and the locale to `SUPPORTED_LOCALES` array in the
+[same file](https://github.com/tomayac/SVGcode/blob/main/src/js/i18n.js). Danke!
+
 ## Acknowledgements
 
 With SVGcode, I just stand on the shoulders of a command line tool called

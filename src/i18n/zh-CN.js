@@ -90,6 +90,7 @@ const translations = {
   elGR: '希腊语（希腊）',
   koKR: '韩语（韩国）',
   zhCN: '中文（中国）',
+  nlNL: '荷兰语（荷兰）',
 };
 
 // ignore unused exports default
