@@ -35,12 +35,12 @@ const translations = {
   scale: 'Échelle',
   rotation: 'Rotation',
   turdsize: 'Supprimer les tâches',
-  alphamax: 'Seuil d\'angle',
+  alphamax: 'Seuil d’angle',
   minPathSegments: 'Longueur de chemin min.',
   strokeWidth: 'Épaisseur de trait',
-  turnpolicy: 'Turn Policy',
+  turnpolicy: 'Stratégie de changement de direction',
   opticurve: 'Optimiser les courbes',
-  opttolerance: 'Tolérance d\'optimisation',
+  opttolerance: 'Tolérance d’optimisation',
   showAdvancedControls: 'Options avancées',
 
   '%': '%',
@@ -59,7 +59,7 @@ const translations = {
   copySVG: 'Copier le SVG',
   install: 'Installer',
 
-  posterizeInputImage: 'Posterize Input Image',
+  posterizeInputImage: 'Postériser l’image source',
   colorSVG: 'SVG en couleurs',
   monochromeSVG: 'SVG monochrome',
 
@@ -68,7 +68,7 @@ const translations = {
   imagePreprocessing: 'Précalcul de la source',
   svgOptions: 'Options SVG',
 
-  considerDPR: 'Prendre en compte la densité de pixels de l\'appareil',
+  considerDPR: 'Prendre en compte la densité de pixels de l’appareil',
 
   tweak: 'Ajuster',
   closeOptions: 'Fermer',
