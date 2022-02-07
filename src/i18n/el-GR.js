@@ -88,6 +88,7 @@ const translations = {
   enUS: 'Αγγλικά (Ηνωμένες Πολιτείες)',
   deDE: 'Γερμανός (Γερμανία)',
   elGR: 'Ελληνικά (Ελλάδα)',
+  koKR: 'Κορεατικά (Κορέα)',
 };
 
 // ignore unused exports default

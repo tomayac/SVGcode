@@ -88,7 +88,7 @@ const translations = {
   enUS: 'English (United States)',
   deDE: 'German (Germany)',
   elGR: 'Greek (Greece)',
-  krKR: 'Korean (Korea)',
+  koKR: 'Korean (Korea)',
 };
 
 // ignore unused exports default
