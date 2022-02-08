@@ -40,7 +40,7 @@ const translations = {
   strokeWidth: 'Stroke Width',
   turnpolicy: 'Turn Policy',
   opticurve: 'Optimise Curves',
-  opttolerance: 'Optimization Tolerance',
+  opttolerance: 'Optimisation Tolerance',
   showAdvancedControls: 'Show Expert Options',
 
   '%': '%',
