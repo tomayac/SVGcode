@@ -60,7 +60,7 @@ const translations = {
   install: 'Install',
 
   posterizeInputImage: 'Posterise Input Image',
-  colorSVG: 'Color SVG',
+  colorSVG: 'Colour SVG',
   monochromeSVG: 'Monochrome SVG',
 
   colorChannels: 'Colour Channels',
