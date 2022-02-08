@@ -85,6 +85,7 @@ const translations = {
   license: 'Licens',
   about: 'Om',
 
+  daDK: 'Dansk (Danmark)',
   deDE: 'Deutsch (Deutschland)',
   elGR: 'Ελληνικά (Ελλάδα)',
   enUS: 'English (United States)',
@@ -92,7 +93,6 @@ const translations = {
   koKR: '한국어 (대한민국)',
   nlNL: 'Nederlands (Nederland)',
   zhCN: '中文（中国）',
-  daDK: 'Dansk (Danmark)'
 };
 
 // ignore unused exports default

@@ -85,6 +85,7 @@ const translations = {
   license: '许可',
   about: '关于',
 
+  daDK: 'Dansk (Danmark)',
   deDE: 'Deutsch (Deutschland)',
   elGR: 'Ελληνικά (Ελλάδα)',
   enUS: 'English (United States)',
