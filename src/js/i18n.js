@@ -18,11 +18,12 @@
  */
 
 const LOCAL_STORAGE_KEY = 'language';
-const SUPPORTED_LANGUAGES = ['de', 'el', 'en', 'ko', 'nl', 'zh'];
+const SUPPORTED_LANGUAGES = ['de', 'el', 'en', 'fr', 'ko', 'nl', 'zh'];
 const SUPPORTED_LOCALES = [
   'de-DE',
   'el-GR',
   'en-US',
+  'fr-FR',
   'ko-KR',
   'nl-NL',
   'zh-CN',
@@ -118,7 +119,7 @@ class I18N {
    * @memberof I18N
    */
   t(key) {
-    return this.translations[key];
+    return this.translations[key] || '⛔️ Missing translation';
   }
 }
 

@@ -91,6 +91,7 @@ const translations = {
   koKR: 'Κορεατικά (Κορέα)',
   zhCN: 'Κινέζικα (Κίνα)',
   nlNL: 'Ολλανδικά (Ολλανδία)',
+  frFR: 'Γαλλικά (Γαλλία)',
 };
 
 // ignore unused exports default
