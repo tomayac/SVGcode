@@ -13,7 +13,7 @@
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
     "lint:css": "npx stylelint \"**/*.css\" --fix",
     "fix": "npx prettier . --write",
-    "deploy": "npm run lint && npm run fix && npm run build && git commit -a && git push",
+    "deploy": "npm run fix && npm run lint && npm run build && git commit -a && git push",
     "oculus": "cd src && ovr-platform-util create-pwa -o output.apk --android-sdk ~/bin/android-10 --manifest-content-file manifest.json --package-name de.svgco"
   },
   "engines": {

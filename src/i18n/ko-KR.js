@@ -85,13 +85,13 @@ const translations = {
   license: '사용권(라이센스)',
   about: 'About',
 
+  deDE: 'Deutsch (Deutschland)',
+  elGR: 'Ελληνικά (Ελλάδα)',
   enUS: 'English (United States)',
-  deDE: 'German (Germany)',
-  elGR: 'Greek (Greece)',
-  koKR: 'Korean (Korea)',
-  zhCN: 'Chinese (China)',
-  nlNL: 'Dutch (Netherlands)',
-  frFR: 'French (France)',
+  frFR: 'Français (France)',
+  koKR: '한국어 (대한민국)',
+  nlNL: 'Nederlands (Nederland)',
+  zhCN: '中文（中国）',
 };
 
 // ignore unused exports default

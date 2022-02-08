@@ -85,13 +85,13 @@ const translations = {
   license: '许可',
   about: '关于',
 
-  enUS: '英语（美国）',
-  deDE: '德语（德国）',
-  elGR: '希腊语（希腊）',
-  koKR: '韩语（韩国）',
+  deDE: 'Deutsch (Deutschland)',
+  elGR: 'Ελληνικά (Ελλάδα)',
+  enUS: 'English (United States)',
+  frFR: 'Français (France)',
+  koKR: '한국어 (대한민국)',
+  nlNL: 'Nederlands (Nederland)',
   zhCN: '中文（中国）',
-  nlNL: '荷兰语（荷兰）',
-  frFR: '法语（法国）',
 };
 
 // ignore unused exports default

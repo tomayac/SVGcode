@@ -85,13 +85,13 @@ const translations = {
   license: 'Αδεια',
   about: 'Σχετικά με',
 
-  enUS: 'Αγγλικά (Ηνωμένες Πολιτείες)',
-  deDE: 'Γερμανός (Γερμανία)',
+  deDE: 'Deutsch (Deutschland)',
   elGR: 'Ελληνικά (Ελλάδα)',
-  koKR: 'Κορεατικά (Κορέα)',
-  zhCN: 'Κινέζικα (Κίνα)',
-  nlNL: 'Ολλανδικά (Ολλανδία)',
-  frFR: 'Γαλλικά (Γαλλία)',
+  enUS: 'English (United States)',
+  frFR: 'Français (France)',
+  koKR: '한국어 (대한민국)',
+  nlNL: 'Nederlands (Nederland)',
+  zhCN: '中文（中国）',
 };
 
 // ignore unused exports default
