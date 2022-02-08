@@ -88,6 +88,7 @@ const translations = {
   daDK: 'Dansk (Danmark)',
   deDE: 'Deutsch (Deutschland)',
   elGR: 'Ελληνικά (Ελλάδα)',
+  enGB: 'English (United Kingdom)',
   enUS: 'English (United States)',
   frFR: 'Français (France)',
   koKR: '한국어 (대한민국)',
