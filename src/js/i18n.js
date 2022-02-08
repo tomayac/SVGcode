@@ -23,6 +23,7 @@ const SUPPORTED_LOCALES = [
   'da-DK',
   'de-DE',
   'el-GR',
+  'en-GB',
   'en-US',
   'fr-FR',
   'ko-KR',
