@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import languages from './languages.js';
+
 const translations = {
   red: 'Κόκκινο',
   green: 'Πράσινο',
@@ -85,15 +87,7 @@ const translations = {
   license: 'Αδεια',
   about: 'Σχετικά με',
 
-  daDK: 'Dansk (Danmark)',
-  deDE: 'Deutsch (Deutschland)',
-  elGR: 'Ελληνικά (Ελλάδα)',
-  enGB: 'English (United Kingdom)',
-  enUS: 'English (United States)',
-  frFR: 'Français (France)',
-  koKR: '한국어 (대한민국)',
-  nlNL: 'Nederlands (Nederland)',
-  zhCN: '中文（中国）',
+  ...languages,
 };
 
 // ignore unused exports default
