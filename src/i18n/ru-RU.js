@@ -1,6 +1,6 @@
 /**
  * SVGcode—Convert raster images to SVG vector graphics
- * Copyright (C) 2021 Google LLC
+ * Copyright (C) 2022 Google LLC
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+import languages from './languages.js';
 
 const translations = {
   red: 'Красный', // Red
@@ -85,16 +87,7 @@ const translations = {
   license: 'Лицензия', // License
   about: 'О проекте', // About
 
-  daDK: 'Dansk (Danmark)',
-  deDE: 'Deutsch (Deutschland)',
-  elGR: 'Ελληνικά (Ελλάδα)',
-  enGB: 'English (United Kingdom)',
-  enUS: 'English (United States)',
-  frFR: 'Français (France)',
-  koKR: '한국어 (대한민국)',
-  nlNL: 'Nederlands (Nederland)',
-  ruRU: 'Русский',
-  zhCN: '中文（中国）',
+  ...languages,
 };
 
 // ignore unused exports default
