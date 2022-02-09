@@ -73,7 +73,7 @@ const translations = {
   tweak: 'Anpassen',
   closeOptions: 'Schließen',
 
-  optimizingSVG: 'Optmiere SVG',
+  optimizingSVG: 'Optimiere SVG',
   copiedSVG: 'SVG kopiert',
   savedSVG: 'SVG gespeichert',
 
