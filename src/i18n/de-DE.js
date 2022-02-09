@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import languages from './languages.js';
+
 const translations = {
   red: 'Rot',
   green: 'Grün',
@@ -73,7 +75,7 @@ const translations = {
   tweak: 'Anpassen',
   closeOptions: 'Schließen',
 
-  optimizingSVG: 'Optmiere SVG',
+  optimizingSVG: 'Optimiere SVG',
   copiedSVG: 'SVG kopiert',
   savedSVG: 'SVG gespeichert',
 
@@ -85,16 +87,7 @@ const translations = {
   license: 'Lizenz',
   about: 'Über',
 
-  daDK: 'Dansk (Danmark)',
-  deDE: 'Deutsch (Deutschland)',
-  elGR: 'Ελληνικά (Ελλάδα)',
-  enGB: 'English (United Kingdom)',
-  enUS: 'English (United States)',
-  frFR: 'Français (France)',
-  koKR: '한국어 (대한민국)',
-  nlNL: 'Nederlands (Nederland)',
-  ruRU: 'Русский',
-  zhCN: '中文（中国）',
+  ...languages,
 };
 
 // ignore unused exports default

@@ -24,7 +24,7 @@ let installEvent = null;
 window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   installEvent = event;
-  installButton.style.display = 'block';
+  installButton.style.display = 'flex';
 });
 
 installButton.addEventListener('click', async () => {

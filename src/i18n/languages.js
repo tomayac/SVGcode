@@ -18,16 +18,16 @@
  */
 
 const languages = {
-  daDK: 'Dansk (Danmark)',
-  deDE: 'Deutsch (Deutschland)',
-  elGR: 'Ελληνικά (Ελλάδα)',
+  daDK: 'Dansk',
+  deDE: 'Deutsch',
+  elGR: 'Ελληνικά',
   enGB: 'English (United Kingdom)',
   enUS: 'English (United States)',
-  frFR: 'Français (France)',
-  koKR: '한국어 (대한민국)',
-  nlNL: 'Nederlands (Nederland)',
+  frFR: 'Français',
+  koKR: '한국어',
+  nlNL: 'Nederlands',
   ruRU: 'Русский',
-  zhCN: '中文（中国）',
+  zhCN: '中文',
 };
 
 // ignore unused exports default

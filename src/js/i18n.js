@@ -43,7 +43,7 @@ class I18N {
    * @memberof I18N
    */
   constructor() {
-    this.currentLanguageAndLocale = this.detectLanguageAndLocale();
+    this.currentLanguageAndLocale = this.detectOrRestoreLanguageAndLocale();
     this.defaultLanguage = SUPPORTED_LANGUAGES[0];
     this.defaultLocale = SUPPORTED_LOCALES[0];
     this.translations = null;
@@ -57,10 +57,12 @@ class I18N {
    * @returns
    * @memberof I18N
    */
-  detectLanguageAndLocale() {
+  detectOrRestoreLanguageAndLocale() {
     const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedLanguage) {
-      return JSON.parse(storedLanguage);
+      const { language, locale } = JSON.parse(storedLanguage);
+      this.setLanguageAndLocale(language, locale);
+      return { language, locale };
     }
     let [language, locale = null] = navigator.language?.split('-');
     if (locale) {
@@ -75,7 +77,7 @@ class I18N {
       language,
       locale,
     };
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(result));
+    this.setLanguageAndLocale(language, locale);
     return result;
   }
   /**
@@ -97,6 +99,7 @@ class I18N {
       LOCAL_STORAGE_KEY,
       JSON.stringify(this.currentLanguageAndLocale),
     );
+    document.documentElement.lang = `${language}${locale ? `-${locale}` : ''}`;
     await this.getTranslations();
   }
 

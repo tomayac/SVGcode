@@ -336,6 +336,7 @@ summary:hover,
 label:hover,
 button:hover {
   color: var(--main-accent-color);
+  border-color: var(--main-accent-color);
 }
 
 .preprocess {

@@ -1,0 +1,1 @@
+const e={daDK:"Dansk",deDE:"Deutsch",elGR:"\u0395\u03BB\u03BB\u03B7\u03BD\u03B9\u03BA\u03AC",enGB:"English (United Kingdom)",enUS:"English (United States)",frFR:"Fran\xE7ais",koKR:"\uD55C\uAD6D\uC5B4",nlNL:"Nederlands",zhCN:"\u4E2D\u6587"};export{e as default};
