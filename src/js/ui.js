@@ -497,7 +497,9 @@ const changeLanguage = () => {
   pasteButton.append(document.createTextNode(i18n.t('pasteImage')));
   installButton.innerHTML = '';
   installButton.append(createIcon(installIcon));
-  installButton.append(document.createTextNode(i18n.t('install')));
+  const installSpan = document.createElement('span');
+  installSpan.textContent = i18n.t('install');
+  installButton.append(installSpan);
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
   summary.innerHTML = '';
   summary.append(createIcon(optionsIcon));
