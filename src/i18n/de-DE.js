@@ -93,6 +93,7 @@ const translations = {
   frFR: 'Français (France)',
   koKR: '한국어 (대한민국)',
   nlNL: 'Nederlands (Nederland)',
+  ruRU: 'Русский',
   zhCN: '中文（中国）',
 };
 
