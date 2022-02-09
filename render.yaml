@@ -1,3 +1,3 @@
 previewsEnabled: true
 services:
-- type: web
+  - type: web
