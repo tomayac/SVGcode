@@ -30,6 +30,7 @@ const languages = {
   koKR: '한국어',
   nlNL: 'Nederlands',
   ruRU: 'Русский',
+  ukUA: 'Українська',
   zhCN: '中文',
 };
 
