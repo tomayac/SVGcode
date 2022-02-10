@@ -29,9 +29,11 @@ const SUPPORTED_LANGUAGES = [
   'ja',
   'ko',
   'nl',
+  'ru',
   'uk',
   'zh',
 ];
+
 const SUPPORTED_LOCALES = [
   'ca-ES',
   'da-DK',
@@ -44,6 +46,7 @@ const SUPPORTED_LOCALES = [
   'ja-JP',
   'ko-KR',
   'nl-NL',
+  'ru-RU',
   'uk-UA',
   'zh-CN',
 ];
