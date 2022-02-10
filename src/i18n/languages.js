@@ -24,6 +24,7 @@ const languages = {
   enGB: 'English (United Kingdom)',
   enUS: 'English (United States)',
   frFR: 'Français',
+  heIL: 'עברית',
   koKR: '한국어',
   nlNL: 'Nederlands',
   zhCN: '中文',
