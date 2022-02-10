@@ -40,7 +40,7 @@ const translations = {
   alphamax: 'Згладжування', // Corner Threshold
   minPathSegments: 'Мін. довжина лінії', // Min. Path Length
   strokeWidth: 'Товщина контуру', // Stroke Width
-  turnpolicy: 'Правила поворота', // Turn Policy
+  turnpolicy: 'Правила повороту', // Turn Policy
   opticurve: 'Оптимізувати криві', // Optimise Curves
   opttolerance: 'Рівень оптимізації', // Optimisation Tolerance
   showAdvancedControls: 'Додаткові налаштування', // Show Expert Options
@@ -66,7 +66,7 @@ const translations = {
   monochromeSVG: 'Монохромний SVG', // Monochrome SVG
 
   colorChannels: 'Кольорові канали', // Colour Channels
-  imageSizeAndRotation: 'Вхідні розмріри і поворот', // Input Size and Rotation
+  imageSizeAndRotation: 'Вхідні розміри і обертання', // Input Size and Rotation
   imagePreprocessing: 'Вхідна обробка', // Input Preprocessing
   svgOptions: 'Налаштування SVG', // SVG Options
 
@@ -79,9 +79,9 @@ const translations = {
   copiedSVG: 'Скопійований SVG', // Copied SVG
   savedSVG: 'Збережений SVG', // Saved SVG
 
-  readyToWorkOffline: 'Готово для офлайн роботи.', // Ready to Work Offline.
+  readyToWorkOffline: 'Готовий для роботи офлайн.', // Ready to Work Offline.
   svgSize: 'Розмір SVG', // SVG Size
-  bytes: 'байтів', // Bytes
+  bytes: 'байт', // Bytes
   zoom: 'Масштаб', // Zoom
 
   license: 'Ліцензія', // License
