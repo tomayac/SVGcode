@@ -29,6 +29,7 @@ const SUPPORTED_LANGUAGES = [
   'ko',
   'nl',
   'zh',
+  'no'
 ];
 const SUPPORTED_LOCALES = [
   'ca-ES',
@@ -42,6 +43,7 @@ const SUPPORTED_LOCALES = [
   'ko-KR',
   'nl-NL',
   'zh-CN',
+  'no-NO'
 ];
 
 /**
