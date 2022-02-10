@@ -69,23 +69,32 @@ copyButton.addEventListener('click', async () => {
     if (!('ClipboardItem' in window)) {
       await navigator.clipboard.writeText(await optimizeSVG(svg));
     } else {
-      // Safari treats user activation differently:
-      // https://bugs.webkit.org/show_bug.cgi?id=222262.
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          'text/plain': new Promise(async (resolve) => {
-            svg = await optimizeSVG(svg);
-            resolve(new Blob([svg], { type: 'text/plain' }));
+      // Chromium >=98.
+      if (!/Apple/.test(navigator.vendor)) {
+        svg = await optimizeSVG(svg);
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/plain': new Promise(async (resolve) => {
+              resolve(new Blob([svg], { type: 'text/plain' }));
+            }),
+            'image/svg+xml': new Promise(async (resolve) => {
+              resolve(new Blob([svg], { type: 'image/svg+xml' }));
+            }),
           }),
-          'image/svg+xml': new Promise(async (resolve) => {
-            svg = await optimizeSVG(svg);
-            resolve(new Blob([svg], { type: 'image/svg+xml' }));
+        ]);
+        // Safari (non-optimized SVG)
+      } else {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/plain': new Promise(async (resolve) => {
+              resolve(new Blob([svg], { type: 'text/plain' }));
+            }),
           }),
-        }),
-      ]);
+        ]);
+      }
     }
+    // Chromium < 98.
   } catch (err) {
-    console.log(err.name, err.message);
     svg = await optimizeSVG(svg);
     const textBlob = new Blob([svg], { type: 'text/plain' });
     const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
@@ -110,7 +119,6 @@ copyButton.addEventListener('click', async () => {
         ]);
       }
     } catch (err) {
-      console.warn(err.name, err.message);
       try {
         // Chromium (text only)
         await navigator.clipboard.write([
@@ -119,7 +127,6 @@ copyButton.addEventListener('click', async () => {
           }),
         ]);
       } catch (err) {
-        console.error(err.name, err.message);
         showToast(err.message);
         return;
       }
