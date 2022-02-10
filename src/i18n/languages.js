@@ -18,11 +18,13 @@
  */
 
 const languages = {
+  caES: 'Català',
   daDK: 'Dansk',
   deDE: 'Deutsch',
   elGR: 'Ελληνικά',
   enGB: 'English (United Kingdom)',
   enUS: 'English (United States)',
+  esES: 'Español',
   frFR: 'Français',
   heIL: 'עברית',
   koKR: '한국어',

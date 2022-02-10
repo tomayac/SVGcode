@@ -19,22 +19,26 @@
 
 const LOCAL_STORAGE_KEY = 'language';
 const SUPPORTED_LANGUAGES = [
+  'ca',
   'da',
   'de',
   'el',
   'en',
+  'es',
   'fr',
-  'he',
+  'il',
   'ko',
   'nl',
   'zh',
 ];
 const SUPPORTED_LOCALES = [
+  'ca-ES',
   'da-DK',
   'de-DE',
   'el-GR',
   'en-GB',
   'en-US',
+  'es-ES',
   'fr-FR',
   'he-IL',
   'ko-KR',
