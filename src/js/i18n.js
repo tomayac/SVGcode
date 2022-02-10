@@ -32,7 +32,7 @@ const SUPPORTED_LANGUAGES = [
   'ru',
   'uk',
   'zh',
-  'no'
+  'no',
 ];
 
 const SUPPORTED_LOCALES = [
@@ -50,7 +50,7 @@ const SUPPORTED_LOCALES = [
   'ru-RU',
   'uk-UA',
   'zh-CN',
-  'no-NO'
+  'no-NO',
 ];
 
 /**

@@ -1,6 +1,6 @@
 /**
  * SVGcode—Convert raster images to SVG vector graphics
- * Copyright (C) 2021 Google LLC
+ * Copyright (C) 2022 Google LLC
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

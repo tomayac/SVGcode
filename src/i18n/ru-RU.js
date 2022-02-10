@@ -20,72 +20,72 @@
 import languages from './languages.js';
 
 const translations = {
-  red: 'Красный', // Red
-  green: 'Зелёный', // Green
-  blue: 'Синий', // Blue
-  alpha: 'Прозрачность', // Alpha
+  red: 'Красный',
+  green: 'Зелёный',
+  blue: 'Синий',
+  alpha: 'Прозрачность',
 
-  brightness: 'Яркость', // Brightness
-  contrast: 'Контраст', // Contrast
-  grayscale: 'Монохром', // Grayscale
-  'hue-rotate': 'Поворот цвета', // Hue Rotate
-  invert: 'Инверсия', // Invert
-  opacity: 'Прозрачность', // Opacity
-  saturate: 'Насыщенность', // Saturate
-  sepia: 'Сепия', // Sepia
+  brightness: 'Яркость',
+  contrast: 'Контраст',
+  grayscale: 'Монохром',
+  'hue-rotate': 'Поворот цвета',
+  invert: 'Инверсия',
+  opacity: 'Прозрачность',
+  saturate: 'Насыщенность',
+  sepia: 'Сепия',
 
-  scale: 'Масштаб', // Scale
-  rotation: 'Поворот', // Rotation
-  turdsize: 'Уменьшить мусор', // Suppress Speckles
-  alphamax: 'Угловой порог', // Corner Threshold
-  minPathSegments: 'Минимальная длина пути', // Min. Path Length
-  strokeWidth: 'Толщина обводки', // Stroke Width
-  turnpolicy: 'Правила поворота', // Turn Policy
-  opticurve: 'Оптимизировать кривые', // Optimise Curves
-  opttolerance: 'Уровень оптимизации', // Optimisation Tolerance
-  showAdvancedControls: 'Дополнительные настройки', // Show Expert Options
+  scale: 'Масштаб',
+  rotation: 'Поворот',
+  turdsize: 'Уменьшить мусор',
+  alphamax: 'Угловой порог',
+  minPathSegments: 'Минимальная длина пути',
+  strokeWidth: 'Толщина обводки',
+  turnpolicy: 'Правила поворота',
+  opticurve: 'Оптимизировать кривые',
+  opttolerance: 'Уровень оптимизации',
+  showAdvancedControls: 'Дополнительные настройки',
 
   '%': '%',
   deg: '°',
-  steps: 'шагов', // Steps
-  pixels: 'пикселей', // Pixels
-  segments: 'сегментов', // Segments
+  steps: 'шагов',
+  pixels: 'пикселей',
+  segments: 'сегментов',
 
-  reset: 'Сбросить', // Reset
-  resetAll: 'Сбросить всё', // Reset All
+  reset: 'Сбросить',
+  resetAll: 'Сбросить всё',
 
-  dropFileHere: 'Бросьте файл сюда', // Drop File Here
-  openImage: 'Открыть картинку', // Open Image
-  saveSVG: 'Сохранить SVG', // Save SVG
-  pasteImage: 'Вставить картинку', // Paste Image
-  copySVG: 'Скопировать SVG', // Copy SVG
-  install: 'Установить', // Install
+  dropFileHere: 'Бросьте файл сюда',
+  openImage: 'Открыть картинку',
+  saveSVG: 'Сохранить SVG',
+  pasteImage: 'Вставить картинку',
+  copySVG: 'Скопировать SVG',
+  install: 'Установить',
 
-  posterizeInputImage: 'Постеризовать входную картинку', // Posterise Input Image
-  colorSVG: 'Цветной SVG', // Colour SVG
-  monochromeSVG: 'Монохромный SVG', // Monochrome SVG
+  posterizeInputImage: 'Постеризовать входную картинку',
+  colorSVG: 'Цветной SVG',
+  monochromeSVG: 'Монохромный SVG',
 
-  colorChannels: 'Цветовые каналы', // Colour Channels
-  imageSizeAndRotation: 'Входные размеры и поворот', // Input Size and Rotation
-  imagePreprocessing: 'Входная обработка', // Input Preprocessing
-  svgOptions: 'Настройки SVG', // SVG Options
+  colorChannels: 'Цветовые каналы',
+  imageSizeAndRotation: 'Входные размеры и поворот',
+  imagePreprocessing: 'Входная обработка',
+  svgOptions: 'Настройки SVG',
 
-  considerDPR: 'Учитывать плотность пикселей', // Consider Device Pixel Ratio
+  considerDPR: 'Учитывать плотность пикселей',
 
-  tweak: 'Подкрутить', // Tweak
-  closeOptions: 'Закрыть', // Close
+  tweak: 'Подкрутить',
+  closeOptions: 'Закрыть',
 
-  optimizingSVG: 'Оптимизирую SVG', // Optimising SVG
-  copiedSVG: 'Скопированный SVG', // Copied SVG
-  savedSVG: 'Сохранённый SVG', // Saved SVG
+  optimizingSVG: 'Оптимизирую SVG',
+  copiedSVG: 'Скопированный SVG',
+  savedSVG: 'Сохранённый SVG',
 
-  readyToWorkOffline: 'Готово для работы офлайн.', // Ready to Work Offline.
-  svgSize: 'Размер SVG', // SVG Size
-  bytes: 'байтов', // Bytes
-  zoom: 'Масштаб', // Zoom
+  readyToWorkOffline: 'Готово для работы офлайн.',
+  svgSize: 'Размер SVG',
+  bytes: 'байтов',
+  zoom: 'Масштаб',
 
-  license: 'Лицензия', // License
-  about: 'О проекте', // About
+  license: 'Лицензия',
+  about: 'О проекте',
 
   ...languages,
 };

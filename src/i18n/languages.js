@@ -29,10 +29,10 @@ const languages = {
   jaJP: '日本語',
   koKR: '한국어',
   nlNL: 'Nederlands',
+  noNO: 'Norsk',
   ruRU: 'Русский',
   ukUA: 'Українська',
   zhCN: '中文',
-  noNO: 'Norsk'
 };
 
 // ignore unused exports default

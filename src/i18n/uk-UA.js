@@ -20,72 +20,72 @@
 import languages from './languages.js';
 
 const translations = {
-  red: 'Червоний', // Red
-  green: 'Зелений', // Green
-  blue: 'Синій', // Blue
-  alpha: 'Прозорість', // Alpha
+  red: 'Червоний',
+  green: 'Зелений',
+  blue: 'Синій',
+  alpha: 'Прозорість',
 
-  brightness: 'Яскравість', // Brightness
-  contrast: 'Контраст', // Contrast
-  grayscale: 'Монохром', // Grayscale
-  'hue-rotate': 'Тон', // Hue Rotate
-  invert: 'Інверсія', // Invert
-  opacity: 'Прозорість', // Opacity
-  saturate: 'Насиченість', // Saturate
-  sepia: 'Сепія', // Sepia
+  brightness: 'Яскравість',
+  contrast: 'Контраст',
+  grayscale: 'Монохром',
+  'hue-rotate': 'Тон',
+  invert: 'Інверсія',
+  opacity: 'Прозорість',
+  saturate: 'Насиченість',
+  sepia: 'Сепія',
 
-  scale: 'Масштаб', // Scale
-  rotation: 'Поворот', // Rotation
-  turdsize: 'Придушити плями', // Suppress Speckles
-  alphamax: 'Згладжування', // Corner Threshold
-  minPathSegments: 'Мін. довжина лінії', // Min. Path Length
-  strokeWidth: 'Товщина контуру', // Stroke Width
-  turnpolicy: 'Правила повороту', // Turn Policy
-  opticurve: 'Оптимізувати криві', // Optimise Curves
-  opttolerance: 'Рівень оптимізації', // Optimisation Tolerance
-  showAdvancedControls: 'Додаткові налаштування', // Show Expert Options
+  scale: 'Масштаб',
+  rotation: 'Поворот',
+  turdsize: 'Придушити плями',
+  alphamax: 'Згладжування',
+  minPathSegments: 'Мін. довжина лінії',
+  strokeWidth: 'Товщина контуру',
+  turnpolicy: 'Правила повороту',
+  opticurve: 'Оптимізувати криві',
+  opttolerance: 'Рівень оптимізації',
+  showAdvancedControls: 'Додаткові налаштування',
 
   '%': '%',
   deg: '°',
-  steps: 'кроків', // Steps
-  pixels: 'пікселів', // Pixels
-  segments: 'сегментів', // Segments
+  steps: 'кроків',
+  pixels: 'пікселів',
+  segments: 'сегментів',
 
-  reset: 'Скинути', // Reset
-  resetAll: 'Скинути все', // Reset All
+  reset: 'Скинути',
+  resetAll: 'Скинути все',
 
-  dropFileHere: 'Киньте файл сюди', // Drop File Here
-  openImage: 'Відкрити зображення', // Open Image
-  saveSVG: 'Зберегти SVG', // Save SVG
-  pasteImage: 'Зберегти зображення', // Paste Image
-  copySVG: 'Скопіювати SVG', // Copy SVG
-  install: 'Встановити', // Install
+  dropFileHere: 'Киньте файл сюди',
+  openImage: 'Відкрити зображення',
+  saveSVG: 'Зберегти SVG',
+  pasteImage: 'Зберегти зображення',
+  copySVG: 'Скопіювати SVG',
+  install: 'Встановити',
 
-  posterizeInputImage: 'Постеризувати вхідне зображення', // Posterise Input Image
-  colorSVG: 'Кольоровий SVG', // Colour SVG
-  monochromeSVG: 'Монохромний SVG', // Monochrome SVG
+  posterizeInputImage: 'Постеризувати вхідне зображення',
+  colorSVG: 'Кольоровий SVG',
+  monochromeSVG: 'Монохромний SVG',
 
-  colorChannels: 'Кольорові канали', // Colour Channels
-  imageSizeAndRotation: 'Вхідні розміри і обертання', // Input Size and Rotation
-  imagePreprocessing: 'Вхідна обробка', // Input Preprocessing
-  svgOptions: 'Налаштування SVG', // SVG Options
+  colorChannels: 'Кольорові канали',
+  imageSizeAndRotation: 'Вхідні розміри і обертання',
+  imagePreprocessing: 'Вхідна обробка',
+  svgOptions: 'Налаштування SVG',
 
-  considerDPR: 'Враховувати щільність пікселів', // Consider Device Pixel Ratio
+  considerDPR: 'Враховувати щільність пікселів',
 
-  tweak: 'Підкрутити', // Tweak
-  closeOptions: 'Закрити', // Close
+  tweak: 'Підкрутити',
+  closeOptions: 'Закрити',
 
-  optimizingSVG: 'Оптимізую SVG', // Optimising SVG
-  copiedSVG: 'Скопійований SVG', // Copied SVG
-  savedSVG: 'Збережений SVG', // Saved SVG
+  optimizingSVG: 'Оптимізую SVG',
+  copiedSVG: 'Скопійований SVG',
+  savedSVG: 'Збережений SVG',
 
-  readyToWorkOffline: 'Готовий для роботи офлайн.', // Ready to Work Offline.
-  svgSize: 'Розмір SVG', // SVG Size
-  bytes: 'байт', // Bytes
-  zoom: 'Масштаб', // Zoom
+  readyToWorkOffline: 'Готовий для роботи офлайн.',
+  svgSize: 'Розмір SVG',
+  bytes: 'байт',
+  zoom: 'Масштаб',
 
-  license: 'Ліцензія', // License
-  about: 'Про проект', // About
+  license: 'Ліцензія',
+  about: 'Про проект',
 
   ...languages,
 };
