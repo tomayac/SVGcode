@@ -29,6 +29,7 @@ const languages = {
   jaJP: '日本語',
   koKR: '한국어',
   nlNL: 'Nederlands',
+  ukUA: 'Українська',
   zhCN: '中文',
 };
 
