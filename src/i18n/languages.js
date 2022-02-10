@@ -26,6 +26,7 @@ const languages = {
   enUS: 'English (United States)',
   esES: 'Español',
   frFR: 'Français',
+  jaJP: '日本語',
   koKR: '한국어',
   nlNL: 'Nederlands',
   zhCN: '中文',

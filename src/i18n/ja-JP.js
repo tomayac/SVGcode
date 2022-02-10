@@ -85,7 +85,7 @@ const translations = {
   zoom: 'ズーム',
 
   license: 'ライセンス',
-  about: 'SVG Code について',
+  about: 'について',
 
   ...languages,
 };
