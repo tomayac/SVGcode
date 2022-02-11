@@ -443,6 +443,7 @@ button:hover {
   height: 100vh;
   content: attr(data-drop-text);
   position: absolute;
+  z-index: 2;
 }
 
 .toast {
