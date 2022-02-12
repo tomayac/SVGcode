@@ -48,6 +48,8 @@ const SUPPORTED_LOCALES = [
   'zh-CN',
 ];
 
+const RTL_LANGUAGES = ['ar', 'fa', 'he', 'ur'];
+
 /**
  *
  *
@@ -116,6 +118,11 @@ class I18N {
       JSON.stringify(this.currentLanguageAndLocale),
     );
     document.documentElement.lang = `${language}${locale ? `-${locale}` : ''}`;
+    if (RTL_LANGUAGES.includes(language)) {
+      document.documentElement.dir = 'rtl';
+    } else {
+      document.documentElement.dir = 'ltr';
+    }
     await this.getTranslations();
   }
 

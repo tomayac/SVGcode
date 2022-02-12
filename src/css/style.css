@@ -223,7 +223,6 @@ details.main .close-options-button {
   height: var(--input-image-height);
   object-fit: contain;
   position: absolute;
-  right: var(--space);
   margin-inline-start: var(--space);
   margin-block-start: calc(var(--menu-height) + 2 * var(--space));
   z-index: 1;
@@ -231,12 +230,25 @@ details.main .close-options-button {
   user-select: none;
 }
 
+[dir=ltr] .input-image {
+  right: var(--space);
+}
+[dir=rtl] .input-image {
+  left: var(--space);
+}
+
 .input-image:hover,
 canvas.debug:hover {
   transform: scale(2);
-  transform-origin: top right;
   z-index: 2;
   cursor: zoom-in;
+}
+
+[dir=ltr] .input-image:hover {
+  transform-origin: top right;
+}
+[dir=rtl] .input-image:hover {
+  transform-origin: top left;
 }
 
 summary svg {
