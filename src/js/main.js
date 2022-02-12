@@ -21,7 +21,6 @@ import { initUI, showToast } from './ui.js';
 import { registerSW } from 'virtual:pwa-register';
 import { i18n } from './i18n.js';
 import { installButton } from './domrefs.js';
-import './collect.js';
 
 if ('launchQueue' in window) {
   import('./filehandling.js');
@@ -70,3 +69,7 @@ const supportsWorkerType = () => {
   });
   updateSW();
 })();
+
+if (location.href == 'https://svgco.de/') {
+  import('./collect.js');
+}
