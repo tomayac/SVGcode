@@ -40,7 +40,7 @@ const translations = {
   alphamax: 'عتبة الزاوية',
   minPathSegments: 'الحد الأدنى لطول المسار',
   strokeWidth: 'عرض جرة قلم',
-  turnpolicy: 'بدوره نهج',
+  turnpolicy: 'سياسة الدوران',
   opticurve: 'تحسين المنحنيات',
   opttolerance: 'التسامح الأمثل',
   showAdvancedControls: 'إظهار خيارات متقدمة',
