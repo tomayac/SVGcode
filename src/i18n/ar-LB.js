@@ -36,13 +36,13 @@ const translations = {
 
   scale: 'حجم',
   rotation: 'دوران',
-  turdsize: 'قمع البقع',
+  turdsize: 'ترطيب الاخاديد',
   alphamax: 'عتبة الزاوية',
   minPathSegments: 'الحد الأدنى لطول المسار',
   strokeWidth: 'عرض جرة قلم',
   turnpolicy: 'سياسة الدوران',
   opticurve: 'تحسين المنحنيات',
-  opttolerance: 'التسامح الأمثل',
+  opttolerance: 'درجة التسامح الأمثل',
   showAdvancedControls: 'إظهار خيارات متقدمة',
 
   '%': '%',
