@@ -26,7 +26,7 @@ const translations = {
   alpha: 'ألفا',
 
   brightness: 'سطوع',
-  contrast: 'مقابلة',
+  contrast: 'تباين',
   grayscale: 'تدرج الرمادي',
   'hue-rotate': 'تدوير هوى',
   invert: 'عكس',
@@ -55,7 +55,7 @@ const translations = {
   resetAll: 'إعادة ضبط الجميع',
 
   dropFileHere: 'إفلات الملف هنا',
-  openImage: 'صورة مفتوحة',
+  openImage: 'افتح هذه الصورة',
   saveSVG: 'احفظ SVG',
   pasteImage: 'لصق الصورة',
   copySVG: 'انسخ ملف SVG',
@@ -66,14 +66,14 @@ const translations = {
   monochromeSVG: 'أحادية اللون SVG',
 
   colorChannels: 'قنوات اللون',
-  imageSizeAndRotation: 'حجم الإدخال والدوران',
-  imagePreprocessing: 'المدخلات المعالجة المسبقة',
+  imageSizeAndRotation: 'حجم الصورة والدوران',
+  imagePreprocessing: 'المعالجة المسبقة',
   svgOptions: 'خيارات SVG',
 
-  considerDPR: 'ضع في اعتبارك نسبة وحدات البكسل في الجهاز',
+  considerDPR: 'اخذ بعين الاعتبار نسبة وحدات البكسل للجهاز',
 
-  tweak: 'قرص',
-  closeOptions: 'قريب',
+  tweak: 'تعديل',
+  closeOptions: 'قفل الخيارات',
 
   optimizingSVG: 'تحسين SVG',
   copiedSVG: 'تم نسخ SVG',
