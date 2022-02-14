@@ -21,7 +21,7 @@ import languages from './languages.js';
 
 const translations = {
   red: 'أحمر',
-  green: 'لون أخضر',
+  green: 'أخضر',
   blue: 'أزرق',
   alpha: 'ألفا',
 
