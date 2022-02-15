@@ -28,6 +28,7 @@ const languages = {
   esES: 'Español',
   frFR: 'Français',
   heIL: 'עברית',
+  idID: 'Bahasa Indonesia',
   jaJP: '日本語',
   koKR: '한국어',
   nlNL: 'Nederlands',
