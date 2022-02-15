@@ -90,15 +90,18 @@ class I18N {
    */
   detectOrRestoreLanguageAndLocale() {
     // Use a `?lang=` query parameter to override the language, if available.
-    const langParam = new URL(window.location).searchParams.get('lang');
+    const urlSearchParams = new URLSearchParams(new URL(location.href).search);
+    const langParam = urlSearchParams.get('lang');
     if (langParam && SUPPORTED_LANGUAGES.includes(langParam.substring(0, 2))) {
       const [language, locale = ''] = langParam.split('-');
-      const result = {
-        language,
-        locale,
-      };
       this.setLanguageAndLocale(language, locale);
-      return result;
+      urlSearchParams.delete('lang');
+      const urlSearchParamsString = urlSearchParams.toString();
+      if (urlSearchParamsString) {
+        location.search = urlSearchParamsString;
+      } else {
+        location.href = location.origin;
+      }
     }
 
     // Use the stored language and locale, if available.
