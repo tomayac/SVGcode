@@ -18,6 +18,7 @@
  */
 
 const languages = {
+  arLB: 'عربى',
   caES: 'Català',
   daDK: 'Dansk',
   deDE: 'Deutsch',
