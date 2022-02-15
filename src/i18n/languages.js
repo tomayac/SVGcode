@@ -33,6 +33,7 @@ const languages = {
   koKR: '한국어',
   nlNL: 'Nederlands',
   noNO: 'Norsk',
+  ptBR: 'Português',
   ruRU: 'Русский',
   ukUA: 'Українська',
   zhCN: '中文',
