@@ -38,7 +38,7 @@ const SUPPORTED_LANGUAGES = [
 ];
 
 const SUPPORTED_LOCALES = [
-  'ar-LB',
+  'ar-TN',
   'ca-ES',
   'da-DK',
   'de-DE',
