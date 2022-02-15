@@ -93,7 +93,7 @@ class I18N {
     const url = new URL(location);
     const urlSearchParams = url.searchParams;
     const langParam = urlSearchParams.get('lang');
-    if (langParam && SUPPORTED_LANGUAGES.includes(langParam.substring(0, 2))) {
+    if (langParam) {
       const [language, locale = ''] = langParam.split('-');
       this.setLanguageAndLocale(language, locale);
       urlSearchParams.delete('lang');
