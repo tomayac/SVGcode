@@ -40,6 +40,12 @@
       "type": "image/svg+xml",
       "sizes": "150x150",
       "purpose": "any"
+    },
+    {
+      "src": "https://svgco.de/favicon-bw.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150",
+      "purpose": "monochrome"
     }
   ],
   "file_handlers": [
