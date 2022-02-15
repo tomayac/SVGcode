@@ -27,8 +27,8 @@ const translations = {
 
   brightness: 'Brilho',
   contrast: 'Contraste',
-  grayscale: 'Escala de cinza',
-  'hue-rotate': 'Rotação de cor',
+  grayscale: 'Tons de cinza',
+  'hue-rotate': 'Rotação de tonalidade',
   invert: 'Inverter',
   opacity: 'Opacidade',
   saturate: 'Saturação',
@@ -56,7 +56,7 @@ const translations = {
 
   dropFileHere: 'Arraste um arquivo aqui',
   openImage: 'Abrir imagem',
-  saveSVG: 'Guardar SVG',
+  saveSVG: 'Salvar SVG',
   pasteImage: 'Colar imagem',
   copySVG: 'Copiar SVG',
   install: 'Instalar',
@@ -77,7 +77,7 @@ const translations = {
 
   optimizingSVG: 'Otimizando SVG',
   copiedSVG: 'SVG copiado',
-  savedSVG: 'SVG guardado',
+  savedSVG: 'SVG salvado',
 
   readyToWorkOffline: 'Pronto para trabalhar offline',
   svgSize: 'Tamanho do SVG',
