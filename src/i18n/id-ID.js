@@ -28,7 +28,7 @@
    brightness: 'Cahaya',
    contrast: 'Kontras',
    grayscale: 'Monokromatik',
-   'hue-rotate': 'Corak',
+   'hue-rotate': 'Perputaran Corak',
    invert: 'Inversi',
    opacity: 'Transparansi',
    saturate: 'Saturasi',
