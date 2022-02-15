@@ -89,13 +89,28 @@ class I18N {
    * @memberof I18N
    */
   detectOrRestoreLanguageAndLocale() {
+    // Use a `?lang=` query parameter to override the language, if available.
+    const langParam = new URL(window.location).searchParams.get('lang');
+    if (langParam && SUPPORTED_LANGUAGES.includes(langParam.substring(0, 2))) {
+      const [language, locale = ''] = langParam.split('-');
+      const result = {
+        language,
+        locale,
+      };
+      this.setLanguageAndLocale(language, locale);
+      return result;
+    }
+
+    // Use the stored language and locale, if available.
     const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedLanguage) {
       const { language, locale } = JSON.parse(storedLanguage);
       this.setLanguageAndLocale(language, locale);
       return { language, locale };
     }
-    let [language, locale = null] = navigator.language?.split('-');
+
+    // Use the browser's language and locale.
+    let [language, locale = ''] = navigator.language?.split('-');
     if (locale) {
       // Safari reports the locale as lowercase:
       // https://bugs.webkit.org/show_bug.cgi?id=163096.
@@ -119,7 +134,7 @@ class I18N {
     if (!SUPPORTED_LANGUAGES.includes(language)) {
       throw new Error(`Language "${language}" is not supported.`);
     }
-    if (!SUPPORTED_LOCALES.includes(`${language}-${locale}`)) {
+    if (locale && !SUPPORTED_LOCALES.includes(`${language}-${locale}`)) {
       throw new Error(`Locale "${language}-${locale}" is not supported.`);
     }
     this.currentLanguageAndLocale = {
