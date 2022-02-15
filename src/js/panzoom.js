@@ -24,6 +24,14 @@ pinchZoom.addEventListener('change', () => {
   svgOutput.setAttribute('transform', `translate(${x}, ${y}) scale(${scale})`);
 });
 
+pinchZoom.addEventListener('pointerdown', () => {
+  pinchZoom.style.cursor = 'grabbing';
+});
+
+pinchZoom.addEventListener('pointerup', () => {
+  pinchZoom.style.cursor = '';
+});
+
 const resetPanAndZoom = () => {
   svgOutput.setAttribute('transform', '');
 };
