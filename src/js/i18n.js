@@ -26,6 +26,7 @@ const SUPPORTED_LANGUAGES = [
   'en',
   'es',
   'fr',
+  'he',
   'ja',
   'ko',
   'nl',
@@ -44,6 +45,7 @@ const SUPPORTED_LOCALES = [
   'en-US',
   'es-ES',
   'fr-FR',
+  'he-IL',
   'ja-JP',
   'ko-KR',
   'nl-NL',
@@ -52,6 +54,8 @@ const SUPPORTED_LOCALES = [
   'zh-CN',
   'no-NO',
 ];
+
+const RTL_LANGUAGES = ['ar', 'fa', 'he', 'ur'];
 
 /**
  *
@@ -121,6 +125,11 @@ class I18N {
       JSON.stringify(this.currentLanguageAndLocale),
     );
     document.documentElement.lang = `${language}${locale ? `-${locale}` : ''}`;
+    if (RTL_LANGUAGES.includes(language)) {
+      document.documentElement.dir = 'rtl';
+    } else {
+      document.documentElement.dir = 'ltr';
+    }
     await this.getTranslations();
   }
 

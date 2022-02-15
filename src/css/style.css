@@ -78,6 +78,8 @@ progress {
 }
 
 canvas.debug {
+  --scale-factor: 2;
+
   width: auto;
   height: var(--input-image-height);
   display: block;
@@ -87,9 +89,9 @@ canvas.debug {
     var(--menu-height) + 4 * var(--space) + var(--input-image-height)
   );
   position: absolute;
-  right: var(--space);
   z-index: 1;
   cursor: default;
+  transform: translateX(-50%) scale(var(--scale-factor));
 }
 
 summary,
@@ -150,15 +152,27 @@ details[open]:not(.main) > summary::after {
   content: "▼";
 }
 
+details.main {
+  z-index: 1;
+  background-color: var(--canvas);
+}
+
 details.main .close-options-button {
   display: none;
   position: fixed;
-  right: 1.25rem;
   margin: 0.5rem 0 0;
   width: 2.2rem;
   height: 2.2rem;
   z-index: 1;
   font-size: 1rem;
+}
+
+[dir="ltr"] details.main .close-options-button {
+  right: 1.25rem;
+}
+
+[dir="rtl"] details.main .close-options-button {
+  left: 1.25rem;
 }
 
 @media (max-width: 414px) {
@@ -223,7 +237,6 @@ details.main .close-options-button {
   height: var(--input-image-height);
   object-fit: contain;
   position: absolute;
-  right: var(--space);
   margin-inline-start: var(--space);
   margin-block-start: calc(var(--menu-height) + 2 * var(--space));
   z-index: 1;
@@ -231,12 +244,33 @@ details.main .close-options-button {
   user-select: none;
 }
 
+[dir="ltr"] .input-image,
+[dir="ltr"] canvas.debug {
+  right: var(--space);
+}
+
+[dir="rtl"] .input-image,
+[dir="rtl"] canvas.debug {
+  left: var(--space);
+}
+
 .input-image:hover,
 canvas.debug:hover {
-  transform: scale(2);
-  transform-origin: top right;
+  /* stylelint-disable-next-line */
+  transform: translateX(calc(var(--scale-factor, 0) * -50%))
+    scale(calc(var(--scale-factor, 1) * 2));
   z-index: 2;
   cursor: zoom-in;
+}
+
+[dir="ltr"] .input-image:hover,
+[dir="ltr"] canvas.debug {
+  transform-origin: top right;
+}
+
+[dir="rtl"] .input-image:hover,
+[dir="rtl"] canvas.debug {
+  transform-origin: top left;
 }
 
 summary svg {
@@ -326,6 +360,16 @@ button.menu {
   width: max-content;
   flex-shrink: 0;
   margin-inline-end: calc(4 * var(--space));
+}
+
+button.menu > span:last-of-type {
+  direction: ltr;
+}
+
+[data-i18n-key="svgOptions"],
+label[for="color"],
+label[for="monochrome"] {
+  direction: ltr;
 }
 
 button.install {
