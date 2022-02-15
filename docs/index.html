@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Convert color or monochrome bitmap images (PNG, JPG, JPEG, WEBP, AVIF, GIF,…) to color or monochrome vector images (SVG)."
+    />
+    <meta name="theme_color" content="#131313" />
+    <meta
+      name="description"
+      content="SVGcode is a Progressive Web App that lets you convert raster images like JPG, PNG, GIF, WebP, AVIF, etc. to vector graphics in SVG format."
+    />
+
+    <meta property="og:title" content="SVGcode" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://svgco.de/" />
+    <meta
+      property="og:image"
+      content="https://svgco.de/screenshots/desktop.png"
+    />
+    <meta
+      property="og:description"
+      content="SVGcode is a Progressive Web App that lets you convert raster images like JPG, PNG, GIF, WebP, AVIF, etc. to vector graphics in SVG format."
+    />
+    <meta name="monetization" content="$ilp.gatehub.net/348218105" />
+
+    <!-- Canvas 2D -->
+    <meta
+      http-equiv="origin-trial"
+      content="AqPXzltR5WIC5g3OazTr1YzSYAyy4nWiyNEqbJYHgkxp6YInR2be3jLg2yQeTGtF7cIatRwiF7XIG99ZOTjm9wwAAABQeyJvcmlnaW4iOiJodHRwczovL3N2Z2NvLmRlOjQ0MyIsImZlYXR1cmUiOiJOZXdDYW52YXMyREFQSSIsImV4cGlyeSI6MTY0NTU3NDM5OX0="
+    />
+    <!-- Window Controls Overlay -->
+    <meta
+      http-equiv="origin-trial"
+      content="AlU98i8v3FdFanY57litSZFTUg+DvX3fHLiOJz5vQcs0beV1Mgco/ECmyEWD0OnRA/MKDVA5HlHhyROHBp1sTwEAAABdeyJvcmlnaW4iOiJodHRwczovL3N2Z2NvLmRlOjQ0MyIsImZlYXR1cmUiOiJXZWJBcHBXaW5kb3dDb250cm9sc092ZXJsYXkiLCJleHBpcnkiOjE2Mzg5MjE1OTl9"
+    />
+
+    <!-- Web App Dark Mode -->
+    <meta
+      http-equiv="origin-trial"
+      content="Armcbvn0AxgR2HikYrpioEv4Y+wyTK+UO4XtYz7vhZAfY7EQmGMlrs25woeJnUH6NejFBMnCkDU05KRnoWgfAAcAAABQeyJvcmlnaW4iOiJodHRwczovL3N2Z2NvLmRlOjQ0MyIsImZlYXR1cmUiOiJXZWJBcHBEYXJrTW9kZSIsImV4cGlyeSI6MTY1NTI1MTE5OX0="
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ChromiumDev" />
+    <meta name="twitter:creator" content="@tomayac" />
+    <meta name="twitter:title" content="SVGcode" />
+    <meta
+      name="twitter:description"
+      content="SVGcode is a Progressive Web App that lets you convert raster images like JPG, PNG, GIF, WebP, AVIF, etc. to vector graphics in SVG format."
+    />
+    <meta
+      name="twitter:image"
+      content="https://svgco.de/screenshots/desktop.png"
+    />
+
+    <title>SVGcode—Convert raster images to SVG vector graphics</title>
+    
+    
+    
+    <link rel="icon" type="image/svg" href="/favicon.svg" />
+    <link rel="canonical" href="https://svgco.de/" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link
+      href="/splashscreens/iphone5_splash.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/iphone6_splash.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/iphoneplus_splash.png"
+      media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/iphonex_splash.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/iphonexr_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/iphonexsmax_splash.png"
+      media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/ipad_splash.png"
+      media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/ipadpro1_splash.png"
+      media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/ipadpro3_splash.png"
+      media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    <link
+      href="/splashscreens/ipadpro2_splash.png"
+      media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+      rel="apple-touch-startup-image"
+    />
+    
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SVGcode",
+        "applicationCategory": "DesignApplication, BrowserApplication, MultimediaApplication, UtilitiesApplication",
+        "screenshot": "https://svgco.de/screenshots/desktop.png",
+        "author": {
+          "@type": "Person",
+          "name": "Thomas Steiner",
+          "email": "steiner.thomas@gmail.com",
+          "image": "https://blog.tomayac.com/static/icon.png"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Blogccasion",
+          "email": "steiner.thomas@gmail.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://blog.tomayac.com/static/icon.png"
+          }
+        }
+      }
+    </script>
+    <base target="_blank" />
+    <script type="module" crossorigin src="/assets/index.fed758ff.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.78f84693.js">
+    <link rel="stylesheet" href="/assets/style.19652628.css">
+  <link rel="manifest" href="/manifest.webmanifest"></head>
+  <body>
+    <main>
+      <details class="main">
+        <summary></summary>
+        <button type="button" class="with-bg close-options-button">
+          <span aria-hidden="true">&#10005;</span>
+        </button>
+        <div class="sidebar">
+          <form>
+            <div class="preprocess">
+              <div class="other-input">
+                <input
+                  id="color"
+                  type="radio"
+                  class="color"
+                  name="output-option"
+                  checked
+                />
+                <label for="color"></label>
+              </div>
+              <div class="other-input">
+                <input
+                  id="monochrome"
+                  type="radio"
+                  class="monochrome"
+                  name="output-option"
+                />
+                <label for="monochrome"></label>
+              </div>
+              <div class="other-input">
+                <input id="consider-dpr" type="checkbox" class="consider-dpr" />
+                <label for="consider-dpr"></label>
+              </div>
+              <div class="other-input advanced">
+                <input
+                  id="optimize-curves"
+                  type="checkbox"
+                  class="optimize-curves"
+                  checked
+                />
+                <label for="optimize-curves"></label>
+              </div>
+              <div class="other-input">
+                <input
+                  id="posterize"
+                  type="checkbox"
+                  class="posterize"
+                  checked
+                />
+                <label for="posterize"></label>
+              </div>
+              <div class="other-input">
+                <input
+                  id="show-advanced"
+                  type="checkbox"
+                  class="show-advanced"
+                />
+                <label for="show-advanced"></label>
+              </div>
+              <div class="details"></div>
+              <div class="other-input">
+                <button type="button" class="reset-all"></button>
+              </div>
+            </div>
+          </form>
+          <ul class="link-list">
+            <li>
+              <a href="https://github.com/tomayac/SVGcode">GitHub</a>
+            </li>
+            <li>
+              <a c href="https://twitter.com/ChromiumDev">Twitter</a>
+            </li>
+            <li>
+              <a class="about" href="https://web.dev/svgcode/"></a>
+            </li>
+            <li>
+              <a
+                class="license"
+                href="https://github.com/tomayac/SVGcode/blob/main/LICENSE"
+              ></a>
+            </li>
+          </ul>
+          <select class="language"></select>
+          <dark-mode-toggle
+            permanent
+            dark="Light Theme"
+            light="Dark Theme"
+          ></dark-mode-toggle>
+        </div>
+      </details>
+      <div class="main-area">
+        <div class="menu">
+          <button class="open menu" type="button"></button>
+          <button class="save menu" type="button"></button>
+          <button class="copy menu" type="button"></button>
+          <button class="paste menu" type="button"></button>
+          <button class="install menu" type="button"></button>
+          <progress hidden value="0" max="100"></progress>
+          <label hidden><input class="debug" type="checkbox" /> Debug</label>
+        </div>
+        <img
+          class="input-image"
+          crossorigin="anonymous"
+          src="/favicon.png"
+          alt=""
+          draggable="false"
+        />
+        <canvas></canvas>
+        <div dir="ltr" class="pinch-zoom-wrapper">
+          <pinch-zoom class="checkerboard">
+            <div></div>
+          </pinch-zoom>
+          <svg version="1.0" xmlns="http://www.w3.org/2000/svg">
+            <g class="svg-output"></g>
+          </svg>
+        </div>
+        <div class="toast" hidden></div>
+      </div>
+    </main>
+  </body>
+</html>
