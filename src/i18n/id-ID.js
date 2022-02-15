@@ -55,7 +55,7 @@
    resetAll: 'Atur Ulang Semua',
  
    dropFileHere: 'Taruh File Di sini',
-   openImage: 'Buka gambar',
+   openImage: 'Buka Gambar',
    saveSVG: 'Simpan SVG',
    pasteImage: 'Tempel Gambar',
    copySVG: 'Salin SVG',
@@ -65,7 +65,7 @@
    colorSVG: 'SVG Berwarna',
    monochromeSVG: 'SVG Hitam Putih',
  
-   colorChannels: 'Kanal warna',
+   colorChannels: 'Kanal Warna',
    imageSizeAndRotation: 'Ukuran dan Rotasi',
    imagePreprocessing: 'Pra Pemrosesan',
    svgOptions: 'Pengaturan SVG',
