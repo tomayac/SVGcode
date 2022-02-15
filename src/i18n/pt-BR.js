@@ -77,7 +77,7 @@ const translations = {
 
   optimizingSVG: 'Otimizando SVG',
   copiedSVG: 'SVG copiado',
-  savedSVG: 'SVG guardado',
+  savedSVG: 'SVG salvado',
 
   readyToWorkOffline: 'Pronto para trabalhar offline',
   svgSize: 'Tamanho do SVG',
