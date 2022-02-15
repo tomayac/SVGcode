@@ -366,6 +366,12 @@ button.menu > span:last-of-type {
   direction: ltr;
 }
 
+[data-i18n-key="svgOptions"],
+label[for="color"],
+label[for="monochrome"] {
+  direction: ltr;
+}
+
 button.install {
   display: none;
 }
