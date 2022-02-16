@@ -32,11 +32,11 @@ const SUPPORTED_LANGUAGES = [
   'ja',
   'ko',
   'nl',
+  'no',  
+  'pl',  
   'ru',
   'uk',
   'zh',
-  'no',
-  'pl',
 ];
 
 const SUPPORTED_LOCALES = [
@@ -54,11 +54,11 @@ const SUPPORTED_LOCALES = [
   'ja-JP',
   'ko-KR',
   'nl-NL',
+  'no-NO',  
+  'pl-PL',  
   'ru-RU',
   'uk-UA',
   'zh-CN',
-  'no-NO',
-  'pl-PL',
 ];
 
 const RTL_LANGUAGES = ['ar', 'fa', 'he', 'ur'];
