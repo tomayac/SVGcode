@@ -359,6 +359,10 @@ optimizeCurvesCheckbox.addEventListener('change', async () => {
   await startProcessing();
 });
 
+debugCheckbox.addEventListener('input', () => {
+  canvasMain.classList.toggle('debug', debugCheckbox.checked);
+});
+
 const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
@@ -447,6 +451,14 @@ const initUI = async () => {
   }
 
   progress.hidden = false;
+
+  const url = new URL(location);
+  const searchParams = url.searchParams;
+  if (searchParams.has('debug')) {
+    debugCheckbox.checked = true;
+    debugCheckbox.labels[0].hidden = false;
+    debugCheckbox.dispatchEvent(new Event('input'));
+  }
 
   try {
     // Start where the user left off.
@@ -568,10 +580,6 @@ resetAllButton.addEventListener('click', async () => {
   await resetSettings();
   resetPanAndZoom();
   await startProcessing();
-});
-
-debugCheckbox.addEventListener('click', () => {
-  canvasMain.classList.toggle('debug');
 });
 
 let toastTimeout = null;

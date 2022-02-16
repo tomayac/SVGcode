@@ -34,6 +34,7 @@ const languages = {
   nlNL: 'Nederlands',
   noNO: 'Norsk',
   plPL: 'Polski',  
+  ptBR: 'Português',
   ruRU: 'Русский',
   ukUA: 'Українська',
   zhCN: '中文',
