@@ -36,6 +36,7 @@ const SUPPORTED_LANGUAGES = [
   'uk',
   'zh',
   'no',
+  'pl',
 ];
 
 const SUPPORTED_LOCALES = [
@@ -57,6 +58,7 @@ const SUPPORTED_LOCALES = [
   'uk-UA',
   'zh-CN',
   'no-NO',
+  'pl-PL',
 ];
 
 const RTL_LANGUAGES = ['ar', 'fa', 'he', 'ur'];

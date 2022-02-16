@@ -36,6 +36,7 @@ const languages = {
   ruRU: 'Русский',
   ukUA: 'Українська',
   zhCN: '中文',
+  plPL: 'Polski',
 };
 
 // ignore unused exports default

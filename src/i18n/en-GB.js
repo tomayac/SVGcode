@@ -41,7 +41,7 @@ const translations = {
   minPathSegments: 'Min. Path Length',
   strokeWidth: 'Stroke Width',
   turnpolicy: 'Turn Policy',
-  opticurve: 'Optimise Curves',
+  opticurve: 'Optymalizuj krzywe',
   opttolerance: 'Optimisation Tolerance',
   showAdvancedControls: 'Show Expert Options',
 
