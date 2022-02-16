@@ -74,12 +74,38 @@ class I18N {
    * @memberof I18N
    */
   constructor() {
-    this.currentLanguageAndLocale = this.detectOrRestoreLanguageAndLocale();
-    this.defaultLanguage = SUPPORTED_LANGUAGES[0];
-    this.defaultLocale = SUPPORTED_LOCALES[0];
+    this.defaultLanguage = 'en';
+    this.defaultLocale = 'US';
     this.translations = null;
     this.supportedLanguages = SUPPORTED_LANGUAGES;
     this.supportedLocales = SUPPORTED_LOCALES;
+    this.currentLanguageAndLocale = this.detectOrRestoreLanguageAndLocale();
+  }
+
+  /**
+   * @param  {} language
+   * @param  {} locale
+   */
+  findBestMatchingLanguageAndLocale(language, locale) {
+    if (locale) {
+      // Safari reports the locale as lowercase:
+      // https://bugs.webkit.org/show_bug.cgi?id=163096.
+      locale = locale.toUpperCase();
+    }
+    // The desired language is unknown or not supported at all, so fall back to en-US.
+    if (!language || !this.supportedLanguages.includes(language)) {
+      language = this.defaultLanguage;
+      locale = this.defaultLocale;
+      // The desired locale is unknown or not supported, but the language is.
+    } else if (
+      !locale ||
+      !this.supportedLocales.includes(`${language}-${locale}`)
+    ) {
+      locale = this.supportedLocales
+        .find((supportedLocale) => supportedLocale.startsWith(`${language}-`))
+        .split('-')[1];
+    }
+    return { language, locale };
   }
 
   /**
@@ -94,10 +120,15 @@ class I18N {
     const urlSearchParams = url.searchParams;
     const langParam = urlSearchParams.get('lang');
     if (langParam) {
-      const [language, locale = ''] = langParam.split('-');
-      this.setLanguageAndLocale(language, locale);
       urlSearchParams.delete('lang');
       history.pushState({}, '', url);
+      const [paramLanguage, paramLocale = ''] = langParam.split('-');
+      const { language, locale } = this.findBestMatchingLanguageAndLocale(
+        paramLanguage,
+        paramLocale,
+      );
+      this.setLanguageAndLocale(language, locale);
+      return { language, locale };
     }
 
     // Use the stored language and locale, if available.
@@ -109,32 +140,28 @@ class I18N {
     }
 
     // Use the browser's language and locale.
-    let [language, locale = ''] = navigator.language?.split('-');
-    if (locale) {
-      // Safari reports the locale as lowercase:
-      // https://bugs.webkit.org/show_bug.cgi?id=163096.
-      locale = locale.toUpperCase();
-    }
-    if (!language || !SUPPORTED_LANGUAGES.includes(language)) {
-      language = SUPPORTED_LANGUAGES[0];
-    }
-    const result = {
-      language,
-      locale,
-    };
+    const [navLanguage, navLocale = ''] = navigator.language?.split('-');
+    const { language, locale } = this.findBestMatchingLanguageAndLocale(
+      navLanguage,
+      navLocale,
+    );
     this.setLanguageAndLocale(language, locale);
-    return result;
+    return { language, locale };
   }
   /**
    * @param  {} language
    * @param  {} locale
    */
   async setLanguageAndLocale(language, locale) {
-    if (!SUPPORTED_LANGUAGES.includes(language)) {
-      throw new Error(`Language "${language}" is not supported.`);
+    if (!this.supportedLanguages.includes(language)) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      language = this.defaultLanguage;
+      locale = this.defaultLocale;
     }
-    if (locale && !SUPPORTED_LOCALES.includes(`${language}-${locale}`)) {
-      throw new Error(`Locale "${language}-${locale}" is not supported.`);
+    if (locale && !this.supportedLocales.includes(`${language}-${locale}`)) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      language = this.defaultLanguage;
+      locale = this.defaultLocale;
     }
     this.currentLanguageAndLocale = {
       language,
