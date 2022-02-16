@@ -33,10 +33,10 @@ const languages = {
   koKR: '한국어',
   nlNL: 'Nederlands',
   noNO: 'Norsk',
+  plPL: 'Polski',  
   ruRU: 'Русский',
   ukUA: 'Українська',
   zhCN: '中文',
-  plPL: 'Polski',
 };
 
 // ignore unused exports default
