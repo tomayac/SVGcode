@@ -109,8 +109,6 @@ details {
 details {
   margin-block-end: calc(2 * var(--space));
   padding-inline-end: var(--space);
-  overflow: hidden auto;
-  scrollbar-width: none;
 }
 
 summary {
@@ -129,10 +127,6 @@ summary::marker {
 }
 
 .main > summary {
-  display: none;
-}
-
-details::-webkit-scrollbar {
   display: none;
 }
 
@@ -414,6 +408,8 @@ button:hover {
 }
 
 .sidebar {
+  overflow: hidden auto;
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   padding: var(--space);
@@ -421,6 +417,10 @@ button:hover {
   min-width: var(--sidebar-width);
   height: 100%;
   background-color: var(--canvas);
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .link-list {
@@ -453,8 +453,8 @@ button:hover {
   flex-shrink: 0;
   align-items: center;
   display: flex;
-  overflow: auto hidden;
   gap: var(--space);
+  overflow: auto hidden;
   scrollbar-width: none;
 }
 
