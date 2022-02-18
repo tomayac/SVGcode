@@ -29,6 +29,7 @@ const languages = {
   frFR: 'Français',
   heIL: 'עברית',
   idID: 'Bahasa Indonesia',
+  itIT: 'Italiano',
   jaJP: '日本語',
   koKR: '한국어',
   nlNL: 'Nederlands',
