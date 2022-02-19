@@ -55,7 +55,7 @@ const translations = {
   resetAll: 'Ripristina tutto',
 
   dropFileHere: 'Trascina un file qui',
-  openImage: "Apri immagine",
+  openImage: 'Apri immagine',
   saveSVG: 'Salva SVG',
   pasteImage: 'Incolla immagine',
   copySVG: 'Copia SVG',
