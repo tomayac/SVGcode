@@ -1,6 +1,4 @@
 {
   "upgrade": true,
-  "reject": [
-    "esm-potrace-wasm"
-  ]
+  "reject": ["esm-potrace-wasm"]
 }
