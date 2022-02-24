@@ -23,7 +23,7 @@
     "browser-fs-access": "^0.25.0",
     "canvas-size": "^1.2.5",
     "dark-mode-toggle": "^0.10.0",
-    "esm-potrace-wasm": "0.2.1",
+    "esm-potrace-wasm": "^0.2.1",
     "idb-keyval": "^6.1.0",
     "module-workers-polyfill": "^0.3.2",
     "pinch-zoom-element": "^1.1.1",
