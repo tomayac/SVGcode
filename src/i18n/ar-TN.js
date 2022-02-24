@@ -25,9 +25,9 @@ const translations = {
   blue: 'أزرق',
   alpha: 'ألفا',
 
-  brightness: 'سطوع',
-  contrast: 'تباين',
-  grayscale: 'تدرج الرمادي',
+  brightness: 'السطوع',
+  contrast: 'التباين',
+  grayscale: 'التدرج الرمادي',
   'hue-rotate': 'تدوير فارق الألوان',
   invert: 'عكس',
   opacity: 'العتامة',
@@ -39,11 +39,11 @@ const translations = {
   turdsize: 'ترطيب الاخاديد',
   alphamax: 'عتبة الزاوية',
   minPathSegments: 'الحد الأدنى لطول المسار',
-  strokeWidth: 'عرض جرة قلم',
+  strokeWidth: 'سمك الخط',
   turnpolicy: 'سياسة الدوران',
   opticurve: 'تحسين المنحنيات',
   opttolerance: 'درجة التسامح الأمثل',
-  showAdvancedControls: 'إظهار خيارات متقدمة',
+  showAdvancedControls: 'إظهار الخيارات متقدمة',
 
   '%': '%',
   deg: '°',
@@ -52,13 +52,13 @@ const translations = {
   segments: 'شرائح',
 
   reset: 'إعادة ضبط',
-  resetAll: 'إعادة ضبط الجميع',
+  resetAll: 'إعادة ضبط الكل',
 
-  dropFileHere: 'إفلات الملف هنا',
-  openImage: 'افتح هذه الصورة',
-  saveSVG: 'احفظ SVG',
+  dropFileHere: 'أضف الملف هنا',
+  openImage: 'استيراد صورة',
+  saveSVG: 'حفظ كـ SVG',
   pasteImage: 'لصق الصورة',
-  copySVG: 'انسخ ملف SVG',
+  copySVG: 'نسخ كـ SVG',
   install: 'تثبيت',
 
   posterizeInputImage: 'صورة الإدخال المتتالية',
@@ -84,7 +84,7 @@ const translations = {
   bytes: 'بايت',
   zoom: 'تكبير',
 
-  license: 'رخصة',
+  license: 'رخصة الاستخدام',
   about: 'عن',
 
   ...languages,
