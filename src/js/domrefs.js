@@ -40,6 +40,7 @@ const resetAllButton = document.querySelector('.reset-all');
 const fileOpenButton = document.querySelector('.open');
 const saveSVGButton = document.querySelector('.save');
 const copyButton = document.querySelector('.copy');
+const shareSVGButton = document.querySelector('.share');
 const pasteButton = document.querySelector('.paste');
 const installButton = document.querySelector('.install');
 const svgOutput = document.querySelector('.svg-output');
@@ -78,6 +79,7 @@ export {
   resetAllButton,
   fileOpenButton,
   saveSVGButton,
+  shareSVGButton,
   copyButton,
   pasteButton,
   installButton,

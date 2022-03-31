@@ -35,6 +35,7 @@ import {
   resetAllButton,
   fileOpenButton,
   saveSVGButton,
+  shareSVGButton,
   pasteButton,
   copyButton,
   installButton,
@@ -70,6 +71,7 @@ import openIcon from 'material-design-icons/file/svg/production/ic_folder_open_4
 import saveIcon from 'material-design-icons/content/svg/production/ic_save_48px.svg?raw';
 import copyIcon from 'material-design-icons/content/svg/production/ic_content_copy_48px.svg?raw';
 import pasteIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg?raw';
+import shareIcon from 'material-design-icons/content/svg/production/ic_content_paste_48px.svg?raw';
 import optionsIcon from 'material-design-icons/image/svg/production/ic_tune_48px.svg?raw';
 import installIcon from '/install.svg?raw';
 
@@ -498,6 +500,7 @@ const checkPermissions = async (handle) => {
 const changeLanguage = () => {
   licenseLink.textContent = i18n.t('license');
   aboutLink.textContent = i18n.t('about');
+
   resetAllButton.textContent = i18n.t('resetAll');
   posterizeLabel.textContent = i18n.t('posterizeInputImage');
   colorLabel.textContent = i18n.t('colorSVG');
@@ -505,36 +508,50 @@ const changeLanguage = () => {
   considerDPRLabel.textContent = i18n.t('considerDPR');
   optimizeCurvesLabel.textContent = i18n.t('opticurve');
   showAdvancedControlsLabel.textContent = i18n.t('showAdvancedControls');
+
   fileOpenButton.innerHTML = '';
   fileOpenButton.append(createIcon(openIcon));
   const fileOpenButtonLabel = document.createElement('span');
   fileOpenButtonLabel.textContent = i18n.t('openImage');
   fileOpenButton.append(fileOpenButtonLabel);
+
   saveSVGButton.innerHTML = '';
   saveSVGButton.append(createIcon(saveIcon));
   const saveSVGButtonLabel = document.createElement('span');
   saveSVGButtonLabel.textContent = i18n.t('saveSVG');
   saveSVGButton.append(saveSVGButtonLabel);
+
+  shareSVGButton.innerHTML = '';
+  shareSVGButton.append(createIcon(shareIcon));
+  const shareSVGButtonLabel = document.createElement('span');
+  shareSVGButtonLabel.textContent = i18n.t('shareSVG');
+  shareSVGButton.append(shareSVGButtonLabel);
+
   copyButton.innerHTML = '';
   copyButton.append(createIcon(copyIcon));
   const copyButtonLabel = document.createElement('span');
   copyButtonLabel.textContent = i18n.t('copySVG');
   copyButton.append(copyButtonLabel);
+
   pasteButton.innerHTML = '';
   pasteButton.append(createIcon(pasteIcon));
   const pasteButtonLabel = document.createElement('span');
   pasteButtonLabel.textContent = i18n.t('pasteImage');
   pasteButton.append(pasteButtonLabel);
+
   installButton.innerHTML = '';
   installButton.append(createIcon(installIcon));
   const installLabel = document.createElement('span');
   installLabel.textContent = i18n.t('install');
   installButton.append(installLabel);
+
   dropContainer.dataset.dropText = i18n.t('dropFileHere');
+
   summary.innerHTML = '';
   summary.append(createIcon(optionsIcon));
   summary.append(document.createTextNode(i18n.t('tweak')));
   closeOptionsButton.ariaLabel = i18n.t('closeOptions');
+
   document.querySelectorAll('[data-i18n-key]').forEach((element) => {
     element.textContent = i18n.t(element.dataset.i18nKey);
   });
@@ -544,6 +561,7 @@ const changeLanguage = () => {
       element.dataset.dynamicValue,
     );
   });
+
   languageSelect.innerHTML = '';
   i18n.supportedLocales.sort().forEach((languageAndLocale) => {
     const [language, locale] = languageAndLocale.split('-');
