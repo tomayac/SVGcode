@@ -87,7 +87,7 @@ const convertToColorSVG = async (imageData) => {
     };
 
     const params = {
-      minPathSegments: Number(filterInputs[POTRACE.minPathLenght].value),
+      minPathSegments: Number(filterInputs[POTRACE.minPathLength].value),
       strokeWidth: Number(filterInputs[POTRACE.strokeWidth].value),
       turdsize: Number(filterInputs[POTRACE.turdsize].value),
       alphamax: Number(filterInputs[POTRACE.alphamax].value),

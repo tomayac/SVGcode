@@ -102,7 +102,7 @@ const COLORS = { red: 'red', green: 'green', blue: 'blue', alpha: 'alpha' };
 const SCALE_ROTATION = { scale: 'scale', rotation: 'rotation' };
 
 const POTRACE = {
-  minPathLenght: 'minPathSegments',
+  minPathLength: 'minPathSegments',
   strokeWidth: 'strokeWidth',
   turdsize: 'turdsize',
   alphamax: 'alphamax',
@@ -136,11 +136,11 @@ const scaleAndRotation = {
 
 const potraceOptions = {
   [POTRACE.turdsize]: { unit: PIXELS, initial: 2, min: 0, max: 50 },
+  [POTRACE.strokeWidth]: { unit: PIXELS, initial: 0, min: 0, max: 100 },
+  [POTRACE.minPathLength]: { unit: SEGMENTS, initial: 0, min: 0, max: 30 },
   [POTRACE.alphamax]: { unit: NONE, initial: 1.0, min: 0.0, max: 1.3334 },
   [POTRACE.turnpolicy]: { unit: STEPS, initial: 4, min: 0, max: 6 },
   [POTRACE.opttolerance]: { unit: NONE, initial: 0.2, min: 0, max: 1 },
-  [POTRACE.minPathLenght]: { unit: SEGMENTS, initial: 0, min: 0, max: 30 },
-  [POTRACE.strokeWidth]: { unit: PIXELS, initial: 0, min: 0, max: 100 },
 };
 
 const detailsArray = [
@@ -413,11 +413,21 @@ const initUI = async () => {
     Promise.all(createControlsPromises).then(async () => {
       for (const [filter] of entries) {
         if (filter === 'opttolerance') {
-          allDetails['svgOptions'].append(optimizeCurvesCheckbox.parentNode);
+          const opttoleranceInput = allDetails['svgOptions'].querySelector(
+            '[for="opttolerance"]',
+          ).parentNode;
+          allDetails['svgOptions'].insertBefore(
+            optimizeCurvesCheckbox.parentNode,
+            opttoleranceInput,
+          );
         }
         if (name === 'svgOptions') {
-          allDetails['svgOptions'].append(
+          const firstAdvancedInput = allDetails['svgOptions'].querySelector(
+            '.preprocess-input.advanced',
+          );
+          allDetails['svgOptions'].insertBefore(
             showAdvancedControlsCheckbox.parentNode,
+            firstAdvancedInput,
           );
         }
       }
@@ -574,6 +584,7 @@ resetAllButton.addEventListener('click', async () => {
   });
 
   optimizeCurvesCheckbox.checked = optimizeCurvesCheckbox.defaultChecked;
+  opttolerance.disabled = !optimizeCurvesCheckbox.defaultChecked;
   posterizeCheckbox.checked = posterizeCheckbox.defaultChecked;
   considerDPRCheckbox.checked = considerDPRCheckbox.defaultChecked;
 
