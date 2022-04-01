@@ -8,6 +8,7 @@
     "build": "vite build && shx echo \"svgco.de\" > docs/CNAME && touch docs/.nojekyll && git add docs/",
     "serve": "vite preview",
     "https-preview": "serve docs",
+    "install": "napa google/material-design-icons",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
     "lint:esm": "npx find-unused-exports",
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
@@ -20,7 +21,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "browser-fs-access": "^0.25.2",
+    "browser-fs-access": "^0.25.3",
     "canvas-size": "^1.2.5",
     "dark-mode-toggle": "^0.10.0",
     "esm-potrace-wasm": "^0.2.1",
@@ -36,7 +37,7 @@
     "eslint-config-prettier": "^8.5.0",
     "find-unused-exports": "^3.0.0",
     "https-localhost": "^4.7.1",
-    "material-design-icons": "^3.0.1",
+    "napa": "^3.0.0",
     "prettier": "^2.6.1",
     "shx": "^0.3.4",
     "stylelint": "^14.6.1",

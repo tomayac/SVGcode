@@ -373,6 +373,7 @@ label[for="monochrome"] {
   direction: ltr;
 }
 
+button.share,
 button.install {
   display: none;
 }
