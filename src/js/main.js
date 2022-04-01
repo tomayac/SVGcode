@@ -20,7 +20,7 @@
 import { initUI, showToast } from './ui.js';
 import { registerSW } from 'virtual:pwa-register';
 import { i18n } from './i18n.js';
-import { installButton, shareSVGButton, inputImage } from './domrefs.js';
+import { installButton, shareSVGButton /* inputImage*/ } from './domrefs.js';
 
 if ('launchQueue' in window) {
   import('./filehandling.js');
@@ -42,6 +42,7 @@ if ('share' in navigator && 'canShare' in navigator) {
   shareSVGButton.style.display = 'none';
 }
 
+/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     await navigator.serviceWorker.register('./web-share-target-sw.js');
@@ -68,6 +69,7 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+*/
 
 // From https://stackoverflow.com/a/62963963/6255000.
 const supportsWorkerType = () => {
