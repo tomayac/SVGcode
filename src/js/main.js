@@ -36,6 +36,10 @@ if ('onbeforeinstallprompt' in window && 'onappinstalled' in window) {
   installButton.style.display = 'none';
 }
 
+if ('share' in navigator && 'canShare' in navigator) {
+  import('./share.js');
+}
+
 // From https://stackoverflow.com/a/62963963/6255000.
 const supportsWorkerType = () => {
   let supports = false;

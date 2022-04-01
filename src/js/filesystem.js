@@ -143,4 +143,4 @@ saveSVGButton.addEventListener('click', async () => {
   }
 });
 
-export { FILE_HANDLE };
+export { FILE_HANDLE, getSuggestedFileName };

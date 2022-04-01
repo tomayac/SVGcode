@@ -71,7 +71,8 @@ import openIcon from 'material-design-icons/src/file/folder_open/materialicons/2
 import saveIcon from 'material-design-icons/src/content/save/materialicons/24px.svg?raw';
 import copyIcon from 'material-design-icons/src/content/content_copy/materialicons/24px.svg?raw';
 import pasteIcon from 'material-design-icons/src/content/content_paste/materialicons/24px.svg?raw';
-import shareIcon from 'material-design-icons/src/social/ios_share/materialicons/24px.svg?raw';
+import shareIconMac from 'material-design-icons/src/social/ios_share/materialicons/24px.svg?raw';
+import shareIcon from 'material-design-icons/src/social/share/materialicons/24px.svg?raw';
 import optionsIcon from 'material-design-icons/src/image/tune/materialicons/24px.svg?raw';
 import installIcon from 'material-design-icons/src/action/install_desktop/materialicons/24px.svg?raw';
 
@@ -522,7 +523,9 @@ const changeLanguage = () => {
   saveSVGButton.append(saveSVGButtonLabel);
 
   shareSVGButton.innerHTML = '';
-  shareSVGButton.append(createIcon(shareIcon));
+  shareSVGButton.append(
+    createIcon(/Mac/.test(navigator.platform) ? shareIconMac : shareIcon),
+  );
   const shareSVGButtonLabel = document.createElement('span');
   shareSVGButtonLabel.textContent = i18n.t('shareSVG');
   shareSVGButton.append(shareSVGButtonLabel);
@@ -627,6 +630,11 @@ const showToast = (message, duration = 5000) => {
   }
 };
 
+const clearToast = () => {
+  toast.hidden = true;
+  toast.textContent = '';
+};
+
 const showAdvancedControlsCheckboxOnChange = async () => {
   await storeSettings(showAdvancedControlsCheckbox);
   document.querySelectorAll('.advanced').forEach((el) => {
@@ -687,6 +695,7 @@ export {
   filters,
   filterInputs,
   showToast,
+  clearToast,
   COLORS,
   SCALE_ROTATION,
   POTRACE,
