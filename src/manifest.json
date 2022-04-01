@@ -65,6 +65,19 @@
       }
     }
   ],
+  "share_target": {
+    "action": "./share-target/",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "image",
+          "accept": ["image/jpeg", "image/png", "image/webp", "image/gif"]
+        }
+      ]
+    }
+  },
   "iarc_rating_id": "39d78758-59f2-429e-92ab-ad11d61feafe",
   "categories": ["photo", "productivity", "utilities", "devtools"],
   "related_applications": [

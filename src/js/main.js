@@ -20,7 +20,7 @@
 import { initUI, showToast } from './ui.js';
 import { registerSW } from 'virtual:pwa-register';
 import { i18n } from './i18n.js';
-import { installButton } from './domrefs.js';
+import { installButton, shareSVGButton, inputImage } from './domrefs.js';
 
 if ('launchQueue' in window) {
   import('./filehandling.js');
@@ -38,6 +38,35 @@ if ('onbeforeinstallprompt' in window && 'onappinstalled' in window) {
 
 if ('share' in navigator && 'canShare' in navigator) {
   import('./share.js');
+} else {
+  shareSVGButton.style.display = 'none';
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    await navigator.serviceWorker.register('./web-share-target-sw.js');
+
+    if (location.search.includes('share-target')) {
+      const keys = await caches.keys();
+      const mediaCache = await caches.open(
+        keys.filter((key) => key.startsWith('media'))[0],
+      );
+      const image = await mediaCache.match('shared-image');
+      if (image) {
+        const blob = await image.blob();
+        await mediaCache.delete('shared-image');
+        const blobURL = URL.createObjectURL(blob);
+        inputImage.addEventListener(
+          'load',
+          () => {
+            URL.revokeObjectURL(blobURL);
+          },
+          { once: true },
+        );
+        inputImage.src = blobURL;
+      }
+    }
+  });
 }
 
 // From https://stackoverflow.com/a/62963963/6255000.
@@ -74,6 +103,6 @@ const supportsWorkerType = () => {
   updateSW();
 })();
 
-if (location.href == 'https://svgco.de/') {
+if (location.href === 'https://svgco.de/') {
   import('./collect.js');
 }
