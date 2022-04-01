@@ -66,7 +66,7 @@
     }
   ],
   "share_target": {
-    "action": "./share-target/",
+    "action": "https://svgco.de/share-target/",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {

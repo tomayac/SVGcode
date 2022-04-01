@@ -524,7 +524,7 @@ const changeLanguage = () => {
 
   shareSVGButton.innerHTML = '';
   shareSVGButton.append(
-    createIcon(/Mac/.test(navigator.platform) ? shareIconMac : shareIcon),
+    createIcon(/Apple/.test(navigator.vendor) ? shareIconMac : shareIcon),
   );
   const shareSVGButtonLabel = document.createElement('span');
   shareSVGButtonLabel.textContent = i18n.t('shareSVG');
