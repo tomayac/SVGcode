@@ -20,7 +20,7 @@
 import { initUI, showToast } from './ui.js';
 import { registerSW } from 'virtual:pwa-register';
 import { i18n } from './i18n.js';
-import { installButton, shareSVGButton /* , inputImage*/ } from './domrefs.js';
+import { installButton, shareSVGButton, inputImage } from './domrefs.js';
 
 if ('launchQueue' in window) {
   import('./filehandling.js');
