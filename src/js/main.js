@@ -42,10 +42,11 @@ if ('share' in navigator && 'canShare' in navigator) {
   shareSVGButton.style.display = 'none';
 }
 
-/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
-    await navigator.serviceWorker.register('./web-share-target-sw.js');
+    await navigator.serviceWorker.register('./sharetargetsw.js', {
+      scope: '/share-target/',
+    });
 
     if (location.search.includes('share-target')) {
       const keys = await caches.keys();
@@ -69,7 +70,6 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
-*/
 
 // From https://stackoverflow.com/a/62963963/6255000.
 const supportsWorkerType = () => {

@@ -21,7 +21,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "browser-fs-access": "^0.25.3",
+    "browser-fs-access": "^0.26.1",
     "canvas-size": "^1.2.5",
     "dark-mode-toggle": "^0.10.0",
     "esm-potrace-wasm": "^0.2.1",
@@ -38,7 +38,7 @@
     "find-unused-exports": "^3.0.0",
     "https-localhost": "^4.7.1",
     "napa": "^3.0.0",
-    "prettier": "^2.6.1",
+    "prettier": "^2.6.2",
     "shx": "^0.3.4",
     "stylelint": "^14.6.1",
     "stylelint-config-standard": "^25.0.0",
