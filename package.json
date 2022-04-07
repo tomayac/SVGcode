@@ -5,10 +5,11 @@
     "start": "npm run dev",
     "start-with-sw": "npm run build && npm run serve",
     "dev": "vite",
+    "icons": "node ./scripts/icons.mjs",
     "build": "vite build && shx echo \"svgco.de\" > docs/CNAME && touch docs/.nojekyll && git add docs/",
+    "prepare": "npm run icons && npm run build",
     "serve": "vite preview",
     "https-preview": "serve docs",
-    "install": "napa google/material-design-icons",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
     "lint:esm": "npx find-unused-exports",
     "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
@@ -35,9 +36,11 @@
     "eslint": "^8.12.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
     "find-unused-exports": "^3.0.0",
     "https-localhost": "^4.7.1",
     "napa": "^3.0.0",
+    "node-fetch": "^3.2.3",
     "prettier": "^2.6.2",
     "shx": "^0.3.4",
     "stylelint": "^14.6.1",
@@ -47,6 +50,9 @@
     "vite-plugin-pwa": "^0.11.13"
   },
   "eslintConfig": {
+    "plugins": [
+      "eslint-plugin-node"
+    ],
     "parserOptions": {
       "ecmaVersion": 2020,
       "sourceType": "module"
