@@ -22,7 +22,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "browser-fs-access": "^0.27.0",
+    "browser-fs-access": "^0.28.0",
     "canvas-size": "^1.2.5",
     "dark-mode-toggle": "^0.10.0",
     "esm-potrace-wasm": "^0.2.1",
