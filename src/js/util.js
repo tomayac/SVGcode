@@ -29,4 +29,6 @@ const debounce = (func, wait) => {
   };
 };
 
-export { debounce };
+const IS_MAC = /Mac|iPhone/.test(navigator.platform);
+
+export { debounce, IS_MAC };

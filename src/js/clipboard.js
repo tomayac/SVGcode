@@ -21,6 +21,7 @@ import { inputImage, copyButton, pasteButton, svgOutput } from './domrefs.js';
 import { optimizeSVG } from './svgo.js';
 import { showToast } from './ui.js';
 import { i18n } from './i18n.js';
+import { IS_MAC } from './util.js';
 
 pasteButton.addEventListener('click', async () => {
   try {
@@ -70,7 +71,7 @@ copyButton.addEventListener('click', async () => {
       await navigator.clipboard.writeText(await optimizeSVG(svg));
     } else {
       // Chromium >=98.
-      if (!/Apple/.test(navigator.vendor)) {
+      if (!IS_MAC) {
         svg = await optimizeSVG(svg);
         await navigator.clipboard.write([
           new ClipboardItem({

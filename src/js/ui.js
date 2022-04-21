@@ -53,7 +53,7 @@ import {
   languageSelect,
 } from './domrefs.js';
 import { resetPanAndZoom } from './panzoom.js';
-import { debounce } from './util.js';
+import { debounce, IS_MAC } from './util.js';
 import { startProcessing } from './orchestrate.js';
 import { i18n } from './i18n.js';
 import { FILE_HANDLE } from './filesystem.js';
@@ -523,9 +523,7 @@ const changeLanguage = () => {
   saveSVGButton.append(saveSVGButtonLabel);
 
   shareSVGButton.innerHTML = '';
-  shareSVGButton.append(
-    createIcon(/Apple/.test(navigator.vendor) ? shareIconMac : shareIcon),
-  );
+  shareSVGButton.append(createIcon(IS_MAC ? shareIconMac : shareIcon));
   const shareSVGButtonLabel = document.createElement('span');
   shareSVGButtonLabel.textContent = i18n.t('shareSVG');
   shareSVGButton.append(shareSVGButtonLabel);
