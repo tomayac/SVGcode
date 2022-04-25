@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-dynamic-import-vars": "^1.4.3",
-    "eslint": "^8.13.0",
+    "eslint": "^8.14.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-node": "^11.1.0",
