@@ -22,7 +22,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "browser-fs-access": "^0.29.3",
+    "browser-fs-access": "^0.29.4",
     "canvas-size": "^1.2.5",
     "dark-mode-toggle": "^0.10.0",
     "esm-potrace-wasm": "^0.2.1",
@@ -40,7 +40,7 @@
     "find-unused-exports": "^3.0.0",
     "https-localhost": "^4.7.1",
     "napa": "^3.0.0",
-    "node-fetch": "^3.2.3",
+    "node-fetch": "^3.2.4",
     "prettier": "^2.6.2",
     "shx": "^0.3.4",
     "stylelint": "^14.8.0",
