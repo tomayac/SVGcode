@@ -19,13 +19,15 @@
   "theme_color": "#131313",
   "background_color": "#131313",
   "user_preferences": {
-    "color_scheme_dark": {
-      "theme_color": "#131313",
-      "background_color": "#131313"
-    },
-    "color_scheme_light": {
-      "theme_color": "#fffe",
-      "background_color": "#fffe"
+    "color_scheme": {
+      "dark": {
+        "theme_color": "#131313",
+        "background_color": "#131313"
+      },
+      "light": {
+        "theme_color": "#fffe",
+        "background_color": "#fffe"
+      }
     }
   },
   "icons": [
