@@ -59,6 +59,7 @@ const translations = {
   saveSVG: '保存 SVG',
   pasteImage: '粘贴图像',
   copySVG: '复制 SVG',
+  shareSVG: '分享 SVG',
   install: '安装',
 
   posterizeInputImage: '对图像进行色彩处理',

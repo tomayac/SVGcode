@@ -59,6 +59,7 @@ const translations = {
   saveSVG: 'Simpan SVG',
   pasteImage: 'Tempel Gambar',
   copySVG: 'Salin SVG',
+  shareSVG: 'Bagikan SVG',
   install: 'Pasang',
 
   posterizeInputImage: 'Posterisasi Gambar',

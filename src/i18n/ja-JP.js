@@ -59,6 +59,7 @@ const translations = {
   saveSVG: 'SVG として保存',
   pasteImage: '画像を貼り付ける',
   copySVG: 'SVG をコピーする',
+  shareSVG: 'SVG を共有する',
   install: 'インストール',
 
   posterizeInputImage: 'ポスタライズする',

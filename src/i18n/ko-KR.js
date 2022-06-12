@@ -59,6 +59,7 @@ const translations = {
   saveSVG: 'SVG 저장하기',
   pasteImage: '이미지 붙여넣기',
   copySVG: 'SVG 복사하기',
+  shareSVG: 'SVG 공유하기',
   install: '설치하기',
 
   posterizeInputImage: '입력한 이미지 포스터효과',

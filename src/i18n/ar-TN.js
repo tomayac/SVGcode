@@ -59,6 +59,7 @@ const translations = {
   saveSVG: 'حفظ كـ SVG',
   pasteImage: 'لصق الصورة',
   copySVG: 'نسخ كـ SVG',
+  shareSVG: 'مشاركة كـ SVG',
   install: 'تثبيت',
 
   posterizeInputImage: 'صورة الإدخال المتتالية',

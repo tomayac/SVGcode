@@ -59,6 +59,7 @@ const translations = {
   saveSVG: 'Сохранить SVG',
   pasteImage: 'Вставить картинку',
   copySVG: 'Скопировать SVG',
+  shareSVG: 'Поделиться SVG',
   install: 'Установить',
 
   posterizeInputImage: 'Постеризовать входную картинку',

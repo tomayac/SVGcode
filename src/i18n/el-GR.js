@@ -59,6 +59,7 @@ const translations = {
   saveSVG: 'Αποθήκευση SVG',
   pasteImage: 'Επικόλληση Εικόνας',
   copySVG: 'Αντιγραφή SVG',
+  shareSVG: 'Διαμοιρασμός SVG',
   install: 'Εγκατάσταση',
 
   posterizeInputImage: 'Posterize Εικόνα Εισόδου',
