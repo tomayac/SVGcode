@@ -19,6 +19,7 @@
 
 const languages = {
   arTN: 'عربى',
+  beBY: 'Беларуская',
   caES: 'Català',
   daDK: 'Dansk',
   deDE: 'Deutsch',
