@@ -20,6 +20,7 @@
 const LOCAL_STORAGE_KEY = 'language';
 const SUPPORTED_LANGUAGES = [
   'ar',
+  'be',
   'ca',
   'da',
   'de',
@@ -43,6 +44,7 @@ const SUPPORTED_LANGUAGES = [
 
 const SUPPORTED_LOCALES = [
   'ar-TN',
+  'be-BY',
   'ca-ES',
   'da-DK',
   'de-DE',
