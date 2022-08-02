@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import { documentElement } from './domrefs.js';
+
 (async (r, l, s, d, h, e, u, n, i, c) => {
   const o = {
     z: `${r()}`.substr(2),
@@ -48,7 +50,7 @@
   localStorage,
   screen,
   document,
-  document.documentElement,
+  documentElement,
   encodeURIComponent,
   location,
   navigator,

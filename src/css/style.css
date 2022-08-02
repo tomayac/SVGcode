@@ -26,10 +26,11 @@
   --sidebar-width: 15rem;
   --input-image-height: 5rem;
   --input-width: 10rem;
+  --color-scheme: dark light;
 
   /* Defined in `light.css` and `dark.css` */
   accent-color: var(--main-accent-color);
-  color-scheme: dark light;
+  color-scheme: var(--color-scheme);
   font-family: system-ui, sans-serif;
 }
 
@@ -426,7 +427,7 @@ button:hover {
 
 .link-list {
   list-style: none;
-  margin-block-start: var(--space);
+  margin-block: var(--space);
   padding-inline-start: var(--space);
   line-height: 2;
 }
@@ -513,6 +514,7 @@ button:hover {
 .language {
   max-width: fit-content;
   font-size: inherit;
+  margin-block: calc(2 * var(--space));
 }
 
 dark-mode-toggle {
@@ -521,5 +523,8 @@ dark-mode-toggle {
   --dark-mode-toggle-color: var(--canvas-text);
   --dark-mode-toggle-icon-filter: invert(100%);
 
-  display: none;
+  border: solid 1px var(--canvas-text);
+  border-radius: var(--space);
+  max-width: fit-content;
+  margin-block: calc(2 * var(--space));
 }

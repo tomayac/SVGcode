@@ -47,7 +47,6 @@ const svgOutput = document.querySelector('.svg-output');
 const debugCheckbox = document.querySelector('.debug');
 const progress = document.querySelector('progress');
 const toast = document.querySelector('.toast');
-const dropContainer = document.documentElement;
 const details = document.querySelector('details.main');
 const summary = document.querySelector('summary');
 const closeOptionsButton = document.querySelector('.close-options-button');
@@ -55,6 +54,9 @@ const licenseLink = document.querySelector('.license');
 const aboutLink = document.querySelector('.about');
 const pinchZoom = document.querySelector('pinch-zoom');
 const languageSelect = document.querySelector('.language');
+const darkModeToggle = document.querySelector('dark-mode-toggle');
+const documentElement = document.documentElement;
+const metaThemeColor = document.querySelector('meta[name=theme-color]');
 
 const dpr = window.devicePixelRatio;
 
@@ -84,7 +86,7 @@ export {
   pasteButton,
   installButton,
   svgOutput,
-  dropContainer,
+  documentElement,
   debugCheckbox,
   toast,
   progress,
@@ -96,4 +98,6 @@ export {
   aboutLink,
   pinchZoom,
   languageSelect,
+  darkModeToggle,
+  metaThemeColor,
 };

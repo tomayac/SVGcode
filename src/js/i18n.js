@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+import { documentElement } from './domrefs.js';
+
 const LOCAL_STORAGE_KEY = 'language';
 const SUPPORTED_LANGUAGES = [
   'ar',
@@ -177,11 +179,11 @@ class I18N {
       LOCAL_STORAGE_KEY,
       JSON.stringify(this.currentLanguageAndLocale),
     );
-    document.documentElement.lang = `${language}${locale ? `-${locale}` : ''}`;
+    documentElement.lang = `${language}${locale ? `-${locale}` : ''}`;
     if (RTL_LANGUAGES.includes(language)) {
-      document.documentElement.dir = 'rtl';
+      documentElement.dir = 'rtl';
     } else {
-      document.documentElement.dir = 'ltr';
+      documentElement.dir = 'ltr';
     }
     await this.getTranslations();
   }

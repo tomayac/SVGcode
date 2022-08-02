@@ -23,7 +23,7 @@ import {
   fileOpenButton,
   saveSVGButton,
   svgOutput,
-  dropContainer,
+  documentElement,
 } from './domrefs.js';
 import { clearToast, showToast } from './ui.js';
 import { optimizeSVG } from './svgo.js';
@@ -70,21 +70,21 @@ document.addEventListener('dragover', (event) => {
 
 document.addEventListener('dragenter', (event) => {
   event.preventDefault();
-  dropContainer.classList.add('dropenter');
+  documentElement.classList.add('dropenter');
 });
 
 document.addEventListener('dragleave', (event) => {
   event.preventDefault();
-  if (event.target !== document.documentElement) {
+  if (event.target !== documentElement) {
     return;
   }
-  dropContainer.classList.remove('dropenter');
+  documentElement.classList.remove('dropenter');
 });
 
 document.addEventListener('drop', async (event) => {
   event.preventDefault();
   event.stopPropagation();
-  dropContainer.classList.remove('dropenter');
+  documentElement.classList.remove('dropenter');
   const item = event.dataTransfer.items[0];
   if (item.kind === 'file') {
     let blobURL;

@@ -39,7 +39,7 @@ import {
   pasteButton,
   copyButton,
   installButton,
-  dropContainer,
+  documentElement,
   debugCheckbox,
   canvasMain,
   svgOutput,
@@ -370,9 +370,9 @@ const initUI = async () => {
   await i18n.getTranslations();
   changeLanguage();
 
-  const mobileBreakpoint = getComputedStyle(
-    document.documentElement,
-  ).getPropertyValue('--mobile-breakpoint');
+  const mobileBreakpoint = getComputedStyle(documentElement).getPropertyValue(
+    '--mobile-breakpoint',
+  );
   const mediaQueryList = window.matchMedia(`(max-width: ${mobileBreakpoint})`);
   const onMaxWidthMatch = () => {
     if (mediaQueryList.matches) {
@@ -546,7 +546,7 @@ const changeLanguage = () => {
   installLabel.textContent = i18n.t('install');
   installButton.append(installLabel);
 
-  dropContainer.dataset.dropText = i18n.t('dropFileHere');
+  documentElement.dataset.dropText = i18n.t('dropFileHere');
 
   summary.innerHTML = '';
   summary.append(createIcon(optionsIcon));
@@ -646,18 +646,12 @@ showAdvancedControlsCheckbox.addEventListener(
   showAdvancedControlsCheckboxOnChange,
 );
 
-document.documentElement.style.setProperty(
-  '--100vh',
-  `${window.innerHeight}px`,
-);
+documentElement.style.setProperty('--100vh', `${window.innerHeight}px`);
 
 window.addEventListener(
   'resize',
   debounce(() => {
-    document.documentElement.style.setProperty(
-      '--100vh',
-      `${window.innerHeight}px`,
-    );
+    documentElement.style.setProperty('--100vh', `${window.innerHeight}px`);
   }, 250),
 );
 

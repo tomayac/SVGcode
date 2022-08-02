@@ -20,7 +20,14 @@
 import { initUI, showToast } from './ui.js';
 import { registerSW } from 'virtual:pwa-register';
 import { i18n } from './i18n.js';
-import { installButton, shareSVGButton, inputImage } from './domrefs.js';
+import {
+  installButton,
+  shareSVGButton,
+  inputImage,
+  darkModeToggle,
+  documentElement,
+  metaThemeColor,
+} from './domrefs.js';
 
 if ('launchQueue' in window) {
   import('./filehandling.js');
@@ -85,6 +92,11 @@ const supportsWorkerType = () => {
     return supports;
   }
 };
+
+darkModeToggle.addEventListener('colorschemechange', () => {
+  documentElement.style.setProperty('--color-scheme', darkModeToggle.mode);
+  metaThemeColor.content = darkModeToggle.mode === 'dark' ? '#131313' : '#fff';
+});
 
 (async () => {
   initUI();
