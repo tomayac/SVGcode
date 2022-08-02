@@ -28,6 +28,7 @@ import {
   documentElement,
   metaThemeColor,
 } from './domrefs.js';
+import 'dark-mode-toggle';
 
 if ('launchQueue' in window) {
   import('./filehandling.js');
@@ -94,8 +95,9 @@ const supportsWorkerType = () => {
 };
 
 darkModeToggle.addEventListener('colorschemechange', () => {
-  documentElement.style.setProperty('--color-scheme', darkModeToggle.mode);
-  metaThemeColor.content = darkModeToggle.mode === 'dark' ? '#131313' : '#fff';
+  const mode = darkModeToggle.mode;
+  documentElement.style.setProperty('--color-scheme', mode);
+  metaThemeColor.content = mode === 'dark' ? '#131313' : '#fff';
 });
 
 (async () => {

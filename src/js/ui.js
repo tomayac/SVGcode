@@ -61,7 +61,6 @@ import { get, set, del } from 'idb-keyval';
 import './clipboard.js';
 import './filesystem.js';
 import 'pinch-zoom-element';
-import 'dark-mode-toggle';
 
 import paletteIcon from '/paletteicon.svg?raw';
 import scaleIcon from '/scaleicon.svg?raw';
