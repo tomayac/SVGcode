@@ -24,7 +24,7 @@
   "dependencies": {
     "browser-fs-access": "^0.31.0",
     "canvas-size": "^1.2.5",
-    "dark-mode-toggle": "^0.10.0",
+    "dark-mode-toggle": "^0.13.0",
     "esm-potrace-wasm": "^0.2.1",
     "idb-keyval": "^6.2.0",
     "module-workers-polyfill": "^0.3.2",
@@ -33,20 +33,20 @@
   },
   "devDependencies": {
     "@rollup/plugin-dynamic-import-vars": "^1.4.3",
-    "eslint": "^8.20.0",
+    "eslint": "^8.21.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-node": "^11.1.0",
     "find-unused-exports": "^3.0.0",
     "https-localhost": "^4.7.1",
     "napa": "^3.0.0",
-    "node-fetch": "^3.2.9",
+    "node-fetch": "^3.2.10",
     "prettier": "^2.7.1",
     "shx": "^0.3.4",
     "stylelint": "^14.9.1",
     "stylelint-config-standard": "^26.0.0",
     "stylelint-order": "^5.0.0",
-    "vite": "^3.0.3",
+    "vite": "^3.0.4",
     "vite-plugin-pwa": "^0.12.3"
   },
   "eslintConfig": {
