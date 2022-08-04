@@ -94,11 +94,13 @@ const supportsWorkerType = () => {
   }
 };
 
-darkModeToggle.addEventListener('colorschemechange', () => {
+const onColorSchemeChange = () => {
   const mode = darkModeToggle.mode;
   documentElement.style.setProperty('--color-scheme', mode);
   metaThemeColor.content = mode === 'dark' ? '#131313' : '#fff';
-});
+};
+darkModeToggle.addEventListener('colorschemechange', onColorSchemeChange);
+onColorSchemeChange();
 
 (async () => {
   initUI();
