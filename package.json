@@ -24,7 +24,7 @@
   "dependencies": {
     "browser-fs-access": "^0.31.0",
     "canvas-size": "^1.2.5",
-    "dark-mode-toggle": "^0.14.0",
+    "dark-mode-toggle": "^0.14.1",
     "esm-potrace-wasm": "^0.2.1",
     "idb-keyval": "^6.2.0",
     "module-workers-polyfill": "^0.3.2",
