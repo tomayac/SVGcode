@@ -493,7 +493,11 @@ const initUI = async () => {
     }
   } catch (err) {
     console.error(err.name, err.message);
-    await del(FILE_HANDLE);
+    try {
+      await del(FILE_HANDLE);
+    } catch (err) {
+      console.error(err.name, err.message);
+    }
   }
 };
 
@@ -689,12 +693,16 @@ const getSettings = async () => {
 };
 
 const storeSettings = async (input) => {
-  const settings = await getSettings();
-  settings[input.id] = input.type === 'range' ? input.value : input.checked;
-  await set(
-    colorRadio.checked ? COLOR_SETTINGS : MONOCHROME_SETTINGS,
-    settings,
-  );
+  try {
+    const settings = await getSettings();
+    settings[input.id] = input.type === 'range' ? input.value : input.checked;
+    await set(
+      colorRadio.checked ? COLOR_SETTINGS : MONOCHROME_SETTINGS,
+      settings,
+    );
+  } catch (err) {
+    // Do nothing. The user probably blocks cookies.
+  }
 };
 
 export {
