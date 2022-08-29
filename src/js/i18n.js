@@ -139,12 +139,16 @@ class I18N {
       return { language, locale };
     }
 
-    // Use the stored language and locale, if available.
-    const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (storedLanguage) {
-      const { language, locale } = JSON.parse(storedLanguage);
-      this.setLanguageAndLocale(language, locale);
-      return { language, locale };
+    try {
+      // Use the stored language and locale, if available.
+      const storedLanguage = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedLanguage) {
+        const { language, locale } = JSON.parse(storedLanguage);
+        this.setLanguageAndLocale(language, locale);
+        return { language, locale };
+      }
+    } catch {
+      // Do nothing. The user probably blocks cookies.
     }
 
     // Use the browser's language and locale.
@@ -161,24 +165,28 @@ class I18N {
    * @param  {} locale
    */
   async setLanguageAndLocale(language, locale) {
-    if (!this.supportedLanguages.includes(language)) {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
-      language = this.defaultLanguage;
-      locale = this.defaultLocale;
+    try {
+      if (!this.supportedLanguages.includes(language)) {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        language = this.defaultLanguage;
+        locale = this.defaultLocale;
+      }
+      if (locale && !this.supportedLocales.includes(`${language}-${locale}`)) {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        language = this.defaultLanguage;
+        locale = this.defaultLocale;
+      }
+      this.currentLanguageAndLocale = {
+        language,
+        locale,
+      };
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        JSON.stringify(this.currentLanguageAndLocale),
+      );
+    } catch {
+      // Do nothing. The user probably blocks cookies.
     }
-    if (locale && !this.supportedLocales.includes(`${language}-${locale}`)) {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
-      language = this.defaultLanguage;
-      locale = this.defaultLocale;
-    }
-    this.currentLanguageAndLocale = {
-      language,
-      locale,
-    };
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify(this.currentLanguageAndLocale),
-    );
     documentElement.lang = `${language}${locale ? `-${locale}` : ''}`;
     if (RTL_LANGUAGES.includes(language)) {
       documentElement.dir = 'rtl';
