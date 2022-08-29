@@ -121,7 +121,13 @@ saveSVGButton.addEventListener('click', async () => {
   };
 
   try {
-    const fileName = getSuggestedFileName(await get(FILE_HANDLE));
+    let fileHandle = false;
+    try {
+      fileHandle = await get(FILE_HANDLE);
+    } catch (err) {
+      // Do nothing. The user probably blocks cookies.
+    }
+    const fileName = getSuggestedFileName(fileHandle);
     await fileSave(createPromiseBlob(), {
       fileName,
       description: 'SVG file',

@@ -52,9 +52,14 @@ if ('share' in navigator && 'canShare' in navigator) {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
-    await navigator.serviceWorker.register('./sharetargetsw.js', {
-      scope: '/share-target/',
-    });
+    try {
+      await navigator.serviceWorker.register('./sharetargetsw.js', {
+        scope: '/share-target/',
+      });
+    } catch (err) {
+      console.error(err.name, err.message);
+      showToast(err.message);
+    }
 
     if (location.search.includes('share-target')) {
       const keys = await caches.keys();

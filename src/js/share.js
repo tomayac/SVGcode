@@ -31,8 +31,15 @@ shareSVGButton.addEventListener('click', async () => {
   showToast(i18n.t('optimizingSVG'), Infinity);
   svg = await optimizeSVG(svg);
   clearToast();
-  const suggestedFileName =
-    getSuggestedFileName(await get(FILE_HANDLE)) || 'Untitled.svg';
+  let fileHandle = false;
+  try {
+    fileHandle = await get(FILE_HANDLE);
+  } catch (err) {
+    // Do nothing. The user probably blocks cookies.
+  }
+  const suggestedFileName = fileHandle
+    ? getSuggestedFileName(fileHandle)
+    : 'Untitled.svg';
   const file = new File([svg], suggestedFileName, { type: 'image/svg+xml' });
   const data = {
     files: [file],

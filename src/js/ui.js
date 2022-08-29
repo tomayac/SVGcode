@@ -383,9 +383,20 @@ const initUI = async () => {
   onMaxWidthMatch();
   mediaQueryList.addEventListener('change', onMaxWidthMatch);
 
-  colorRadio.checked = (await get(colorRadio.id)) ?? colorRadio.defaultChecked;
-  monochromeRadio.checked =
-    (await get(monochromeRadio.id)) ?? monochromeRadio.defaultChecked;
+  try {
+    colorRadio.checked =
+      (await get(colorRadio.id)) ?? colorRadio.defaultChecked;
+  } catch (err) {
+    // The user probably blocks cookies.
+    colorRadio.checked = colorRadio.defaultChecked;
+  }
+  try {
+    monochromeRadio.checked =
+      (await get(monochromeRadio.id)) ?? monochromeRadio.defaultChecked;
+  } catch (err) {
+    // The user probably blocks cookies.
+    monochromeRadio.checked = monochromeRadio.defaultChecked;
+  }
   if (colorRadio.checked) {
     svgOutput.classList.add(COLOR);
   }
@@ -663,13 +674,18 @@ const resetSettings = async () => {
 };
 
 const getSettings = async () => {
-  const settings = colorRadio.checked
-    ? await get(COLOR_SETTINGS)
-    : await get(MONOCHROME_SETTINGS);
-  if (settings) {
-    return settings;
+  try {
+    const settings = colorRadio.checked
+      ? await get(COLOR_SETTINGS)
+      : await get(MONOCHROME_SETTINGS);
+    if (settings) {
+      return settings;
+    }
+    return {};
+  } catch (err) {
+    // The user probably blocks cookies.
+    return {};
   }
-  return {};
 };
 
 const storeSettings = async (input) => {
