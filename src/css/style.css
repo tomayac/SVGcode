@@ -344,6 +344,7 @@ label {
   color: var(--canvas-text);
 }
 
+select,
 button {
   height: 3ex;
   align-items: center;
