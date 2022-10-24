@@ -356,6 +356,9 @@ button {
   margin-inline-end: var(--space);
   cursor: pointer;
   padding: 1px 6px;
+}
+
+select {
   flex-shrink: 0;
 }
 
