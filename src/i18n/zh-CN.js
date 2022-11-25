@@ -82,7 +82,6 @@ const translations = {
 
   readyToWorkOffline: '离线工作已就绪。',
   svgSize: 'SVG 大小',
-  bytes: '字节',
   zoom: '缩放',
 
   license: '许可',

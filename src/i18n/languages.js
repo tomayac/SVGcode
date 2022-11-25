@@ -24,6 +24,7 @@ const languages = {
   daDK: 'Dansk',
   deDE: 'Deutsch',
   elGR: 'Ελληνικά',
+  enAU: 'English (Australia) 🦘',
   enGB: 'English (United Kingdom)',
   enUS: 'English (United States)',
   esES: 'Español',

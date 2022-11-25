@@ -82,7 +82,6 @@ const translations = {
 
   readyToWorkOffline: 'Bereit für Offline-Nutzung.',
   svgSize: 'SVG-Größe',
-  bytes: 'Byte',
   zoom: 'Zoom',
 
   license: 'Lizenz',

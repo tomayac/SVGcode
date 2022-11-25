@@ -82,7 +82,6 @@ const translations = {
 
   readyToWorkOffline: 'Prêt à fonctionner hors connexion.',
   svgSize: 'Poids du SVG',
-  bytes: 'Octets',
   zoom: 'Zoom',
 
   license: 'Licence',

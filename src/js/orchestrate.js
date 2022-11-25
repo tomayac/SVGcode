@@ -30,6 +30,12 @@ import { i18n } from './i18n.js';
 
 import spinnerSVG from '/spinner.svg?raw';
 
+const readableSize = (size) => {
+  if (size === 0) return '0B';
+  const i = Math.floor(Math.log(size) / Math.log(1024));
+  return `${(size / Math.pow(1024, i)).toFixed(2) * 1} ${['B', 'kB', 'MB'][i]}`;
+};
+
 const displayResult = (svg, className) => {
   if (!svg) {
     return;
@@ -42,7 +48,7 @@ const displayResult = (svg, className) => {
   svgOutput.classList.remove(MONOCHROME);
   svgOutput.classList.add(className);
   svgOutput.innerHTML = svg;
-  showToast(`${i18n.t('svgSize')}: ${svg.length} ${i18n.t('bytes')}`, 3000);
+  showToast(`${i18n.t('svgSize')}: ${readableSize(svg.length)}`, 3000);
 };
 
 const startProcessing = async () => {

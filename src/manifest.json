@@ -16,8 +16,8 @@
   "dir": "auto",
   "display_override": ["window-controls-overlay"],
   "orientation": "portrait",
-  "theme_color": "#131313",
-  "background_color": "#131313",
+  "theme_color": "#fffe",
+  "background_color": "#fffe",
   "user_preferences": {
     "color_scheme": {
       "dark": {
@@ -30,6 +30,12 @@
       }
     }
   },
+  "theme_colors": [
+    { "color": "#131313", "media": "(prefers-color-scheme: dark)" }
+  ],
+  "background_colors": [
+    { "color": "#131313", "media": "(prefers-color-scheme: dark)" }
+  ],
   "icons": [
     {
       "src": "https://svgco.de/favicon.png",

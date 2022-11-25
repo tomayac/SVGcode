@@ -82,7 +82,6 @@ const translations = {
 
   readyToWorkOffline: 'Preparat per treballar fora de línia.',
   svgSize: 'Mida SVG',
-  bytes: 'Bytes',
   zoom: 'Zoom',
 
   license: 'Llicència',
