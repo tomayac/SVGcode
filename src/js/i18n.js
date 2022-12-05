@@ -51,7 +51,6 @@ const SUPPORTED_LOCALES = [
   'da-DK',
   'de-DE',
   'el-GR',
-  'en-AU',
   'en-GB',
   'en-US',
   'es-ES',
@@ -193,11 +192,6 @@ class I18N {
       documentElement.dir = 'rtl';
     } else {
       documentElement.dir = 'ltr';
-    }
-    if (locale === 'AU') {
-      document.body.style.transform = 'rotate(180deg)';
-    } else {
-      document.body.style.transform = '';
     }
     await this.getTranslations();
   }

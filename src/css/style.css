@@ -143,6 +143,10 @@ details:not([open], .main) > summary::after {
   content: "▶";
 }
 
+details:dir(rtl):not([open], .main) > summary::after {
+  content: "◀️";
+}
+
 details[open]:not(.main) > summary::after {
   content: "▼";
 }
@@ -403,10 +407,17 @@ button:hover {
   margin: var(--space);
 }
 
+.preprocess-input > div {
+  display: flex;
+  gap: var(--space);
+}
+
 .other-input {
   display: flex;
   margin: var(--space);
   height: 3ex;
+  align-items: flex-start;
+  gap: var(--space);
 }
 
 .other-input.advanced,
