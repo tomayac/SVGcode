@@ -139,11 +139,11 @@ summary::after {
   margin-inline-start: var(--space);
 }
 
-details:not([open], .main) > summary::after {
+[dir="ltr"] details:not([open], .main) > summary::after {
   content: "▶";
 }
 
-[dir="ltr"] details:not([open], .main) > summary::after {
+[dir="rtl"] details:not([open], .main) > summary::after {
   content: "◀️";
 }
 
