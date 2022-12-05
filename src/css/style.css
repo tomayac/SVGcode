@@ -143,7 +143,7 @@ details:not([open], .main) > summary::after {
   content: "▶";
 }
 
-details:dir(rtl):not([open], .main) > summary::after {
+[dir="ltr"] details:not([open], .main) > summary::after {
   content: "◀️";
 }
 
