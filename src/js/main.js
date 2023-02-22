@@ -53,9 +53,7 @@ if ('share' in navigator && 'canShare' in navigator) {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      await navigator.serviceWorker.register('./sharetargetsw.js', {
-        scope: '/share-target/',
-      });
+      await navigator.serviceWorker.register('./share-target/sharetargetsw.js');
     } catch (err) {
       console.error(err.name, err.message);
       showToast(err.message);
