@@ -16,8 +16,8 @@
   "dir": "auto",
   "display_override": ["window-controls-overlay"],
   "orientation": "portrait",
-  "theme_color": "#fffe",
-  "background_color": "#fffe",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "user_preferences": {
     "color_scheme": {
       "dark": {
@@ -25,8 +25,8 @@
         "background_color": "#131313"
       },
       "light": {
-        "theme_color": "#fffe",
-        "background_color": "#fffe"
+        "theme_color": "#ffffff",
+        "background_color": "#ffffff"
       }
     }
   },
