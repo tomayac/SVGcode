@@ -17,7 +17,7 @@ the [video](https://youtu.be/kcvfyQh6J-0?).
 Apart from using the Web app at [svgco.de](https://svgco.de/), you can also
 install SVGcode from the
 [Play Store](https://play.google.com/store/apps/details?id=de.svgco.twa) on
-Android (or Chrome OS) and the
+Android (or ChromeOS) and the
 [Microsoft Store](https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab)
 on Windows.
 
