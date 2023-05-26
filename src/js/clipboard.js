@@ -85,11 +85,18 @@ copyButton.addEventListener('click', async () => {
         ]);
         // Safari (non-optimized SVG)
       } else {
+        /*
         await navigator.clipboard.write([
           new ClipboardItem({
-            'text/plain': new Promise(async (resolve) => {
+            'text/plain': new Promise((resolve) => {
               resolve(new Blob([svg], { type: 'text/plain' }));
             }),
+          }),
+        ]);
+        */
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/plain': new Blob([svg], { type: 'text/plain' }),
           }),
         ]);
       }
