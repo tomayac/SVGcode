@@ -167,7 +167,7 @@ details.main .close-options-button {
   inset-inline-end: 1.25rem;
 }
 
-@media (max-width: 414px) {
+@media (width <= 414px) {
   summary,
   label,
   button,
