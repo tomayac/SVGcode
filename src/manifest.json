@@ -98,6 +98,10 @@
       "platform": "windows",
       "url": "https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj",
       "id": "9PLHXDGSW1RJ"
+    },
+    {
+      "platform": "webapp",
+      "url": "https://svgco.de/manifest.json"
     }
   ],
   "prefer_related_applications": false
