@@ -101,7 +101,7 @@
     },
     {
       "platform": "webapp",
-      "url": "https://svgco.de/manifest.json"
+      "url": "https://svgco.de/manifest.webmanifest"
     }
   ],
   "prefer_related_applications": false
