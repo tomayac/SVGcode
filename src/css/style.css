@@ -288,7 +288,9 @@ summary svg {
 }
 
 .checkerboard {
-  background-position: 0 0, calc(2 * var(--space)) calc(2 * var(--space));
+  background-position:
+    0 0,
+    calc(2 * var(--space)) calc(2 * var(--space));
   background-size: calc(4 * var(--space)) calc(4 * var(--space));
 }
 
