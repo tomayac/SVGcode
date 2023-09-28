@@ -30,8 +30,8 @@ const preProcessMainCanvas = (
   width,
   height,
 ) => {
-  console.log(filter)
-  console.log(cssFilters)
+  console.log(filter);
+  console.log(cssFilters);
   ctxOffscreen.clearRect(0, 0, width, height);
   ctxOffscreen.setTransform(1, 0, 0, 1, width / 2, height / 2);
   ctxOffscreen.rotate((rotate * Math.PI) / 180);
