@@ -127,16 +127,41 @@ if (supportsOffscreenCanvas) {
     canvasMain.width = width;
     canvasMain.height = height;
     ctxMain.clearRect(0, 0, width, height);
-    ctxMain.filter = getFilterString();
     ctxMain.setTransform(1, 0, 0, 1, width / 2, height / 2);
-    const rotate = Number(filterInputs[SCALE_ROTATION.rotation].value);
-    ctxMain.rotate((rotate * Math.PI) / 180);
     ctxMain.drawImage(
       inputImage,
       (-factor * inputImage.naturalWidth * shrinkFactor) / 2,
       (-factor * inputImage.naturalHeight * shrinkFactor) / 2,
     );
-    return ctxMain.getImageData(0, 0, width, height);
+    const rotate = Number(filterInputs[SCALE_ROTATION.rotation].value);
+    ctxMain.rotate((rotate * Math.PI) / 180);
+    ctxMain.filter = getFilterString();
+    const imgData = ctxMain.getImageData(
+      0,
+      0,
+      canvasMain.width,
+      canvasMain.height,
+    );
+    const redSteps = filterInputs[COLORS.red].value;
+    const greenSteps = filterInputs[COLORS.green].value;
+    const blueSteps = filterInputs[COLORS.blue].value;
+    const alphaSteps = filterInputs[COLORS.alpha].value + 1;
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      imgData.data[i] =
+        Math.floor((imgData.data[i] / 255) * (redSteps - 1)) *
+        (255 / (redSteps - 1));
+      imgData.data[i + 1] =
+        Math.floor((imgData.data[i + 1] / 255) * (greenSteps - 1)) *
+        (255 / (greenSteps - 1));
+      imgData.data[i + 2] =
+        Math.floor((imgData.data[i + 2] / 255) * (blueSteps - 1)) *
+        (255 / (blueSteps - 1));
+      imgData.data[i + 3] =
+        Math.floor((imgData.data[i + 3] / 255) * (alphaSteps - 1)) *
+        (255 / (alphaSteps - 1));
+    }
+    ctxMain.putImageData(imgData, 0, 0);
+    return imgData;
   };
 }
 
