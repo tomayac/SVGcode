@@ -9,7 +9,7 @@ background, read the accompanying [article](https://web.dev/svgcode/) or watch
 the [video](https://youtu.be/kcvfyQh6J-0?).
 
 <a href="https://svgco.de/">
-  <img src="https://github.com/tomayac/SVGcode/raw/main/public/screenshots/desktop.png" alt="SVGcode application screenshot" width="707" height="497" />
+  <img src="https://github.com/tomayac/SVGcode/raw/main/public/screenshots/desktop-dark.png" alt="SVGcode application screenshot" width="707" height="497" />
 </a>
 
 ## Access from the Web or install from a store
