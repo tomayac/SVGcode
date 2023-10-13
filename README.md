@@ -74,7 +74,7 @@ the amazing [svgo](https://github.com/svg/svgo) library.
 
 ## Alternatives
 
-Projects listed here must be Web-based, free to use with the option to save the SVG, open source, and not require the user to login:
+Projects listed here must be Web-based, free to use with the option to save the SVG, open source, and not require the user to log in:
 
 - [VTracer](https://www.visioncortex.org/vtracer/#) ([source code](https://github.com/visioncortex/vtracer))
 
