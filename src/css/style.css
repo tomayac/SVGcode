@@ -27,6 +27,7 @@
   --input-image-height: 5rem;
   --input-width: 10rem;
   --color-scheme: dark light;
+  --focus-ring-color: -webkit-focus-ring-color;
 
   /* Defined in `light.css` and `dark.css` */
   accent-color: var(--main-accent-color);
@@ -535,6 +536,11 @@ button:hover {
   margin-block: calc(2 * var(--space));
 }
 
+.language:hover {
+  color: var(--main-accent-color);
+  border-color: var(--main-accent-color);
+}
+
 dark-mode-toggle {
   --dark-mode-toggle-light-icon: url("/moon.svg");
   --dark-mode-toggle-dark-icon: url("/sun.svg");
@@ -545,4 +551,19 @@ dark-mode-toggle {
   border-radius: var(--space);
   max-width: fit-content;
   margin-block: calc(2 * var(--space));
+}
+
+dark-mode-toggle:focus-within {
+  outline: solid 2px var(--focus-ring-color, var(--main-accent-color));
+  outline-offset: -1px;
+}
+
+dark-mode-toggle:focus::part(toggleLabel) {
+  outline: none;
+}
+
+dark-mode-toggle:hover {
+  --dark-mode-toggle-color: var(--main-accent-color);
+
+  border-color: var(--main-accent-color);
 }
