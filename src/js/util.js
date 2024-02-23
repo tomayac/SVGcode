@@ -30,5 +30,6 @@ const debounce = (func, wait) => {
 };
 
 const IS_MAC = /Mac|iPhone/.test(navigator.platform);
+const IS_SAFARI = /Version\/.* Safari\//.test(navigator.userAgent);
 
-export { debounce, IS_MAC };
+export { debounce, IS_MAC, IS_SAFARI };

@@ -21,7 +21,7 @@ import { inputImage, copyButton, pasteButton, svgOutput } from './domrefs.js';
 import { optimizeSVG } from './svgo.js';
 import { showToast } from './ui.js';
 import { i18n } from './i18n.js';
-import { IS_MAC } from './util.js';
+import { IS_SAFARI } from './util.js';
 
 pasteButton.addEventListener('click', async () => {
   try {
@@ -71,15 +71,15 @@ copyButton.addEventListener('click', async () => {
       await navigator.clipboard.writeText(await optimizeSVG(svg));
     } else {
       // Chromium >=98.
-      if (!IS_MAC) {
+      if (!IS_SAFARI) {
         svg = await optimizeSVG(svg);
         await navigator.clipboard.write([
           new ClipboardItem({
-            'text/plain': new Promise(async (resolve) => {
-              resolve(new Blob([svg], { type: 'text/plain' }));
-            }),
             'image/svg+xml': new Promise(async (resolve) => {
               resolve(new Blob([svg], { type: 'image/svg+xml' }));
+            }),
+            'text/plain': new Promise(async (resolve) => {
+              resolve(new Blob([svg], { type: 'text/plain' }));
             }),
           }),
         ]);
