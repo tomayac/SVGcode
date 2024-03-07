@@ -71,7 +71,11 @@ copyButton.addEventListener('click', async () => {
       await navigator.clipboard.writeText(await optimizeSVG(svg));
     } else {
       // Chromium >=98.
-      if (!IS_SAFARI) {
+      if (
+        ('supports' in ClipboardItem &&
+          ClipboardItem.supports('image/svg+xml')) ||
+        !IS_SAFARI
+      ) {
         svg = await optimizeSVG(svg);
         await navigator.clipboard.write([
           new ClipboardItem({
