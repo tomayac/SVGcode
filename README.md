@@ -15,10 +15,8 @@ the [video](https://youtu.be/kcvfyQh6J-0?).
 ## Access from the Web or install from a store
 
 Apart from using the Web app at [svgco.de](https://svgco.de/), you can also
-install SVGcode from the
-<!-- [Play Store](https://play.google.com/store/apps/details?id=de.svgco.twa) on
-Android (or ChromeOS) and the -->
-[Microsoft Store](https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab)
+install SVGcode from the <!-- [Play Store](https://play.google.com/store/apps/details?id=de.svgco.twa) on
+Android (or ChromeOS) and the --> [Microsoft Store](https://www.microsoft.com/en-us/p/svgcode/9plhxdgsw1rj#activetab=pivot:overviewtab)
 on Windows.
 
 <a href="https://svgco.de/"><img height="50px" src="https://raw.githubusercontent.com/tomayac/SVGcode/main/public/badges/web-browser.svg"></a>
