@@ -77,6 +77,7 @@ SVG, open source, and not require the user to log in:
 
 - [VTracer](https://www.visioncortex.org/vtracer/#)
   ([source code](https://github.com/visioncortex/vtracer))
+- [Image to SVG](https://tools.simonwillison.net/image-to-svg) (based on [imagetracerjs](https://github.com/jankovicsandras/imagetracerjs))
 
 ## License
 
