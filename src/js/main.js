@@ -125,7 +125,3 @@ onColorSchemeChange();
   });
   updateSW();
 })();
-
-if (location.href === 'https://svgco.de/') {
-  import('./collect.js');
-}
