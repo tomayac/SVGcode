@@ -111,7 +111,7 @@ if (supportsOffscreenCanvas) {
     };
   });
 } else {
-  const ctxMain = canvasMain.getContext('2d', { desynchronized: true });
+  const ctxMain = canvasMain.getContext('2d', { desynchronized: true, willReadFrequently: true });
   ctxMain.scale(dpr, dpr);
   ctxMain.imageSmoothingEnabled = true;
   preProcessMainCanvas = () => {
@@ -128,14 +128,14 @@ if (supportsOffscreenCanvas) {
     canvasMain.height = height;
     ctxMain.clearRect(0, 0, width, height);
     ctxMain.setTransform(1, 0, 0, 1, width / 2, height / 2);
+    const rotate = Number(filterInputs[SCALE_ROTATION.rotation].value);
+    ctxMain.rotate((rotate * Math.PI) / 180);
+    ctxMain.filter = getFilterString();
     ctxMain.drawImage(
       inputImage,
       (-factor * inputImage.naturalWidth * shrinkFactor) / 2,
       (-factor * inputImage.naturalHeight * shrinkFactor) / 2,
     );
-    const rotate = Number(filterInputs[SCALE_ROTATION.rotation].value);
-    ctxMain.rotate((rotate * Math.PI) / 180);
-    ctxMain.filter = getFilterString();
     const imgData = ctxMain.getImageData(
       0,
       0,

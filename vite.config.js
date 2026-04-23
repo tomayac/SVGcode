@@ -41,6 +41,12 @@ export default {
     outDir: 'docs',
     target: 'esnext',
     cssCodeSplit: false,
+    rollupOptions: {
+      onwarn(warning, warn) {
+        if (warning.id?.includes('esm-potrace-wasm')) return;
+        warn(warning);
+      },
+    },
   },
   preview: {
     port: 4000,

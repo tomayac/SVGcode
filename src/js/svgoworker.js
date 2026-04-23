@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import { optimize } from 'svgo/dist/svgo.browser';
+import { optimize } from 'svgo/browser';
 
 self.addEventListener('message', async (e) => {
   const { svg } = e.data;

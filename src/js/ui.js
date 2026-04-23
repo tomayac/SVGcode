@@ -617,8 +617,9 @@ resetAllButton.addEventListener('click', async () => {
   });
 
   optimizeCurvesCheckbox.checked = optimizeCurvesCheckbox.defaultChecked;
-  opttolerance.disabled = !optimizeCurvesCheckbox.defaultChecked;
+  optimizeCurvesCheckboxOnChange();
   posterizeCheckbox.checked = posterizeCheckbox.defaultChecked;
+  posterizeCheckboxOnChange();
   considerDPRCheckbox.checked = considerDPRCheckbox.defaultChecked;
 
   await resetSettings();
