@@ -111,7 +111,10 @@ if (supportsOffscreenCanvas) {
     };
   });
 } else {
-  const ctxMain = canvasMain.getContext('2d', { desynchronized: true, willReadFrequently: true });
+  const ctxMain = canvasMain.getContext('2d', {
+    desynchronized: true,
+    willReadFrequently: true,
+  });
   ctxMain.scale(dpr, dpr);
   ctxMain.imageSmoothingEnabled = true;
   preProcessMainCanvas = () => {

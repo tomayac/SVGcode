@@ -110,9 +110,7 @@ onColorSchemeChange();
 (async () => {
   initUI();
   if (!supportsWorkerType()) {
-    await import(
-      '../.././node_modules/module-workers-polyfill/module-workers-polyfill.min.js'
-    );
+    await import('../.././node_modules/module-workers-polyfill/module-workers-polyfill.min.js');
   }
 
   const updateSW = registerSW({

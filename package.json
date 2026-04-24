@@ -12,7 +12,7 @@
     "https-preview": "serve docs",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
     "lint:esm": "npx find-unused-exports",
-    "lint:js": "npx eslint . --ext .js,.mjs --fix --ignore-pattern docs/",
+    "lint:js": "npx eslint . --fix",
     "lint:css": "npx stylelint \"**/*.css\" --fix",
     "fix": "npx prettier . --write",
     "deploy": "npm run fix && npm run lint && npm run build && git commit -a && git push",
