@@ -11,7 +11,7 @@
     "serve": "vite preview",
     "https-preview": "serve docs",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:esm",
-    "lint:esm": "npx find-unused-exports",
+    "lint:esm": "npx find-unused-exports --module-glob \"src/**/*.{js,mjs}\"",
     "lint:js": "npx eslint . --fix",
     "lint:css": "npx stylelint \"**/*.css\" --fix",
     "fix": "npx prettier . --write",

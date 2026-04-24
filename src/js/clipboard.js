@@ -106,7 +106,7 @@ copyButton.addEventListener('click', async () => {
       }
     }
     // Chromium < 98.
-  } catch (err) {
+  } catch {
     svg = await optimizeSVG(svg);
     const textBlob = new Blob([svg], { type: 'text/plain' });
     const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
@@ -130,7 +130,7 @@ copyButton.addEventListener('click', async () => {
           }),
         ]);
       }
-    } catch (err) {
+    } catch {
       try {
         // Chromium (text only)
         await navigator.clipboard.write([

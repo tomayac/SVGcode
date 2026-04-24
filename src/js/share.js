@@ -34,7 +34,7 @@ shareSVGButton.addEventListener('click', async () => {
   let fileHandle = false;
   try {
     fileHandle = await get(FILE_HANDLE);
-  } catch (err) {
+  } catch {
     // Do nothing. The user probably blocks cookies.
   }
   const suggestedFileName = fileHandle

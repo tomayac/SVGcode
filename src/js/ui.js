@@ -125,9 +125,9 @@ const filters = {
 };
 
 const posterizeComponents = {
-  [COLORS.red]: { unit: STEPS, initial: 5, min: 1, max: 20 },
-  [COLORS.green]: { unit: STEPS, initial: 5, min: 1, max: 20 },
-  [COLORS.blue]: { unit: STEPS, initial: 5, min: 1, max: 20 },
+  [COLORS.red]: { unit: STEPS, initial: 7, min: 1, max: 20 },
+  [COLORS.green]: { unit: STEPS, initial: 7, min: 1, max: 20 },
+  [COLORS.blue]: { unit: STEPS, initial: 7, min: 1, max: 20 },
   [COLORS.alpha]: { unit: STEPS, initial: 1, min: 1, max: 10 },
 };
 
@@ -386,14 +386,14 @@ const initUI = async () => {
   try {
     colorRadio.checked =
       (await get(colorRadio.id)) ?? colorRadio.defaultChecked;
-  } catch (err) {
+  } catch {
     // The user probably blocks cookies.
     colorRadio.checked = colorRadio.defaultChecked;
   }
   try {
     monochromeRadio.checked =
       (await get(monochromeRadio.id)) ?? monochromeRadio.defaultChecked;
-  } catch (err) {
+  } catch {
     // The user probably blocks cookies.
     monochromeRadio.checked = monochromeRadio.defaultChecked;
   }
@@ -687,7 +687,7 @@ const getSettings = async () => {
       return settings;
     }
     return {};
-  } catch (err) {
+  } catch {
     // The user probably blocks cookies.
     return {};
   }
@@ -701,7 +701,7 @@ const storeSettings = async (input) => {
       colorRadio.checked ? COLOR_SETTINGS : MONOCHROME_SETTINGS,
       settings,
     );
-  } catch (err) {
+  } catch {
     // Do nothing. The user probably blocks cookies.
   }
 };
