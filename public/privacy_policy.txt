@@ -1,1 +1,13 @@
-SVGcode does not collect, store, or process any personal data.
+PRIVACY POLICY
+
+SVGcode (https://svgco.de/ and the Android app de.svgco.twa)
+Last updated: November 15, 2026
+
+SVGcode does not collect, store, or process any personal data on a server. It
+has no user accounts, no ads, and no analytics or tracking code. Images are
+converted entirely on your device and are never uploaded. Settings stay in your
+browser's local storage.
+
+The full Privacy Policy is at https://svgco.de/privacy-policy.html
+
+Contact: Thomas Steiner, steiner.thomas@gmail.com
