@@ -25,21 +25,21 @@ or recurring charges unless explicitly stated at the time of purchase.
 
 ## 3. Payments
 
-Payments for premium features are processed by **Lemon Squeezy** (a Lemon
-Squeezy, LLC service). By completing a purchase, you also agree to
-[Lemon Squeezy's Terms of Service](https://www.lemonsqueezy.com/terms). SVGcode
-does not store or process your payment card information directly.
+Payments for premium features are processed by a third-party payment processor.
+By completing a purchase, you also agree to the terms of service that the
+payment processor presents at checkout. SVGcode does not store or process your
+payment card information directly.
 
 Prices are listed in USD unless otherwise stated and may include applicable
-taxes where required by law. Lemon Squeezy acts as the Merchant of Record for
-all purchases, meaning they are responsible for billing, tax collection, and
-compliance in your jurisdiction.
+taxes where required by law. The payment processor acts as the Merchant of
+Record for all purchases, meaning they are responsible for billing, tax
+collection, and compliance in your jurisdiction.
 
 ## 4. Refunds
 
 Please see our [Refund Policy](refund_policy.md) for details. Refund requests
-are handled through Lemon Squeezy. We honor a 14-day refund window for premium
-feature purchases if you are not satisfied.
+are handled through the payment processor. We honor a 14-day refund window for
+premium feature purchases if you are not satisfied.
 
 ## 5. License for Premium Features
 

@@ -17,15 +17,14 @@ To request a refund:
 
 1. Email **[steiner.thomas@gmail.com](mailto:steiner.thomas@gmail.com)** with
    the subject line "Refund Request"
-2. Include your order number (found in your Lemon Squeezy purchase confirmation
-   email)
+2. Include your order number (found in your purchase confirmation email)
 3. Optionally, let us know why you'd like a refund — this helps us improve
 
 We aim to process refund requests within **3 business days**. Refunds are
 returned to the original payment method and may take an additional 5–10 business
 days to appear, depending on your bank.
 
-Alternatively, you can request a refund directly through Lemon Squeezy's
+Alternatively, you can request a refund directly through the payment processor's
 customer portal using the link in your purchase confirmation email.
 
 ## 3. Refunds After 14 Days
