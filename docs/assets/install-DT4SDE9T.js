@@ -1,1 +1,0 @@
-import{d as e}from"./index-CuzaZXoa.js";var t=null;window.addEventListener(`beforeinstallprompt`,n=>{n.preventDefault(),t=n,e.style.display=`flex`}),e.addEventListener(`click`,async()=>{t&&(t.prompt(),(await t.userChoice).outcome===`accepted`&&(e.style.display=`none`,t=null))}),window.addEventListener(`appinstalled`,n=>{e.style.display=`none`,t=null});

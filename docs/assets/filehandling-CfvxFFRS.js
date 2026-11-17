@@ -1,0 +1,1 @@
+import{o as e,r as t,u as n}from"./index-DL6iEhGX.js";window.launchQueue.setConsumer(async r=>{if(r.files.length)for(let i of r.files){let r=await i.getFile();if(r.type.startsWith(`image/`)){let a=URL.createObjectURL(r);n.addEventListener(`load`,()=>{URL.revokeObjectURL(a)},{once:!0}),n.src=a,await e(t,i);return}}});
